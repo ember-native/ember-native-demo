@@ -1,10 +1,66 @@
 const webpack = require("@nativescript/webpack");
+const fs = require("fs");
+
 
 module.exports = (env) => {
 	webpack.init(env);
 
 	// Learn how to customize:
 	// https://docs.nativescript.org/webpack
+
+
+
+  webpack.chainWebpack((config) => {
+
+    const glimmerDirs = fs.readdirSync("./node_modules/ember-source/dist/packages/@glimmer");
+    for (const glimmerDir of glimmerDirs) {
+      console.log(glimmerDir);
+      config.resolve.alias.set(`@glimmer/${glimmerDir}`, `ember-source/dist/packages/@glimmer/${glimmerDir}`);
+    }
+    // change the "@" alias to "app/libs"
+    config.resolve.alias.set('@ember', 'ember-source/dist/packages/@ember');
+    config.resolve.alias.set('ember', 'ember-source/dist/packages/ember');
+    config.resolve.alias.set('@glimmer/component', '@glimmer/component/addon/index.ts');
+    config.resolve.alias.set('@glimmer/env', require.resolve('./glimmer-env.js'));
+  })
+
+  webpack.chainWebpack((config) => {
+    // add a new rule for *.something files
+    config.module
+      .rule('gts/gjs')
+      .test(/\.g[jt]s$/)
+      .use('babel-loader')
+      .loader('babel-loader')
+      .end()
+      .use('gjs-loader')
+      .loader(require.resolve('./content-tag-loader.js'))
+      .end()
+
+    config.module
+      .rule('js/ts')
+      .test(/\.([jt]s)$/)
+      .use('babel-loader')
+      .loader('babel-loader')
+  });
+
+  webpack.chainWebpack((config) => {
+    config.plugin('DefinePlugin').tap((args) => {
+      Object.assign(args[0], {
+        'window': 'globalThis',
+      });
+      return args
+    })
+  })
+
+  webpack.chainWebpack((config) => {
+    config.externals(
+      // make sure to keep pre-defined externals
+      config.get('externals').concat([
+        // add your own externals
+        {'ember-compatibility-helpers': 'global globalThis'},
+      ])
+    )
+  })
 
 	return webpack.resolveConfig();
 };

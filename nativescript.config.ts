@@ -1,7 +1,7 @@
 import { NativeScriptConfig } from '@nativescript/core';
 
 export default {
-  id: 'org.nativescript.githubplus',
+  id: 'org.nativescript.embernativedemo',
   appPath: 'app',
   appResourcesPath: 'App_Resources',
   android: {
