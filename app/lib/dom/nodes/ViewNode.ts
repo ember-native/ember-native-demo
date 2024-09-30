@@ -43,6 +43,12 @@ export default class ViewNode {
         this._meta = null;
     }
 
+    insertAdjacentHTML(location, html) {
+        const e = globalThis.document.createElement('HtmlView');
+        e.html = html;
+        globalThis.document.body.appendChild(e);
+    }
+
     hasAttribute() {
         return false;
     }

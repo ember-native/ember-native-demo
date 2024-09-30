@@ -36,6 +36,7 @@ export function registerElements() {
     registerElement('head', () => null, {
         insertChild(parentNode, childNode, atIndex) {}
     });
+    registerElement('style',  () => new ElementNode('style', this));
     // registerElement('Frame', () => require('@nativescript/core/ui/frame').Frame, {
     //     insertChild(parentNode, childNode, atIndex) {
     //         //dont bother
@@ -108,5 +109,5 @@ export function registerElements() {
     registerElement('Template', () => new TemplateElement());
     registerElement('Frame', () => new FrameElement());
     registerElement('Page', () => new PageElement());
-    registerElement('Fragment', () => new ElementNode('fragment'));
+    registerElement('Fragment', () => new ElementNode('fragment', this));
 }

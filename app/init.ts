@@ -22,6 +22,7 @@ export function init(
   const app = Application.create({
     name: ENV.modulePrefix,
     version: ENV.APP.version,
+    ENV: ENV
   });
 
   const registryObjects = registry();
