@@ -7,7 +7,7 @@ function injectChrome(themeName) {
     constructor() {
       this.channel = new MessageChannel();
       this.listeners = [];
-      this.channel.port2.addEventListener('message', (msg) => {
+      this.channel.port1.addEventListener('message', (msg) => {
         this.listeners.forEach(l => l(msg));
       });
       window.parent.postMessage("openChannel", '*', [this.channel.port2]);

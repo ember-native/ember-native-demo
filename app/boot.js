@@ -24,7 +24,6 @@ document.config = app.ENV;
 
 boot().then(() => {
   console.log('visit');
-
   app.visit('/', {
     document: document
   })
