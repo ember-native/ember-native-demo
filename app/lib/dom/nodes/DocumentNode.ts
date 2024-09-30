@@ -14,12 +14,14 @@ function* elementIterator(el: any) {
 
 export default class DocumentNode extends ViewNode {
     head: any;
+    nodeMap: Map<any, any>;
     constructor() {
         super();
         this.tagName = 'docNode';
         this.nodeType = 9;
         this.head = new ElementNode('head');
         this.appendChild(this.head);
+        this.nodeMap = new Map();
     }
 
     createComment(text) {
@@ -37,7 +39,11 @@ export default class DocumentNode extends ViewNode {
             return this.createPropertyNode(bits[0], bits[1]);
         }
         console.log(createElement(tagName));
-        return createElement(tagName);
+        const e = createElement(tagName);
+        if (e.nativeView) {
+          this.nodeMap.set(e.nativeView._domId, e);
+        }
+        return e;
     }
 
     createElementNS(namespace, tagName) {
