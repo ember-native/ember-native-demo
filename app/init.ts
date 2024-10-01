@@ -17,7 +17,6 @@ export function init(
   // // Init instance initializers
   // Application.instanceInitializer(logger);
   // Application.instanceInitializer(modalDialog);
-  registerElements();
 
   const app = Application.create({
     name: ENV.modulePrefix,

@@ -1,6 +1,5 @@
 const Host = await import('devtools://devtools/bundled/devtools-frontend/front_end/core/host/host.js');
 const { ThemeSupport } = await import('devtools://devtools/bundled/devtools-frontend/front_end/ui/legacy/theme_support/theme_support.js');
-const { ShortcutRegistry } = await import('devtools://devtools/bundled/devtools-frontend/front_end/ui/legacy/legacy.js');
 
 function injectChrome(themeName) {
   class ChromePort {
@@ -8,8 +7,9 @@ function injectChrome(themeName) {
       this.channel = new MessageChannel();
       this.listeners = [];
       this.channel.port1.addEventListener('message', (msg) => {
-        this.listeners.forEach(l => l(msg));
+        this.listeners.forEach(l => l(msg.data));
       });
+      this.channel.port1.start();
       window.parent.postMessage("openChannel", '*', [this.channel.port2]);
     }
     postMessage(options) {
@@ -108,13 +108,14 @@ function startCommunication(port) {
     ProtocolClient.test.sendRawMessage('Ember.fromExtension', event.data);
   });
   ProtocolClient.test.onMessageReceived = (msg)  => {
-    console.log(msg);
+    console.log('onMessageReceived', msg);
     if (msg.method === 'Ember.toExtension') {
       console.log('msg', msg)
       port.postMessage(msg.params);
     }
   }
   port.start();
+  window.commPort = port;
 }
 
 

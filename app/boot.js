@@ -1,7 +1,5 @@
 import app from './main';
 import { Application as NativeApplication } from '@nativescript/core/application/application';
-import DocumentNode from './lib/dom/nodes/DocumentNode';
-import ENV from 'app/env';
 
 
 function boot() {
@@ -19,7 +17,7 @@ function boot() {
   });
 }
 
-const document = globalThis.document = new DocumentNode();
+const document = globalThis.document;
 document.config = app.ENV;
 
 boot().then(() => {
