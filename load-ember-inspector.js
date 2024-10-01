@@ -111,7 +111,7 @@ function startCommunication(port) {
     console.log('onMessageReceived', msg);
     if (msg.method === 'Ember.toExtension') {
       console.log('msg', msg)
-      port.postMessage(msg.params);
+      port.postMessage(msg.params.data);
     }
   }
   port.start();

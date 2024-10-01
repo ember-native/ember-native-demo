@@ -142,7 +142,9 @@ let EmberDomain = class EmberDomain {
   fromExtension(msg) {
     console.log('ember fromExtension', msg);
     try {
-      this.port?.postMessage(msg);
+      if (msg.type) {
+        this.port?.postMessage(msg);
+      }
     } catch (e) {
       console.error(e);
     }
