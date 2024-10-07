@@ -149,8 +149,9 @@ let EmberDomain = class EmberDomain {
       console.error(e);
     }
 
-    if (msg.type === 'inject-code') {
+    if (msg.type === 'inject-code' && !globalThis.emberDebugInjected) {
       console.log('inject');
+      globalThis.emberDebugInjected = true;
       try {
         eval('console.log("hi")');
         eval(msg.value);
