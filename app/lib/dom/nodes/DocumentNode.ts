@@ -60,12 +60,30 @@ export default class DocumentNode extends ViewNode {
     }
     console.log(createElement(tagName));
     const e = createElement(tagName);
+    e.parentNode = this;
     if (e.nativeView) {
       this.nodeMap.set(e.nativeView._domId, e);
     }
     if (tagName === 'page') {
       this.page = e;
-      this.body = e;
+
+      Object.defineProperty(this, 'body', {
+        get() {
+          let page =  this.page;
+          return {
+            insertAdjacentHTML(location, html) {
+              const e = globalThis.document.createElement('HtmlView');
+              e.html = html;
+              console.log('insertAdjacentHTML', html);
+              page.firstChild.appendChild(e);
+            },
+            addEventListener: globalThis.addEventListener.bind(this.page),
+            get lastChild() {
+              return page.firstChild.lastChild;
+            }
+          }
+        }
+      })
     }
     return e;
   }

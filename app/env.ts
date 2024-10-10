@@ -1,11 +1,10 @@
 import packageJSON from '../package.json';
-import FrameElement from '~/lib/dom/native/FrameElement';
 
 function config(environment: 'production' | 'development') {
   const ENV = {
     modulePrefix: packageJSON.name,
     environment,
-    rootElement: new FrameElement(),
+    rootElement: globalThis.document.createElement('frame'),
     autoboot: false,
     rootURL: '/',
     locationType: 'history', // here is the change

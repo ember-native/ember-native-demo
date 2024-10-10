@@ -29,12 +29,10 @@ window.define('doc-app/config/environment', () => ({
 
 console.debug = console.log;
 
-const globalMessaging = {
-  listeners: []
-}
+const globalMessaging = {};
 
 globalThis.postMessage = (msg, origin, ports) => {
-  globalMessaging.listeners.forEach((listener) => listener({
+  globalMessaging['message']?.forEach((listener) => listener({
     data: msg,
     origin,
     ports
@@ -42,17 +40,16 @@ globalThis.postMessage = (msg, origin, ports) => {
 }
 
 globalThis.addEventListener = (type, cb) => {
-  if (type === 'message') {
-    globalMessaging.listeners.push(cb);
-  }
+  globalMessaging[type] = globalMessaging[type] || [];
+  globalMessaging[type].push(cb);
   console.log('addEventListener', type);
 }
 
 globalThis.removeEventListener = (type, cb) => {
   if (type === 'message') {
-    const i = globalMessaging.listeners.indexOf(cb);
+    const i = globalMessaging[type].indexOf(cb);
     if (i >= 0) {
-      globalMessaging.listeners.splice(i, 1);
+      globalMessaging[type].splice(i, 1);
     }
   }
 }

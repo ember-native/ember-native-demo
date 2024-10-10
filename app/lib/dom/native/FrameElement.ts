@@ -12,7 +12,6 @@ export default class FrameElement extends NativeElementNode {
     setAttribute(key: string, value: any) {
         if (key.toLowerCase() == 'defaultpage') {
             let dummy = createElement('fragment');
-            let page = new (value as any)({ target: dummy, props: {} });
             (this.nativeView as Frame).navigate({
                 create: () => (dummy.firstElement() as NativeElementNode).nativeView
             });
@@ -32,11 +31,16 @@ export default class FrameElement extends NativeElementNode {
     appendChild(childNode: ViewNode) {
         //only handle page nodes
         console.log('appendChild', childNode);
+        super.appendChild(childNode);
         if (!childNode.nativeView) return;
 
         console.log('navigate', childNode);
         this.nativeView.navigate({ create: () => childNode.nativeView });
         return;
+    }
+
+    onInsertedChild() {
+
     }
 
     removeChild(childNode: NativeElementNode) {

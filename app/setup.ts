@@ -6,5 +6,6 @@ globalThis.requireModule = loader.require;
 globalThis.requirejs = loader.require;
 globalThis.define = loader.define;
 
-globalThis.document = new DocumentNode();
+globalThis.document = new DocumentNode() as unknown as Document;
+
 registerElements();

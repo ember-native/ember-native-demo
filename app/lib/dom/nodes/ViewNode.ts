@@ -43,12 +43,6 @@ export default class ViewNode {
         this._meta = null;
     }
 
-    insertAdjacentHTML(location, html) {
-        const e = globalThis.document.createElement('HtmlView');
-        e.html = html;
-        globalThis.document.body.appendChild(e);
-    }
-
     hasAttribute() {
         return false;
     }
@@ -84,6 +78,7 @@ export default class ViewNode {
 
     set nativeView(view) {
         this._nativeView = view;
+        this.addEventListener('click', () => globalThis.onElementClicked(this));
     }
 
     get meta() {
@@ -94,18 +89,22 @@ export default class ViewNode {
         return (this._meta = getViewMeta(this.tagName));
     }
 
+    get isConnected() {
+      return Boolean(this.ownerDocument);
+    }
+
     /* istanbul ignore next */
     get ownerDocument() {
-        if (this._ownerDocument) {
-            return this._ownerDocument;
-        }
-
         let el = this;
         while (el != null && el.nodeType !== 9) {
             el = el.parentNode;
         }
 
-        return (this._ownerDocument = el);
+        if (el?.nodeType === 9) {
+          return el;
+        }
+
+        return null;
     }
 
     getAttribute(key) {
@@ -183,12 +182,12 @@ export default class ViewNode {
 
     /* istanbul ignore next */
     addEventListener(event, handler) {
-        this.nativeView.on(event, handler);
+        this.nativeView?.on(event, handler);
     }
 
     /* istanbul ignore next */
     removeEventListener(event, handler) {
-        this.nativeView.off(event, handler);
+        this.nativeView?.off(event, handler);
     }
 
     dispatchEvent(event: EventData) {
