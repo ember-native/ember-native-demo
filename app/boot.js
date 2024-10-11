@@ -20,6 +20,7 @@ function boot() {
 const document = globalThis.document;
 document.config = app.ENV;
 
+
 boot().then(() => {
   console.log('visit');
   app.visit('/', {

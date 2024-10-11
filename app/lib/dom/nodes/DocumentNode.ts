@@ -20,6 +20,7 @@ class HeadNode extends ElementNode {
   }
   appendChild(childNode: ViewNode) {
     if (childNode.tagName === 'style') {
+      console.log('append style', this.document.page);
       this.document.page.nativeView.addCss(childNode.childNodes[0].text);
       return;
     }
@@ -60,7 +61,7 @@ export default class DocumentNode extends ViewNode {
     }
     console.log(createElement(tagName));
     const e = createElement(tagName);
-    e.parentNode = this;
+    e._ownerDocument = this;
     if (e.nativeView) {
       this.nodeMap.set(e.nativeView._domId, e);
     }
@@ -116,6 +117,65 @@ export default class DocumentNode extends ViewNode {
       return;
     }
     console.error('unsupported event on document', event);
+  }
+
+  searchDom(node, startNode, endNode) {
+    const start = startNode || this.page;
+    if (start === node) {
+      return true;
+    }
+    if (node === endNode) {
+      return false;
+    }
+    for (const childNode of start.childNodes) {
+      if (this.searchDom(node, childNode, endNode)) {
+        return true;
+      }
+    }
+    let sibling = node;
+    while (sibling) {
+      if (this.searchDom(node, sibling, endNode)) {
+        return true;
+      }
+      sibling = sibling.nextSibling;
+    }
+    return false;
+  }
+
+  createRange() {
+    let self = this;
+    return {
+      startNode: null as ViewNode | null,
+      endNode: null as ViewNode | null,
+      setStartBefore(startNode) {
+        while (startNode && !startNode.nativeView) {
+          startNode = startNode.nextSibling;
+        }
+        this.startNode = startNode;
+      },
+      setEndAfter(endNode) {
+        while (endNode && !endNode.nativeView) {
+          endNode = endNode.prevSibling;
+        }
+        this.endNode = endNode;
+      },
+      isPointInRange(dom, number) {
+        return self.searchDom(dom, this.startNode, this.endNode);
+      },
+      getBoundingClientRect() {
+        if (!this.startNode.nativeView) return null;
+        const point1 = this.startNode.nativeView.getLocationInWindow();
+        const point2 = this.endNode.nativeView.getLocationInWindow();
+        const x = Math.min(point1.x, point2.x);
+        const y = Math.min(point1.y, point2.y);
+        return {
+          x,
+          y,
+          width: Math.max(point1.width, point2.width) - x,
+          height: Math.max(point1.height, point2.height) - y,
+        }
+      }
+    }
   }
 
   querySelectorAll(selector) {

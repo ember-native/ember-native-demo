@@ -97,7 +97,7 @@ export default class ViewNode {
     get ownerDocument() {
         let el = this;
         while (el != null && el.nodeType !== 9) {
-            el = el.parentNode;
+            el = el.parentNode || el._ownerDocument;
         }
 
         if (el?.nodeType === 9) {
@@ -325,4 +325,16 @@ export default class ViewNode {
         }
         return null;
     }
+
+  getBoundingClientRect() {
+    if (!this.nativeView) return null;
+    const point = this.nativeView.getLocationInWindow();
+    let actualSize = this.nativeView.getActualSize();
+    return {
+      x: point.x,
+      y: point.y,
+      width: actualSize.width,
+      height: actualSize.height,
+    }
+  }
 }

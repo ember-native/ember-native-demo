@@ -1,4 +1,6 @@
 import packageJSON from '../package.json';
+import {Frame} from "@nativescript/core/ui/frame";
+import FrameElement from "~/lib/dom/native/FrameElement";
 
 function config(environment: 'production' | 'development') {
   const ENV = {

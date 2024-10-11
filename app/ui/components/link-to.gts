@@ -1,10 +1,12 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
 import { NavigationTransition, NavigationEntry } from '@nativescript/core';
+import { on } from '@ember/modifier'
 
 export interface LinkToInterface {
     Args: {
         route: string;
+        text: string;
         model?: any;
         frame?: any;
         context?: any;
@@ -20,7 +22,7 @@ export interface LinkToInterface {
 
 export default class LinkTo extends Component<LinkToInterface> {
     @service router;
-    onClick() {
+    onClick = () => {
         const args = this.args;
         const options: NavigationEntry = {
             animated: args.animated,
@@ -32,4 +34,13 @@ export default class LinkTo extends Component<LinkToInterface> {
         };
         this.router.transitionTo(this.args.route, this.args.model, options);
     }
+    <template>
+        {{#if (has-block)}}
+            <flexboxLayout ...attributes class="link-to" {{on 'tap' this.onClick}}>
+                {{yield}}
+            </flexboxLayout>
+        {{else}}
+            <button ...attributes text={{@text}} class="btn link-to" {{on 'tap' this.onClick}}></button>
+        {{/if}}
+    </template>
 }
