@@ -73,14 +73,11 @@ export default class DocumentNode extends ViewNode {
           let page =  this.page;
           return {
             insertAdjacentHTML(location, html) {
-              const e = globalThis.document.createElement('HtmlView');
-              e.html = html;
-              console.log('insertAdjacentHTML', html);
-              page.firstChild.appendChild(e);
+              return null;
             },
             addEventListener: globalThis.addEventListener.bind(this.page),
             get lastChild() {
-              return page.firstChild.lastChild;
+              return null
             }
           }
         }

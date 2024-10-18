@@ -171,6 +171,14 @@ export default class ViewNode {
         this.nativeView.style[property] = value;
     }
 
+    get style() {
+      return this.nativeView?.style;
+    }
+
+    set style(v) {
+      Object.assign(this.nativeView?.style, v);
+    }
+
     /* istanbul ignore next */
     setText(text) {
         if (this.nodeType === 3) {

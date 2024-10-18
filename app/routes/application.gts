@@ -6,7 +6,7 @@ export default class ApplicationRoute extends RoutableComponentRoute(<template>
     <page>
         <absoluteLayout>
             <label text='Hello world 2!'></label>
-            <LinkTo @route='test' @text="test"></LinkTo>
+            <LinkTo @route='test' @text="test" />
             {{outlet}}
         </absoluteLayout>
     </page>

@@ -149,6 +149,20 @@ let EmberDomain = class EmberDomain {
     if (msg.type === 'inject-code' && !globalThis.emberDebugInjected) {
       console.log('inject');
       globalThis.emberDebugInjected = true;
+      let i = setInterval(() => {
+        const viewInspection = globalThis.EmberInspector?.viewDebug?.viewInspection;
+        if (viewInspection) {
+          viewInspection._showTooltip = (node, rect) => {
+
+          }
+          viewInspection.highlight = document.createElement('div');
+          const id = viewInspection.id;
+          viewInspection.highlight.id = `ember-inspector-highlight-${id}`;
+          document.highlight = viewInspection.highlight;
+          document.page?.appendChild(document.highlight);
+          clearInterval(i);
+        }
+      })
       try {
         eval('console.log("hi")');
         eval(msg.value);
