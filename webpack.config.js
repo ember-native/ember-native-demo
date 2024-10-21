@@ -39,6 +39,9 @@ module.exports = (env) => {
     config.module
       .rule('js/ts')
       .test(/\.([jt]s)$/)
+      .use('fix-glimmer-content-owner')
+      .loader(require.resolve('./fix-glimmer-content-owner.js'))
+      .end()
       .use('babel-loader')
       .loader('babel-loader')
   });

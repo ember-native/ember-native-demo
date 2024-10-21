@@ -32,7 +32,11 @@ export default class LinkTo extends Component<LinkToInterface> {
             transitionAndroid: args.transitionAndroid,
             transitioniOS: args.transitioniOS
         };
-        this.router.transitionTo(this.args.route, this.args.model, options);
+        if (this.args.model) {
+            this.router.transitionTo(this.args.route, this.args.model, { queryParams: options });
+        } else {
+            this.router.transitionTo(this.args.route, { queryParams: options});
+        }
     }
     <template>
         {{#if (has-block)}}

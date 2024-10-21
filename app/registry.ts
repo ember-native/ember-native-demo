@@ -1,9 +1,8 @@
 import RouteableComponentTemmplate from 'ember-routable-component/templates/ember-routable-component/ember-route-template';
 import { DEBUG } from '@glimmer/env';
 import ApplicationRoute from './routes/application.gts';
+import TestRoute from "./routes/test.gts";
 /* imported routes */
-
-
 
 
 // ember-data debug adapter
@@ -25,6 +24,7 @@ const InitialRegistry = {
   // 'controller:application': ApplicationController,
   // 'controller:login': LoginController,
   'route:application': ApplicationRoute,
+  'route:test': TestRoute,
   // 'route:login': LoginRoute,
   // 'route:logout': LogoutRoute,
   'template:ember-routable-component/ember-route-template': RouteableComponentTemmplate,
