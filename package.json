@@ -27,9 +27,10 @@
     "@glimmer/wire-format": "^0.92.3",
     "@nativescript/core": "~8.8.0",
     "@nativescript/theme": "^3.1.0",
+    "ember-modifier": "^4.2.0",
     "ember-source": "^5.11.1",
-    "octokit": "^4.0.2",
-    "nativescript-ui-listview": "^15.2.3"
+    "nativescript-ui-listview": "^15.2.3",
+    "octokit": "^4.0.2"
   },
   "devDependencies": {
     "@babel/core": "^7.25.2",

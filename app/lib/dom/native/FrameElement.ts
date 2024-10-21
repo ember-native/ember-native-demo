@@ -16,6 +16,7 @@ export default class FrameElement extends NativeElementNode {
                 create: () => (dummy.firstElement() as NativeElementNode).nativeView
             });
         }
+        super.setAttribute(key, value);
     }
 
     get nativeView(): Frame {

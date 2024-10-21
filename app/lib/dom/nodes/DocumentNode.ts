@@ -95,12 +95,6 @@ export default class DocumentNode extends ViewNode {
     return new TextNode(text);
   }
 
-  getElementById(id) {
-    for (let el of elementIterator(this)) {
-      if (el.nodeType === 1 && el.id === id) return el;
-    }
-  }
-
   addEventListener(event, callback) {
     if (event === 'DOMContentLoaded') {
       setTimeout(callback, 0);
@@ -161,15 +155,29 @@ export default class DocumentNode extends ViewNode {
       },
       getBoundingClientRect() {
         if (!this.startNode.nativeView) return null;
-        const point1 = this.startNode.nativeView.getLocationInWindow();
-        const point2 = this.endNode.nativeView.getLocationInWindow();
-        const x = Math.min(point1.x, point2.x);
-        const y = Math.min(point1.y, point2.y);
+        let point = this.startNode.nativeView.getLocationInWindow();
+        let size = this.startNode.nativeView.getActualSize();
+        let x = point.x;
+        let y = point.y;
+        let width = size.width;
+        let height = size.height;
+        for (const element of elementIterator(this.startNode)) {
+          let point = element.nativeView.getLocationInWindow();
+          let size = element.nativeView.getActualSize();
+          x = Math.min(x, point.x);
+          y = Math.min(y, point.y);
+          width = point.x + size.width - x;
+          height = point.y + size.height - y;
+          if (element === this.endNode) {
+            break;
+          }
+        }
         return {
-          x,
-          y,
-          width: Math.max(point1.width, point2.width) - x,
-          height: Math.max(point1.height, point2.height) - y,
+          left: x,
+          top: y,
+          bottom: y + height,
+          width,
+          height,
         }
       }
     }

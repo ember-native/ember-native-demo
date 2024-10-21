@@ -1,11 +1,14 @@
 import app from './main';
 import { Application as NativeApplication } from '@nativescript/core/application/application';
+import ElementNode from './lib/dom/nodes/ElementNode';
 
 
 function boot() {
   return new Promise((resolve, reject) => {
     NativeApplication.on(NativeApplication.launchEvent, () => {
-      resolve()
+      setTimeout(() => {
+        resolve()
+      }, 5000)
     });
     try {
       NativeApplication.run({ create: () => {
@@ -17,14 +20,19 @@ function boot() {
   });
 }
 
+
 const document = globalThis.document;
 document.config = app.ENV;
+
+globalThis.Element = ElementNode;
+globalThis.Node = ElementNode;
 
 
 boot().then(() => {
   console.log('visit');
   app.visit('/', {
-    document: document
+    document: document,
+    isInteractive: true
   })
 });
 

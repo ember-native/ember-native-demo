@@ -9,6 +9,7 @@ import * as validator from '@glimmer/validator';
 import * as reference from '@glimmer/reference';
 import * as runloop from '@ember/runloop';
 import ElementNode from './lib/dom/nodes/ElementNode';
+import { CSSDomainDebugger } from '@nativescript/core/debugger/webinspector-css';
 
 console.log('inspector support');
 
@@ -40,6 +41,7 @@ globalThis.postMessage = (msg, origin, ports) => {
 }
 
 globalThis.addEventListener = (type, cb) => {
+  console.log('global addEventListener', type, cb);
   globalMessaging[type] = globalMessaging[type] || [];
   globalMessaging[type].push(cb);
   console.log('addEventListener', type);
@@ -98,7 +100,29 @@ class MessageChannel {
 
 globalThis.MessageChannel = MessageChannel;
 
+globalThis.scrollX = 0;
+globalThis.scrollY = 0;
+Object.defineProperty(globalThis, 'innerWidth', {
+  get() {
+    return document.body?.nativeView?.getActualSize().width || 0;
+  }
+})
 
+
+CSSDomainDebugger.prototype.getInlineStylesForNode = (params) => {
+  const n = document.nodeMap.get(params.nodeId) as ElementNode;
+  console.log('getInlineStylesForNode', n.style);
+  return {
+    attributesStyle: {},
+    inlineStyle: {
+      shorthandEntries: [],
+      cssProperties: Object.entries(n.style).map(([k, v]) => ({
+        name: k,
+        value: String(v)
+      }))
+    }
+  }
+}
 
 
 DOMDomainDebugger.prototype.resolveNode = ((params) => {
@@ -149,20 +173,6 @@ let EmberDomain = class EmberDomain {
     if (msg.type === 'inject-code' && !globalThis.emberDebugInjected) {
       console.log('inject');
       globalThis.emberDebugInjected = true;
-      let i = setInterval(() => {
-        const viewInspection = globalThis.EmberInspector?.viewDebug?.viewInspection;
-        if (viewInspection) {
-          viewInspection._showTooltip = (node, rect) => {
-
-          }
-          viewInspection.highlight = document.createElement('div');
-          const id = viewInspection.id;
-          viewInspection.highlight.id = `ember-inspector-highlight-${id}`;
-          document.highlight = viewInspection.highlight;
-          document.page?.appendChild(document.highlight);
-          clearInterval(i);
-        }
-      })
       try {
         eval('console.log("hi")');
         eval(msg.value);

@@ -6,6 +6,13 @@ import { getViewMeta, normalizeElementName } from '../element-registry';
 
 const XML_ATTRIBUTES = Object.freeze(['tap', 'style', 'rows', 'columns', 'fontAttributes']);
 
+function* elementIterator(el: any) {
+  yield el;
+  for (let child of el.childNodes) {
+    yield* elementIterator(child);
+  }
+}
+
 export default class ViewNode {
     nodeValue: any;
     namespaceURI: any;
@@ -30,6 +37,37 @@ export default class ViewNode {
     _nativeView: any;
     _meta: any;
 
+  getElementById(id: string) {
+    for (let el of elementIterator(this)) {
+      if (el.nodeType === 1 && el.id === id) return el;
+    }
+  }
+
+  getElementByClass(klass: string) {
+    for (let el of elementIterator(this)) {
+      if (el.nodeType === 1 && el.classList.contains(klass)) return el;
+    }
+  }
+
+  getElementByTagName(tagName: string) {
+    for (let el of elementIterator(this)) {
+      if (el.nodeType === 1 && el.tagName === tagName) return el;
+    }
+  }
+
+  querySelector(selector: string) {
+    console.log('querySelector', selector);
+    if (selector.startsWith('.')) {
+      return this.getElementByClass(selector.slice(1));
+    }
+
+    if (selector.startsWith('#')) {
+      return this.getElementById(selector.slice(1));
+    }
+
+    return this.getElementByTagName(selector);
+  }
+
     constructor() {
         this.nodeType = null;
         this._tagName = null;
@@ -41,6 +79,7 @@ export default class ViewNode {
         this._ownerDocument = null;
         this._nativeView = null;
         this._meta = null;
+        this.attributes = [];
     }
 
     hasAttribute() {
@@ -118,6 +157,11 @@ export default class ViewNode {
     /* istanbul ignore next */
     setAttribute(key, value) {
         const nv = this.nativeView;
+
+      this.attributes.push({
+        nodeName: key,
+        nodeValue: value,
+      })
 
         if (!nv) {
             this[key] = value;
@@ -251,7 +295,7 @@ export default class ViewNode {
 
     appendChild(childNode) {
         if (!childNode) {
-            throw new Error(`Can't append child.`);
+            throw new Error(`Can't append null child.`);
         }
 
         if (childNode.parentNode && childNode.parentNode !== this) {
@@ -339,8 +383,9 @@ export default class ViewNode {
     const point = this.nativeView.getLocationInWindow();
     let actualSize = this.nativeView.getActualSize();
     return {
-      x: point.x,
-      y: point.y,
+      left: point.x,
+      top: point.y,
+      bottom: point.y + actualSize.height,
       width: actualSize.width,
       height: actualSize.height,
     }

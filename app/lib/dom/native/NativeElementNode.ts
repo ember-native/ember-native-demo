@@ -200,7 +200,7 @@ export default class NativeElementNode extends ElementNode {
 
     /* istanbul ignore next */
     addEventListener(event: string, handler: EventListener) {
-        // log.debug(`add event listener ${this} ${event}`);
+        // log.debug('add event listener', this, event, handler);
         this.nativeView.on(event, handler);
     }
 
