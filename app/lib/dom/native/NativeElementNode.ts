@@ -404,6 +404,4 @@ function removeChild(parentNode: ViewNode, childNode: ViewNode) {
     } else {
         // throw new Error("Unknown parent type: " + parent);
     }
-
-    childNode.nativeView = null;
 }

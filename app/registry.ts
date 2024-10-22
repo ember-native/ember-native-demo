@@ -2,6 +2,7 @@ import RouteableComponentTemmplate from 'ember-routable-component/templates/embe
 import { DEBUG } from '@glimmer/env';
 import ApplicationRoute from './routes/application.gts';
 import TestRoute from "./routes/test.gts";
+import IndexRoute from '~/routes';
 /* imported routes */
 
 
@@ -23,8 +24,8 @@ const InitialRegistry = {
   // 'service:date': DateService,
   // 'controller:application': ApplicationController,
   // 'controller:login': LoginController,
-  'route:application': ApplicationRoute,
-  'route:test': TestRoute,
+  // 'route:application': ApplicationRoute,
+  // 'route:test': TestRoute,
   // 'route:login': LoginRoute,
   // 'route:logout': LogoutRoute,
   'template:ember-routable-component/ember-route-template': RouteableComponentTemmplate,

@@ -3,6 +3,10 @@ import LinkTo from '../ui/components/link-to.gts';
 import Component from '@glimmer/component';
 import { modifier } from 'ember-modifier';
 import type ElementNode from '../lib/dom/nodes/ElementNode';
+import { service } from '@ember/service';
+import { Frame } from '@nativescript/core/ui/frame';
+import ENV from '~/env';
+import { Page } from '@nativescript/core/ui/page';
 
 const ref = modifier(function setRef(element, [context, key]) {
     // console.log('ref', element, context, key);
@@ -54,22 +58,43 @@ class RoutableComponent extends Component {
         this.tooltip = element;
     }.bind(this));
     <template>
-        <page>
-            <absoluteLayout {{ref this 'absoluteLayout'}}>
-                <htmlView {{this.setupHighlight}} />
-                <htmlView {{this.setupTooltip}} zIndex=99/>
-                {{(this.setupInspector)}}
-                <label text='Hello world 2!'></label>
-                <LinkTo @route='test' @text="test" />
-                {{outlet}}
-            </absoluteLayout>
-        </page>
+        <frame>
+            <page>
+                <absoluteLayout {{ref this 'absoluteLayout'}}>
+                    <htmlView {{this.setupHighlight}} />
+                    <htmlView {{this.setupTooltip}} zIndex=99/>
+                        {{(this.setupInspector)}}
+                </absoluteLayout>
+            </page>
+        </frame>
+        {{outlet}}
     </template>
 }
 
 // this will generate a Route class and use the provided template
 export default class ApplicationRoute extends RoutableComponentRoute(RoutableComponent) {
+    @service router;
+    history = []
     activate() {
         console.log('activate');
+        ENV.rootElement.nativeView.on(Page.navigatingToEvent, (args) => {
+            console.log('event', args);
+            if (args.isBack) {
+                const h = this.history.pop();
+                if (h.params.model) {
+                    this.router.transitionTo(h.name, h.params.model, {
+                        queryParams: h.queryParams
+                    });
+                } else {
+                    this.router.transitionTo(h.name, {
+                        queryParams: h.queryParams
+                    });
+                }
+
+            }
+        })
+        this.router.on('routeDidChange', (transition) => {
+            this.history.push(transition.from);
+        })
     }
 }

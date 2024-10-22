@@ -69,6 +69,7 @@ export default class DocumentNode extends ViewNode {
       this.page = e;
 
       Object.defineProperty(this, 'body', {
+        configurable: true,
         get() {
           let page =  this.page;
           return {

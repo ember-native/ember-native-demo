@@ -1,22 +1,13 @@
 import ENV from './env';
-import registry from './registry';
 import type ApplicationClass from '@ember/application';
 import type RouteClass from './router';
-import {registerElements} from "~/lib/dom/setup-registry";
+import registry from './registry';
 
 
 export function init(
   Application: typeof ApplicationClass,
   Router: typeof RouteClass
 ) {
-  // Init initializers
-  // Application.initializer(initializer);
-  // Application.initializer(emberDataInitializer);
-  // Application.initializer(emberResponsive);
-  //
-  // // Init instance initializers
-  // Application.instanceInitializer(logger);
-  // Application.instanceInitializer(modalDialog);
 
   const app = Application.create({
     name: ENV.modulePrefix,
@@ -32,7 +23,6 @@ export function init(
   });
 
   app.register('config:environment', ENV);
-  app.register('router:main', Router);
 
   return app;
 }
