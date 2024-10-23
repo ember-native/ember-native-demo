@@ -6,7 +6,7 @@ function config(environment: 'production' | 'development') {
   const ENV = {
     modulePrefix: packageJSON.name,
     environment,
-    rootElement: globalThis.document.createElement('frame'),
+    rootElement: globalThis.document.createElement('stackLayout'),
     autoboot: false,
     rootURL: '/',
     locationType: 'history', // here is the change

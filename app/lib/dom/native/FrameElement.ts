@@ -38,7 +38,7 @@ export default class FrameElement extends NativeElementNode {
     if (childNode.nativeView instanceof Page) {
       console.log('navigate', childNode);
       this.currentPage = childNode.nativeView;
-      this.nativeView.navigate({ create: () => childNode.nativeView });
+      this.nativeView.navigate({ create: () => childNode.nativeView, clearHistory: true, backstackVisible: false });
     }
     super.appendChild(childNode);
     return;
@@ -47,7 +47,7 @@ export default class FrameElement extends NativeElementNode {
   onInsertedChild(childNode: ViewNode) {
     if (childNode.nativeView instanceof Page && this.currentPage !== childNode.nativeView) {
       console.log('navigate', childNode);
-      this.nativeView.navigate({ create: () => childNode.nativeView });
+      this.nativeView.navigate({ create: () => childNode.nativeView, clearHistory: true, backstackVisible: false });
     }
   }
 

@@ -7,6 +7,7 @@ import { service } from '@ember/service';
 import { Frame } from '@nativescript/core/ui/frame';
 import ENV from '~/env';
 import { Page } from '@nativescript/core/ui/page';
+import { Application } from '@nativescript/core';
 
 const ref = modifier(function setRef(element, [context, key]) {
     // console.log('ref', element, context, key);
@@ -34,7 +35,10 @@ class RoutableComponent extends Component {
                     const style = this.highlight.style;
                     this.highlight.style.width = this.highlight.style.width.value;
                     this.highlight.style.height = this.highlight.style.height.value;
-                    const pos = this.absoluteLayout.nativeView.getLocationInWindow();
+                    const pos = this.page.nativeView.getLocationInWindow() || {
+                        x: 0,
+                        y: 0
+                    };
                     this.highlight.setAttribute('left', style.left.replace('px', '') - pos.x);
                     this.highlight.setAttribute('top', style.top.replace('px', '') - pos.y);
                 }
@@ -58,43 +62,29 @@ class RoutableComponent extends Component {
         this.tooltip = element;
     }.bind(this));
     <template>
-        <frame>
-            <page>
-                <absoluteLayout {{ref this 'absoluteLayout'}}>
-                    <htmlView {{this.setupHighlight}} />
-                    <htmlView {{this.setupTooltip}} zIndex=99/>
-                        {{(this.setupInspector)}}
-                </absoluteLayout>
-            </page>
-        </frame>
-        {{outlet}}
+        <absoluteLayout {{ref this 'page'}}>
+            <htmlView {{this.setupHighlight}} />
+            <htmlView {{this.setupTooltip}} zIndex=99 />
+            {{(this.setupInspector)}}
+            <contentView left="0" top="0" width="100%" height="100%">
+                <frame>
+                    {{outlet}}
+                </frame>
+            </contentView>
+        </absoluteLayout>
     </template>
 }
 
-// this will generate a Route class and use the provided template
+
 export default class ApplicationRoute extends RoutableComponentRoute(RoutableComponent) {
-    @service router;
-    history = []
+    @service history;
+
+    init(...args) {
+        super.init(...args)
+        this.history.setup();
+    }
+
     activate() {
         console.log('activate');
-        ENV.rootElement.nativeView.on(Page.navigatingToEvent, (args) => {
-            console.log('event', args);
-            if (args.isBack) {
-                const h = this.history.pop();
-                if (h.params.model) {
-                    this.router.transitionTo(h.name, h.params.model, {
-                        queryParams: h.queryParams
-                    });
-                } else {
-                    this.router.transitionTo(h.name, {
-                        queryParams: h.queryParams
-                    });
-                }
-
-            }
-        })
-        this.router.on('routeDidChange', (transition) => {
-            this.history.push(transition.from);
-        })
     }
 }

@@ -102,6 +102,7 @@ export function registerElements() {
     registerNativeElement('TextView', () => require('@nativescript/core/ui/text-view').TextView);
     registerNativeElement('WebView', () => require('@nativescript/core/ui/web-view').WebView);
     registerNativeElement('WrapLayout', () => require('@nativescript/core/ui/layouts/wrap-layout').WrapLayout);
+    registerNativeElement('ContentView', () => require('@nativescript/core/ui/content-view').ContentView);
 
     // Not Complete
     registerElement('ListView', () => new ListViewElement());
