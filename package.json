@@ -5,6 +5,7 @@
   "private": true,
   "scripts": {
     "run": "npx nativescript debug android",
+    "debug": "npx nativescript debug android --debug-brk",
     "prepare-android": "npx nativescript prepare android"
   },
   "dependencies": {

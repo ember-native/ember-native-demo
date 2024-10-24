@@ -4,11 +4,8 @@ import { View } from '@nativescript/core';
 
 import { registerElement } from './element-registry';
 import FrameElement from './native/FrameElement';
-import ListViewElement from './native/ListViewElement';
 import NativeElementNode, { ComponentMeta } from './native/NativeElementNode';
 import PageElement from './native/PageElement';
-import RadListViewElement from './native/RadListViewElement';
-import TemplateElement from './native/TemplateElement';
 import ElementNode from './nodes/ElementNode';
 import ViewNode from './nodes/ViewNode';
 
@@ -103,11 +100,10 @@ export function registerElements() {
     registerNativeElement('WebView', () => require('@nativescript/core/ui/web-view').WebView);
     registerNativeElement('WrapLayout', () => require('@nativescript/core/ui/layouts/wrap-layout').WrapLayout);
     registerNativeElement('ContentView', () => require('@nativescript/core/ui/content-view').ContentView);
+    registerNativeElement('ListView', () => require('@nativescript/core/ui/list-view').ListView);
+    registerNativeElement('RadListView', () => require('nativescript-ui-listview').RadListView);
 
     // Not Complete
-    registerElement('ListView', () => new ListViewElement());
-    registerElement('RadListView', () => new RadListViewElement());
-    registerElement('Template', () => new TemplateElement());
     registerElement('Frame', () => new FrameElement());
     registerElement('Page', () => new PageElement());
     registerElement('Fragment', () => new ElementNode('fragment', this));

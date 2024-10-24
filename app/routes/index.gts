@@ -3,10 +3,24 @@ import LinkTo from '../ui/components/link-to.gts';
 import {on} from "@ember/modifier";
 import {service} from "@ember/service";
 import Component from "@glimmer/component";
+import ListView from '../lib/components/ListView.gts';
+import {tracked} from "@glimmer/tracking";
 
 
 class Page extends Component {
     @service history;
+    @tracked list = ['a', 'b', 'c'];
+    start = () => {
+        const lists = [
+            ['a', 'b', 'c'],
+            ['a', 'b', 'c', 'd', 'e'],
+            ['1', '2', '3'],
+            ['1', '2', '3', 4, 5],
+        ];
+        setInterval(() => {
+            this.list = lists[Math.floor(Math.random() * lists.length)];
+        }, 3000);
+    }
     <template>
         <page>
             <actionBar title="MyApp">
@@ -21,6 +35,14 @@ class Page extends Component {
             <stackLayout>
                 <label text='Hello world 2!'></label>
                 <LinkTo @route='test' @text="test" />
+                {{(this.start)}}
+                <ListView @items={{this.list}}>
+                    <:item as |item|>
+                        <label>
+                            {{item}}
+                        </label>
+                    </:item>
+                </ListView>
             </stackLayout>
         </page>
     </template>

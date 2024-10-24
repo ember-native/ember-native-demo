@@ -1,7 +1,9 @@
+import { Label } from '@nativescript/core';
 import ViewNode from './ViewNode';
 
 export default class TextNode extends ViewNode {
     text: any;
+    private _parentNode: any;
     constructor(text) {
         super();
 
@@ -13,8 +15,19 @@ export default class TextNode extends ViewNode {
         };
     }
 
+    set parentNode(node) {
+      this._parentNode = node;
+      this.setText(this.text);
+    }
+
+    get parentNode() {
+      return this._parentNode;
+    }
+
     setText(text) {
         this.text = text;
-        this.parentNode.setText(text);
+        if (this.parentNode?.nativeView instanceof Label) {
+          this.parentNode.updateText();
+        }
     }
 }
