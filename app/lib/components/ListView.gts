@@ -6,8 +6,6 @@ import {tracked} from "@glimmer/tracking";
 
 export default class ListViewComponent extends Component {
     @tracked elementRefs = [];
-    @tracked ready = false;
-    counter = 0;
 
     get items() {
         return this.elementRefs.map(({element, index}) => {
