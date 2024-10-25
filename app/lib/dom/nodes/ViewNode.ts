@@ -68,6 +68,10 @@ export default class ViewNode {
     return this.getElementByTagName(selector);
   }
 
+  contains(otherElement) {
+    return false;
+  }
+
   constructor() {
     this.nodeType = null;
     this._tagName = null;
@@ -117,7 +121,6 @@ export default class ViewNode {
 
   set nativeView(view) {
     this._nativeView = view;
-    this.addEventListener('click', () => globalThis.onElementClicked(this));
   }
 
   get meta() {
@@ -380,6 +383,7 @@ export default class ViewNode {
 
   getBoundingClientRect() {
     if (!this.nativeView) return null;
+    if (!this.nativeView.getLocationInWindow) return null;
     const point = this.nativeView.getLocationInWindow();
     let actualSize = this.nativeView.getActualSize();
     return {

@@ -30,8 +30,12 @@ class RoutableComponent extends Component {
 
                 }
                 const _showHighlight = viewInspection._showHighlight;
+                viewInspection._hideHighlight = () => {
+                    this.highlight.setAttribute('visibility', 'collapse');
+                }
                 viewInspection._showHighlight = (node, rect) => {
                     _showHighlight.call(this, node, rect);
+                    this.highlight.setAttribute('visibility', 'visible');
                     const style = this.highlight.style;
                     this.highlight.style.width = this.highlight.style.width.value;
                     this.highlight.style.height = this.highlight.style.height.value;
@@ -56,10 +60,13 @@ class RoutableComponent extends Component {
     setupHighlight = modifier(function setupHighlight(element) {
         console.log('setupHighlight', element);
         this.highlight = element;
+        this.highlight.setAttribute('visibility', 'collapse');
     }.bind(this));
     setupTooltip = modifier(function setupTooltip(element) {
         console.log('setupTooltip', element);
         this.tooltip = element;
+        this.tooltip.setAttribute('visibility', 'collapse');
+
     }.bind(this));
     <template>
         <absoluteLayout {{ref this 'page'}}>

@@ -10,6 +10,7 @@ import * as reference from '@glimmer/reference';
 import * as runloop from '@ember/runloop';
 import ElementNode from './lib/dom/nodes/ElementNode';
 import { CSSDomainDebugger } from '@nativescript/core/debugger/webinspector-css';
+import { Application } from '@nativescript/core';
 
 console.log('inspector support');
 
@@ -32,12 +33,37 @@ console.debug = console.log;
 
 const globalMessaging = {};
 
+class Event {
+  target: any;
+  type: any;
+
+  constructor(type, target) {
+    this.type = type;
+    this.target = target;
+  }
+
+  preventDefault() {
+
+  }
+  stopPropagation() {
+
+  }
+}
+
 globalThis.postMessage = (msg, origin, ports) => {
   globalMessaging['message']?.forEach((listener) => listener({
     data: msg,
     origin,
     ports
   }));
+}
+
+globalThis.triggerEvent = (type, element, data) => {
+  console.log('triggerevent', type, data, globalMessaging[type]);
+  const e = new Event(type, element);
+  globalMessaging[type]?.forEach((cb) => {
+    cb(e);
+  })
 }
 
 globalThis.addEventListener = (type, cb) => {

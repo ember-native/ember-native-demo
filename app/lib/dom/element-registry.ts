@@ -32,7 +32,10 @@ export function registerElement(elementName, resolver, meta = null) {
         resolver: resolver,
         meta: meta
     };
+    const dashName = elementName.replace(/([a-zA-Z])(?=[A-Z])/g, '$1-').toLowerCase()
     elementMap[normalizedName] = entry;
+    elementMap[dashName] = entry;
+    elementMap[elementName] = entry;
 }
 
 export function getElementMap() {
