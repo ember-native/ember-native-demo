@@ -8,7 +8,6 @@ class Page extends Component {
     @service history;
         <template>
             <page>
-
                 <actionBar title="MyApp">
                     <navigationButton
                         {{on 'tap' this.history.back}}

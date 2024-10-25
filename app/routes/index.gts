@@ -4,6 +4,7 @@ import {on} from "@ember/modifier";
 import {service} from "@ember/service";
 import Component from "@glimmer/component";
 import ListView from '../lib/components/ListView.gts';
+import RadListView from '../lib/components/RadListView.gts';
 import {tracked} from "@glimmer/tracking";
 
 
@@ -19,7 +20,7 @@ class Page extends Component {
         ];
         setInterval(() => {
             this.list = lists[Math.floor(Math.random() * lists.length)];
-        }, 3000);
+        }, 200);
     }
     <template>
         <page>
@@ -36,13 +37,15 @@ class Page extends Component {
                 <label text='Hello world 2!'></label>
                 <LinkTo @route='test' @text="test" />
                 {{(this.start)}}
-                <ListView @items={{this.list}}>
+                <RadListView @items={{this.list}}>
+                    <:header><label>header</label></:header>
                     <:item as |item|>
                         <label>
                             {{item}}
                         </label>
                     </:item>
-                </ListView>
+                    <:footer><label>footer</label></:footer>
+                </RadListView>
             </stackLayout>
         </page>
     </template>

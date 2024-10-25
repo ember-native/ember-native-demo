@@ -51,7 +51,7 @@ export default class ListViewComponent extends Component {
 
 
     <template>
-        <listview {{this.setupListView}} items={{@items}} />
+        <list-view {{this.setupListView}} items={{@items}} />
         {{#each this.items as |item|}}
             {{#in-element item.element}}
                 {{yield item.item to='item'}}
