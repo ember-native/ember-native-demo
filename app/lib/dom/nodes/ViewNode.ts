@@ -1,8 +1,9 @@
-import {Button, isAndroid, isIOS, Label} from '@nativescript/core';
+import { isAndroid, isIOS } from '@nativescript/core';
 import {EventData} from '@nativescript/core';
 import {isBoolean} from '@nativescript/core/utils/types';
 
 import {getViewMeta, normalizeElementName} from '../element-registry';
+import { TextBase } from '@nativescript/core/ui/text-base';
 
 const XML_ATTRIBUTES = Object.freeze(['tap', 'style', 'rows', 'columns', 'fontAttributes']);
 
@@ -227,8 +228,7 @@ export default class ViewNode {
   }
 
   updateText() {
-    let hasTextAttr = this.nativeView instanceof Label;
-    hasTextAttr = hasTextAttr || this.nativeView instanceof Button;
+    let hasTextAttr = this.nativeView instanceof TextBase;
     if (hasTextAttr) {
       const t = this.childNodes.map(c => (c as any).text).filter(Boolean).join('');
       this.setAttribute('text', t.trim());
