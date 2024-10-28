@@ -80,14 +80,6 @@ export default class FrameElement extends NativeElementNode {
 
     childNode.parentNode = null;
 
-    // if (childNode.prevSibling) {
-    //     childNode.prevSibling.nextSibling = childNode.nextSibling;
-    // }
-
-    // if (childNode.nextSibling) {
-    //     childNode.nextSibling.prevSibling = childNode.prevSibling;
-    // }
-
     // reset the prevSibling and nextSibling. If not, a keep-alived component will
     // still have a filled nextSibling attribute so vue will not
     // insert the node again to the parent. See #220

@@ -13,22 +13,6 @@ export function registerNativeElement(elementName: string, resolver: () => typeo
     registerElement(elementName, () => new NativeElementNode(elementName, resolver(), meta));
 }
 
-// export function registerElement(elementName, resolver, meta = null) {
-//     const normalizedName = normalizeElementName(elementName);
-
-//     meta = Object.assign({}, defaultViewMeta, meta);
-
-//     if (elementMap[normalizedName]) {
-//         throw new Error(`Element for ${elementName} already registered.`);
-//     }
-
-//     const entry = {
-//         resolver: resolver,
-//         meta: meta
-//     };
-//     elementMap[normalizedName] = entry;
-// }
-
 export function registerElements() {
     registerElement('head', () => null, {
         insertChild(parentNode, childNode, atIndex) {}
