@@ -1,12 +1,11 @@
-import packageJSON from '../package.json';
-import {Frame} from "@nativescript/core/ui/frame";
-import FrameElement from "~/lib/dom/native/FrameElement";
+import packageJSON from '../../package.json';
+import NativeElementNode from 'ember-native/dom/native/NativeElementNode';
 
 function config(environment: 'production' | 'development') {
   const ENV = {
     modulePrefix: packageJSON.name,
     environment,
-    rootElement: globalThis.document.createElement('stackLayout'),
+    rootElement: null as NativeElementNode | null,
     autoboot: false,
     rootURL: '/',
     locationType: 'history', // here is the change
@@ -29,5 +28,5 @@ function config(environment: 'production' | 'development') {
 
 const mode = __DEV__ ? 'development' : 'production';
 
-const ENV = config(mode);
+export const ENV = config(mode);
 export default ENV;

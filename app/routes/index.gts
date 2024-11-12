@@ -2,16 +2,18 @@ import RoutableComponentRoute from 'ember-routable-component';
 import LinkTo from '../ui/components/link-to.gts';
 import {on} from "@ember/modifier";
 import {service} from "@ember/service";
-import Component from "@glimmer/component";
-import ListView from '../lib/components/ListView.gts';
-import RadListView from '../lib/components/RadListView.gts';
 import {tracked} from "@glimmer/tracking";
+import Component from "@glimmer/component";
+import ListView from 'ember-native/components/ListView';
+import RadListView from 'ember-native/components/RadListView';
+
 
 
 class Page extends Component {
     @service history;
     @tracked list = ['a', 'b', 'c'];
     start = () => {
+        console.log('start');
         const lists = [
             ['a', 'b', 'c'],
             ['a', 'b', 'c', 'd', 'e'],
@@ -35,7 +37,7 @@ class Page extends Component {
             </actionBar>
             <stackLayout>
                 <label text='Hello world 2!'></label>
-                <LinkTo @route='test' @text="test" />
+                <LinkTo @route='test' @text="test" @transitionName='flip' />
                 {{(this.start)}}
                 <RadListView @items={{this.list}}>
                     <:header><label>header</label></:header>

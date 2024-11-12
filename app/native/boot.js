@@ -1,6 +1,5 @@
 import app from './main';
 import { Application as NativeApplication } from '@nativescript/core/application/application';
-import ElementNode from './lib/dom/nodes/ElementNode';
 
 
 function boot() {
@@ -12,6 +11,7 @@ function boot() {
     });
     try {
       NativeApplication.run({ create: () => {
+        console.log('craate view', app.rootElement)
           return app.rootElement.nativeView;
         } });
     } catch (e) {
@@ -22,10 +22,6 @@ function boot() {
 
 
 const document = globalThis.document;
-document.config = app.ENV;
-
-globalThis.Element = ElementNode;
-globalThis.Node = ElementNode;
 
 
 boot().then(() => {

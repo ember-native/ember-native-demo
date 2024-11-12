@@ -8,34 +8,32 @@ export interface LinkToInterface {
         route: string;
         text: string;
         model?: any;
-        frame?: any;
-        context?: any;
         animated?: boolean;
-        backstackVisible?: boolean;
-        clearHistory?: boolean;
-        transition?: NavigationTransition;
-        transitionAndroid?: NavigationTransition;
-        transitioniOS?: NavigationTransition;
+        transitionName?: NavigationTransition['name'];
+        transitionDuration?: NavigationTransition['duration'];
+        transitionInstance?: NavigationTransition['instance'];
+        transitionCurve?: NavigationTransition['curve'];
     }
 }
 
 
 export default class LinkTo extends Component<LinkToInterface> {
-    @service router;
+    @service nativeRouter;
     onClick = () => {
         const args = this.args;
         const options: NavigationEntry = {
             animated: args.animated,
-            backstackVisible: args.backstackVisible,
-            clearHistory: args.clearHistory,
-            transition: args.transition,
-            transitionAndroid: args.transitionAndroid,
-            transitioniOS: args.transitioniOS
+            transition: {
+                duration: this.args.transitionDuration,
+                name: this.args.transitionName,
+                instance: this.args.transitionInstance,
+                curve: this.args.transitionCurve
+            }
         };
         if (this.args.model) {
-            this.router.transitionTo(this.args.route, this.args.model, { queryParams: options });
+            this.nativeRouter.transitionTo(this.args.route, this.args.model, options);
         } else {
-            this.router.transitionTo(this.args.route, { queryParams: options});
+            this.nativeRouter.transitionTo(this.args.route, undefined, options);
         }
     }
     <template>
