@@ -35,6 +35,7 @@
     "ember-native-devtools": "file:../ember-devtools/ember-native-devtools-1.0.1.tgz",
     "ember-source": "^5.11.1",
     "nativescript-ui-listview": "^15.2.3",
+    "nativescript-ui-sidedrawer": "^15.2.3",
     "octokit": "^4.0.2"
   },
   "devDependencies": {

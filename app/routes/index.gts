@@ -37,7 +37,7 @@ class Page extends Component {
             </actionBar>
             <stackLayout>
                 <label text='Hello world 2!'></label>
-                <LinkTo @route='test' @text="test" @transitionName='flip' />
+                <LinkTo @route='test' @text="test" @transitionName='fade' />
                 {{(this.start)}}
                 <RadListView @items={{this.list}}>
                     <:header><label>header</label></:header>

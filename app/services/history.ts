@@ -1,9 +1,12 @@
 import Service, { service } from '@ember/service';
 import { Application } from '@nativescript/core';
 import {tracked} from "@glimmer/tracking";
+import NativeRouter from '~/services/native-router';
+import Router from '@ember/routing/router';
 
 export default class HistoryService extends Service {
-  @service router;
+  @service nativeRouter: NativeRouter;
+  @service router: Router;
   @tracked stack = [];
 
   setup() {
@@ -11,27 +14,27 @@ export default class HistoryService extends Service {
       args.cancel = this.back();
     })
     this.router.on('routeDidChange', (transition) => {
-      console.log('routeDidChange');
       if (transition.from && !transition.data.isBack) {
-        this.stack.push(transition.from);
+        this.stack.push(transition);
       }
       this.stack = [...this.stack];
     })
   }
 
   back = () => {
-    const h = this.stack.pop();
-    if (h) {
+    let transition = this.stack.pop();
+    if (transition) {
+      const h = transition.from;
+      const nativeTransition = transition.data.transition;
       this.stack = [...this.stack];
-      let transition;
       if (h.params.model) {
-        transition = this.router.transitionTo(h.name, h.params.model, {
+        transition = this.nativeRouter.transitionTo(h.name, h.params.model, {
           queryParams: h.queryParams
-        });
+        }, nativeTransition);
       } else {
-        transition = this.router.transitionTo(h.name, {
+        transition = this.nativeRouter.transitionTo(h.name, null, {
           queryParams: h.queryParams
-        });
+        }, nativeTransition);
       }
       transition.data.isBack = true;
       return true;

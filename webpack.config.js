@@ -22,6 +22,8 @@ module.exports = (env) => {
     config.resolve.alias.set('ember', 'ember-source/dist/packages/ember');
     config.resolve.alias.set('@glimmer/component', '@glimmer/component/addon/index.ts');
     config.resolve.alias.set('@glimmer/env', require.resolve('./glimmer-env.js'));
+
+    config.resolve.alias.set('~', '/app');
   })
 
   webpack.chainWebpack((config) => {
