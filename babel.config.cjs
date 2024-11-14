@@ -1,6 +1,5 @@
 const {
   babelCompatSupport,
-  templateCompatSupport,
 } = require('@embroider/compat/babel');
 
 process.env.NODE_ENV = 'development';
