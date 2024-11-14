@@ -6,49 +6,27 @@ import {tracked} from "@glimmer/tracking";
 import Component from "@glimmer/component";
 import ListView from 'ember-native/components/ListView';
 import RadListView from 'ember-native/components/RadListView';
+import SideNav from "~/ui/components/side-nav.gts";
 
 
 
 class Page extends Component {
-    @service history;
-    @tracked list = ['a', 'b', 'c'];
-    start = () => {
-        console.log('start');
-        const lists = [
-            ['a', 'b', 'c'],
-            ['a', 'b', 'c', 'd', 'e'],
-            ['1', '2', '3'],
-            ['1', '2', '3', 4, 5],
-        ];
-        setInterval(() => {
-            this.list = lists[Math.floor(Math.random() * lists.length)];
-        }, 200);
-    }
+    @service('ember-native/history') history;
     <template>
         <page>
-            <actionBar title="MyApp">
-                <navigationButton
-                    {{on 'tap' this.history.back}}
-                    visibility="{{unless this.history.stack.length 'collapse'}}"
-                    android.position="left"
-                    text="Go back"
-                    android.systemIcon="ic_menu_back"
-                />
-            </actionBar>
-            <stackLayout>
-                <label text='Hello world 2!'></label>
-                <LinkTo @route='test' @text="test" @transitionName='fade' />
-                {{(this.start)}}
-                <RadListView @items={{this.list}}>
-                    <:header><label>header</label></:header>
-                    <:item as |item|>
-                        <label>
-                            {{item}}
-                        </label>
-                    </:item>
-                    <:footer><label>footer</label></:footer>
-                </RadListView>
-            </stackLayout>
+            <action-bar title="Ember Nativescript Examples">
+            </action-bar>
+            <stack-layout>
+                <LinkTo @route='list-view' @transitionName='fade'>
+                    List View
+                </LinkTo>
+                <LinkTo @route='rad-list-view' @transitionName='slideLeft'>
+                    Rad List View
+                </LinkTo>
+                <LinkTo @route='tabs' @transitionName='explode'>
+                    Tabs
+                </LinkTo>
+            </stack-layout>
         </page>
     </template>
 }
