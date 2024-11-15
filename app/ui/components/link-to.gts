@@ -22,8 +22,8 @@ export default class LinkTo extends Component<LinkToInterface> {
     @service('ember-native/native-router') nativeRouter: NativeRouter;
     onClick = () => {
         const args = this.args;
-        const options: NavigationEntry = {
-            animated: args.animated,
+        const options = {
+            animated: args.animated ?? true,
             transition: {
                 duration: this.args.transitionDuration,
                 name: this.args.transitionName,
@@ -31,10 +31,11 @@ export default class LinkTo extends Component<LinkToInterface> {
                 curve: this.args.transitionCurve
             }
         };
+        const queryParams = {};
         if (this.args.model) {
-            this.nativeRouter.transitionTo(this.args.route, this.args.model, options);
+            this.nativeRouter.transitionTo(this.args.route, this.args.model, queryParams, options);
         } else {
-            this.nativeRouter.transitionTo(this.args.route, undefined, options);
+            this.nativeRouter.transitionTo(this.args.route, undefined, queryParams, options);
         }
     }
     <template>

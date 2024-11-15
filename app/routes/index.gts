@@ -23,7 +23,7 @@ class Page extends Component {
                 <LinkTo @route='rad-list-view' @transitionName='slideLeft'>
                     Rad List View
                 </LinkTo>
-                <LinkTo @route='tabs' @transitionName='explode'>
+                <LinkTo @route='tabs' @transitionName='explode' @transitionDuration={{1000}}>
                     Tabs
                 </LinkTo>
             </stack-layout>
