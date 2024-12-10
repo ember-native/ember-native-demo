@@ -1,19 +1,25 @@
 import { service } from '@ember/service';
 import Component from '@glimmer/component';
-import { NavigationTransition, NavigationEntry } from '@nativescript/core';
+import { Button, NavigationTransition } from '@nativescript/core';
 import { on } from '@ember/modifier';
 import type NativeRouter from 'ember-native/services/native-router';
+import NativeElementNode from "ember-native/dom/native/NativeElementNode";
 
 export interface LinkToInterface {
+    Element: NativeElementNode<Button>,
     Args: {
         route: string;
-        text: string;
-        model?: any;
+        text?: string;
+        model?: unknown;
         animated?: boolean;
         transitionName?: NavigationTransition['name'];
         transitionDuration?: NavigationTransition['duration'];
         transitionInstance?: NavigationTransition['instance'];
         transitionCurve?: NavigationTransition['curve'];
+    },
+
+    Blocks: {
+        default: []
     }
 }
 

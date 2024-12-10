@@ -1,6 +1,6 @@
 import RoutableComponentRoute from 'ember-routable-component';
-import LinkTo from '../ui/components/link-to.gts';
-import {service} from "@ember/service";
+import LinkTo from '../ui/components/link-to';
+import { service } from "@ember/service";
 import Component from "@glimmer/component";
 
 
