@@ -13,6 +13,7 @@
     "lib": ["ESNext", "dom"],
     "baseUrl": ".",
     "paths": {
+      "ember-polaris-pokedex/*": ["app/*"],
       "~/*": ["app/*"],
       "@/*": ["app/*"],
       "@ember/*": ["./node_modules/ember-source/dist/packages/@ember/*"]
