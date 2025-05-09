@@ -47,8 +47,8 @@ importers:
         specifier: ^0.94.8
         version: 0.94.8
       '@glimmer/runtime':
-        specifier: ^0.92.4
-        version: 0.92.4
+        specifier: ^0.94.10
+        version: 0.94.10
       '@glimmer/syntax':
         specifier: ^0.94.9
         version: 0.94.9
@@ -96,7 +96,7 @@ importers:
         version: 4.2.0(@babel/core@7.26.7)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       ember-native:
         specifier: ^2.0.0
-        version: 2.0.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.8)(@glimmer/runtime@0.92.4)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.2)(ember-modifier@4.2.0(@babel/core@7.26.7)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.6.0(@babel/core@7.26.7))(loader.js@4.7.0)(postcss@8.5.1)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@22.13.0)(typescript@5.7.3))(webpack@5.97.1)
+        version: 2.0.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.8)(@glimmer/runtime@0.94.10)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.2)(ember-modifier@4.2.0(@babel/core@7.26.7)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.6.0(@babel/core@7.26.7))(loader.js@4.7.0)(postcss@8.5.1)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@22.13.0)(typescript@5.7.3))(webpack@5.97.1)
       ember-native-devtools:
         specifier: ^1.0.3
         version: 1.0.3
@@ -14576,7 +14576,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  ember-native@2.0.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.8)(@glimmer/runtime@0.92.4)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.2)(ember-modifier@4.2.0(@babel/core@7.26.7)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.6.0(@babel/core@7.26.7))(loader.js@4.7.0)(postcss@8.5.1)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@22.13.0)(typescript@5.7.3))(webpack@5.97.1):
+  ember-native@2.0.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.8)(@glimmer/runtime@0.94.10)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.2)(ember-modifier@4.2.0(@babel/core@7.26.7)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5)))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.6.0(@babel/core@7.26.7))(loader.js@4.7.0)(postcss@8.5.1)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@22.13.0)(typescript@5.7.3))(webpack@5.97.1):
     dependencies:
       '@babel/core': 7.26.7
       '@babel/plugin-syntax-decorators': 7.25.9(@babel/core@7.26.7)
@@ -14587,7 +14587,7 @@ snapshots:
       '@eslint/js': 9.26.0
       '@glimmer/component': 2.0.0
       '@glimmer/reference': 0.94.8
-      '@glimmer/runtime': 0.92.4
+      '@glimmer/runtime': 0.94.10
       '@glimmer/tracking': 1.1.2
       '@glimmer/validator': 0.94.8
       '@nativescript/core': 8.9.2
