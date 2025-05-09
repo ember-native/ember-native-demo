@@ -35,8 +35,8 @@ importers:
         specifier: ^1.0.1
         version: 1.0.1(@glimmer/compiler@0.94.10)
       '@glimmer/interfaces':
-        specifier: ^0.92.3
-        version: 0.92.3
+        specifier: ^0.94.6
+        version: 0.94.6
       '@glimmer/opcode-compiler':
         specifier: ^0.94.9
         version: 0.94.9
