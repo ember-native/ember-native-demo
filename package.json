@@ -63,7 +63,7 @@
     "@babel/core": "^7.27.1",
     "@babel/plugin-transform-runtime": "^7.27.1",
     "@babel/plugin-transform-typescript": "^7.25.2",
-    "@ember/test-helpers": "^4.0.5",
+    "@ember/test-helpers": "^5.2.1",
     "@embroider/compat": "unstable",
     "@embroider/core": "unstable",
     "@glint/core": "^1.5.2",
