@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  pull_request: {}
+
+concurrency:
+   group: ci-${{ github.head_ref || github.ref }}
+   cancel-in-progress: true
+
+jobs:
+  setup:
+    name: 'build & lint'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: wyvox/action@v1
+        with:
+          node-version: 23
+          pnpm-version: 9
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - run: pnpm lint
