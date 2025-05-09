@@ -33,6 +33,7 @@ jobs:
       - uses: wyvox/action@v1
         with:
           node-version: 23
+          pnpm-version: 9
           repo-token: ${{ secrets.GITHUB_TOKEN }}
 
       - name: build
