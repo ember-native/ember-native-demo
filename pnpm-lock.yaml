@@ -14,8 +14,8 @@ importers:
   .:
     dependencies:
       '@ember/test-waiters':
-        specifier: ^4.0.0
-        version: 4.0.0(@glint/template@1.5.2)
+        specifier: ^4.1.0
+        version: 4.1.0(@glint/template@1.5.2)
       '@embroider/macros':
         specifier: ^1.16.10
         version: 1.16.10(@glint/template@1.5.2)
@@ -1040,8 +1040,8 @@ packages:
     peerDependencies:
       ember-source: '>= 4.0.0'
 
-  '@ember/test-waiters@4.0.0':
-    resolution: {integrity: sha512-anqtvTCQvQh8VlHcKPJC0Fxz3aMmc7L+mZLOqvoH7+k86TUikZ/CxhytgMvgLk0x53fqOPEL1uykl2C9Ez65OA==}
+  '@ember/test-waiters@4.1.0':
+    resolution: {integrity: sha512-qRFA0OumYv7/C3hmx4ETC2dlPzyD549D+naPhcrnV2xCnc3AZlKouWyoFnNF+Cje918kRp9aEefVgV3vmGL5Bg==}
 
   '@embroider/addon-shim@1.10.0':
     resolution: {integrity: sha512-gcJuHiXgnrzaU8NyU+2bMbtS6PNOr5v5B8OXBqaBvTCsMpXLvKo8OBOQFCoUN0rPX2J6VaFqrbi/371sMvzZug==}
@@ -1084,6 +1084,10 @@ packages:
 
   '@embroider/shared-internals@2.8.1':
     resolution: {integrity: sha512-zi0CENFD1e0DH7c9M/rNKJnFnt2c3+736J3lguBddZdmaIV6Cb8l3HQSkskSW5O4ady+SavemLKO3hCjQQJBIw==}
+    engines: {node: 12.* || 14.* || >= 16}
+
+  '@embroider/shared-internals@2.9.0':
+    resolution: {integrity: sha512-8untWEvGy6av/oYibqZWMz/yB+LHsKxEOoUZiLvcpFwWj2Sipc0DcXeTJQZQZ++otNkLCWyDrDhOLrOkgjOPSg==}
     engines: {node: 12.* || 14.* || >= 16}
 
   '@embroider/shared-internals@3.0.0':
@@ -6239,6 +6243,9 @@ packages:
   minimatch@3.0.5:
     resolution: {integrity: sha512-tUpxzX0VAzJHjLu0xUfFv1gwVp9ba3IOuRAVH2EGuRW8a5emA2FlACLqiT/lDVtS1W+TGNwqz3sWaNyLgDJWuw==}
 
+  minimatch@3.0.8:
+    resolution: {integrity: sha512-6FsRAQsxQ61mw+qP1ZzbL9Bc78x2p5OqNgNpnoAFLTrX8n5Kxph0CsnhmKKNXTWjXqU5L0pGPR7hYk+XWZr60Q==}
+
   minimatch@3.1.2:
     resolution: {integrity: sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==}
 
@@ -10290,7 +10297,7 @@ snapshots:
 
   '@ember/test-helpers@4.0.5(@babel/core@7.26.7)(@glint/template@1.5.2)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))':
     dependencies:
-      '@ember/test-waiters': 4.0.0(@glint/template@1.5.2)
+      '@ember/test-waiters': 4.1.0(@glint/template@1.5.2)
       '@embroider/addon-shim': 1.9.0
       '@embroider/macros': 1.16.10(@glint/template@1.5.2)
       '@simple-dom/interface': 1.4.0
@@ -10302,9 +10309,9 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@ember/test-waiters@4.0.0(@glint/template@1.5.2)':
+  '@ember/test-waiters@4.1.0(@glint/template@1.5.2)':
     dependencies:
-      '@embroider/addon-shim': 1.9.0
+      '@embroider/addon-shim': 1.10.0
       '@embroider/macros': 1.16.10(@glint/template@1.5.2)
     transitivePeerDependencies:
       - '@glint/template'
@@ -10456,6 +10463,23 @@ snapshots:
       resolve.exports: 2.0.3
 
   '@embroider/shared-internals@2.8.1':
+    dependencies:
+      babel-import-util: 2.1.1
+      debug: 4.4.0
+      ember-rfc176-data: 0.3.18
+      fs-extra: 9.1.0
+      is-subdir: 1.2.0
+      js-string-escape: 1.0.1
+      lodash: 4.17.21
+      minimatch: 3.1.2
+      pkg-entry-points: 1.1.1
+      resolve-package-path: 4.0.3
+      semver: 7.7.1
+      typescript-memoize: 1.1.1
+    transitivePeerDependencies:
+      - supports-color
+
+  '@embroider/shared-internals@2.9.0':
     dependencies:
       babel-import-util: 2.1.1
       debug: 4.4.0
@@ -14266,7 +14290,7 @@ snapshots:
       '@babel/plugin-transform-class-static-block': 7.26.0(@babel/core@7.26.7)
       '@babel/preset-env': 7.26.7(@babel/core@7.26.7)
       '@embroider/macros': 1.16.10(@glint/template@1.5.2)
-      '@embroider/shared-internals': 2.8.1
+      '@embroider/shared-internals': 2.9.0
       babel-loader: 8.4.1(@babel/core@7.26.7)(webpack@5.97.1)
       babel-plugin-ember-modules-api-polyfill: 3.5.0
       babel-plugin-ember-template-compilation: 2.3.0
@@ -14582,7 +14606,7 @@ snapshots:
       '@babel/plugin-syntax-decorators': 7.25.9(@babel/core@7.26.7)
       '@ember/render-modifiers': 2.1.0(@babel/core@7.26.7)(@glint/template@1.5.2)(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))
       '@ember/string': 4.0.1
-      '@ember/test-waiters': 4.0.0(@glint/template@1.5.2)
+      '@ember/test-waiters': 4.1.0(@glint/template@1.5.2)
       '@embroider/addon-shim': 1.10.0
       '@eslint/js': 9.26.0
       '@glimmer/component': 2.0.0
@@ -14663,7 +14687,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.26.7
       '@ember/edition-utils': 1.2.0
-      '@embroider/addon-shim': 1.9.0
+      '@embroider/addon-shim': 1.10.0
       '@glimmer/compiler': 0.92.4
       '@glimmer/component': 2.0.0
       '@glimmer/destroyable': 0.92.3
@@ -17173,6 +17197,10 @@ snapshots:
     dependencies:
       brace-expansion: 1.1.11
 
+  minimatch@3.0.8:
+    dependencies:
+      brace-expansion: 1.1.11
+
   minimatch@3.1.2:
     dependencies:
       brace-expansion: 1.1.11
@@ -18241,7 +18269,7 @@ snapshots:
     dependencies:
       make-dir: 3.1.0
       mime: 2.5.2
-      minimatch: 3.0.5
+      minimatch: 3.0.8
       postcss: 8.5.1
       xxhashjs: 0.2.2
 
