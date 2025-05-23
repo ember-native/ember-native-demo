@@ -171,8 +171,8 @@ importers:
         specifier: ^10.0.0
         version: 10.0.0(@babel/core@7.27.1)(webpack@5.99.8)
       babel-plugin-ember-template-compilation:
-        specifier: ^2.3.0
-        version: 2.4.1
+        specifier: ^3.0.0
+        version: 3.0.0
       browserify-fs:
         specifier: ^1.0.0
         version: 1.0.0
