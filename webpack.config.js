@@ -1,24 +1,40 @@
 const fs = require('fs');
 const path = require('path');
 var Module = require('module');
-var { fileURLToPath } = require('node:url');
+var { fileURLToPath, pathToFileURL } = require('node:url');
 
 Module.registerHooks({
   resolve: (specifier, context, nextResolve) => {
     //do your thing here
-    if(context.parentURL && fileURLToPath(context.parentURL).includes(':')) return nextResolve(specifier, context);
+    if(context.parentURL && fileURLToPath(context.parentURL).includes('node:')) return nextResolve(specifier, context);
+
     if (context.parentURL) {
       const parentURL = fs.realpathSync(fileURLToPath(context.parentURL));
-      const resolved = require.resolve(specifier, { paths: [path.dirname(parentURL)] });
+      try {
+        const resolved = require.resolve(specifier, { paths: [path.dirname(parentURL)] });
+        if (fs.existsSync(resolved)) {
+          specifier = fs.realpathSync(resolved);
+          if (context.conditions.includes?.('import')) {
+            specifier = pathToFileURL(specifier).toString();
+          }
+        }
+        return nextResolve(specifier, context);
+      } catch (e) {
+        console.log('failed to resolve', specifier,' from ', parentURL, e);
+      }
+    }
+    try {
+      const resolved = require.resolve(specifier);
       if (fs.existsSync(resolved)) {
         specifier = fs.realpathSync(resolved);
+        if (context.conditions.includes?.('import')) {
+          specifier = pathToFileURL(specifier).toString();
+        }
       }
-      return nextResolve(specifier, context);
+    } catch (e) {
+      console.log('failed to resolve', specifier, e);
     }
-    const resolved = require.resolve(specifier);
-    if (fs.existsSync(resolved)) {
-      specifier = fs.realpathSync(resolved);
-    }
+
     return nextResolve(specifier, context);
   }
 });
@@ -42,7 +58,7 @@ module.exports = (env) => {
       console.log(glimmerDir);
       config.resolve.alias.set(
         `@glimmer/${glimmerDir}`,
-          path.resolve(process.cwd(),`./node_modules/ember-source/dist/packages/@glimmer/${glimmerDir}`),
+        path.resolve(process.cwd(), `./node_modules/ember-source/dist/packages/@glimmer/${glimmerDir}`),
       );
     }
 
@@ -145,5 +161,6 @@ module.exports = (env) => {
   });
 
 	const conf = webpack.resolveConfig();
+  console.log('conf', conf)
   return conf;
 };
