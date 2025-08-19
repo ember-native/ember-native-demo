@@ -33,7 +33,7 @@
     "@glimmer/program": "^0.94.10",
     "@glimmer/reference": "^0.94.8",
     "@glimmer/runtime": "^0.94.10",
-    "@glimmer/syntax": "^0.94.9",
+    "@glimmer/syntax": "^0.95.0",
     "@glimmer/test-helpers": "^0.31.2",
     "@glimmer/tracking": "^1.1.2",
     "@glimmer/util": "^0.94.8",

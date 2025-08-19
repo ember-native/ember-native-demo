@@ -50,8 +50,8 @@ importers:
         specifier: ^0.94.10
         version: 0.94.10
       '@glimmer/syntax':
-        specifier: ^0.94.9
-        version: 0.94.9
+        specifier: ^0.95.0
+        version: 0.95.0
       '@glimmer/test-helpers':
         specifier: ^0.31.2
         version: 0.31.2(@glimmer/component@2.0.0)
@@ -12388,12 +12388,12 @@ snapshots:
 
   babel-plugin-ember-template-compilation@2.4.1:
     dependencies:
-      '@glimmer/syntax': 0.94.9
+      '@glimmer/syntax': 0.95.0
       babel-import-util: 3.0.1
 
   babel-plugin-ember-template-compilation@3.0.0:
     dependencies:
-      '@glimmer/syntax': 0.94.9
+      '@glimmer/syntax': 0.95.0
       babel-import-util: 3.0.1
       import-meta-resolve: 4.1.0
 
@@ -14144,7 +14144,7 @@ snapshots:
     dependencies:
       '@babel/core': 7.28.0
       '@babel/eslint-parser': 7.28.0(@babel/core@7.28.0)(eslint@9.33.0(jiti@1.21.7))
-      '@glimmer/syntax': 0.94.9
+      '@glimmer/syntax': 0.95.0
       content-tag: 2.0.3
       eslint-scope: 7.2.2
       html-tags: 3.3.1
