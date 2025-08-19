@@ -24,7 +24,7 @@
     "@ember/test-waiters": "^4.1.0",
     "@embroider/macros": "^1.18.0",
     "@glimmer/blueprint": "^1.1.2",
-    "@glimmer/compiler": "^0.94.10",
+    "@glimmer/compiler": "^0.94.11",
     "@glimmer/component": "^2.0.0",
     "@glimmer/encoder": "^0.93.8",
     "@glimmer/inline-precompile": "^1.0.1",
