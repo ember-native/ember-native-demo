@@ -88,7 +88,7 @@
     "ember-resolver": "^13.1.1",
     "ember-routable-component": "^1.2.0",
     "ember-template-lint": "^7.9.2",
-    "eslint": "^9.31.0",
+    "eslint": "^9.33.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-ember": "^12.7.0",
     "eslint-plugin-n": "^17.21.0",
