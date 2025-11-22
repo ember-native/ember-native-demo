@@ -38,8 +38,8 @@ importers:
         specifier: ^0.94.6
         version: 0.94.6
       '@glimmer/opcode-compiler':
-        specifier: ^0.94.9
-        version: 0.94.9
+        specifier: ^0.94.10
+        version: 0.94.10
       '@glimmer/program':
         specifier: ^0.94.10
         version: 0.94.10
