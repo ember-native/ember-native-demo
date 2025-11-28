@@ -31,7 +31,7 @@
     "@glimmer/interfaces": "^0.94.6",
     "@glimmer/opcode-compiler": "^0.94.10",
     "@glimmer/program": "^0.94.10",
-    "@glimmer/reference": "^0.94.8",
+    "@glimmer/reference": "^0.94.9",
     "@glimmer/runtime": "^0.94.10",
     "@glimmer/syntax": "^0.95.0",
     "@glimmer/test-helpers": "^0.31.2",

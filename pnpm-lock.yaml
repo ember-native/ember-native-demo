@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@nativescript/unit-test-runner':
-    hash: 6fjeie3vsxjpmqbl67fkeez57i
+    hash: 6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84
     path: patches/@nativescript__unit-test-runner.patch
 
 importers:
@@ -44,8 +44,8 @@ importers:
         specifier: ^0.94.10
         version: 0.94.10
       '@glimmer/reference':
-        specifier: ^0.94.8
-        version: 0.94.8
+        specifier: ^0.94.9
+        version: 0.94.9
       '@glimmer/runtime':
         specifier: ^0.94.10
         version: 0.94.10
@@ -78,7 +78,7 @@ importers:
         version: 3.1.0
       '@nativescript/unit-test-runner':
         specifier: ~3.0.0
-        version: 3.0.4(patch_hash=6fjeie3vsxjpmqbl67fkeez57i)
+        version: 3.0.4(patch_hash=6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84)
       '@valor/nativescript-websockets':
         specifier: ^2.0.2
         version: 2.0.2
@@ -96,7 +96,7 @@ importers:
         version: 4.2.2(@babel/core@7.28.0)
       ember-native:
         specifier: ^2.2.0
-        version: 2.2.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.8)(@glimmer/runtime@0.94.10)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.0))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.9.2)(loader.js@4.7.0)(postcss@8.5.3)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@24.5.2)(typescript@5.8.3))(webpack@5.99.8)
+        version: 2.2.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.9)(@glimmer/runtime@0.94.10)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.0))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.9.2)(loader.js@4.7.0)(postcss@8.5.3)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@24.5.2)(typescript@5.8.3))(webpack@5.99.8)
       ember-native-devtools:
         specifier: ^1.0.3
         version: 1.0.3
@@ -11527,7 +11527,7 @@ snapshots:
       '@nativescript/types-android': 8.9.0
       '@nativescript/types-ios': 8.9.1
 
-  '@nativescript/unit-test-runner@3.0.4(patch_hash=6fjeie3vsxjpmqbl67fkeez57i)':
+  '@nativescript/unit-test-runner@3.0.4(patch_hash=6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84)':
     dependencies:
       '@nativescript/hook': 2.0.0
       glob-regex: 0.3.2
@@ -14909,7 +14909,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  ember-native@2.2.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.8)(@glimmer/runtime@0.94.10)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.0))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.9.2)(loader.js@4.7.0)(postcss@8.5.3)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@24.5.2)(typescript@5.8.3))(webpack@5.99.8):
+  ember-native@2.2.0(@glimmer/component@2.0.0)(@glimmer/reference@0.94.9)(@glimmer/runtime@0.94.10)(@glimmer/tracking@1.1.2)(@glimmer/validator@0.94.8)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.0))(ember-source@6.4.0(@glimmer/component@2.0.0)(rsvp@4.8.5))(ember-template-lint@7.9.2)(loader.js@4.7.0)(postcss@8.5.3)(prettier@3.5.2)(rollup@2.79.2)(ts-node@10.9.2(@types/node@24.5.2)(typescript@5.8.3))(webpack@5.99.8):
     dependencies:
       '@babel/core': 7.28.0
       '@babel/plugin-syntax-decorators': 7.27.1(@babel/core@7.28.0)
@@ -14919,7 +14919,7 @@ snapshots:
       '@embroider/addon-shim': 1.10.0
       '@eslint/js': 9.27.0
       '@glimmer/component': 2.0.0
-      '@glimmer/reference': 0.94.8
+      '@glimmer/reference': 0.94.9
       '@glimmer/runtime': 0.94.10
       '@glimmer/tracking': 1.1.2
       '@glimmer/validator': 0.94.8
