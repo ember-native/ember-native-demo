@@ -83,6 +83,9 @@ importers:
       '@embroider/core':
         specifier: ^4.1.0
         version: 4.1.0(@glint/template@1.5.2)
+      '@glimmer/component':
+        specifier: ^2.0.0
+        version: 2.0.0
       '@glint/core':
         specifier: ^1.5.2
         version: 1.5.2(typescript@5.8.3)
