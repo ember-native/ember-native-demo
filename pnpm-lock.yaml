@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@nativescript/unit-test-runner':
-    hash: 6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84
+    hash: 6fjeie3vsxjpmqbl67fkeez57i
     path: patches/@nativescript__unit-test-runner.patch
 
 importers:
