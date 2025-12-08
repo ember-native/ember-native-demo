@@ -17,9 +17,11 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: wyvox/action@v1
+      - uses: actions/checkout@v4
+      - run: npm i -g pnpm
+      - uses: actions/setup-node@v6
         with:
-          node-version: 23
-          pnpm-version: 9
-          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          node-version: 24
+          cache: 'pnpm'
+      - run: pnpm i
       - run: pnpm lint
