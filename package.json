@@ -40,13 +40,15 @@
     "selenium-webdriver": "^4.34.0"
   },
   "devDependencies": {
-    "@glimmer/component": "^2.0.0",
     "@babel/core": "^7.28.0",
+    "@babel/eslint-parser": "^7.28.5",
     "@babel/plugin-transform-runtime": "^7.28.5",
     "@babel/plugin-transform-typescript": "^7.27.1",
     "@ember/test-helpers": "^5.2.2",
     "@embroider/compat": "^4.1.0",
     "@embroider/core": "^4.1.0",
+    "@eslint/js": "^9.39.1",
+    "@glimmer/component": "^2.0.0",
     "@glint/core": "^1.5.2",
     "@glint/environment-ember-template-imports": "^1.5.2",
     "@jsdevtools/coverage-istanbul-loader": "3.0.5",

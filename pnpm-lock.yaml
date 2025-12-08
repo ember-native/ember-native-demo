@@ -6,7 +6,7 @@ settings:
 
 patchedDependencies:
   '@nativescript/unit-test-runner':
-    hash: 6fjeie3vsxjpmqbl67fkeez57i
+    hash: 6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84
     path: patches/@nativescript__unit-test-runner.patch
 
 importers:
@@ -68,6 +68,9 @@ importers:
       '@babel/core':
         specifier: ^7.28.0
         version: 7.28.0
+      '@babel/eslint-parser':
+        specifier: ^7.28.5
+        version: 7.28.5(@babel/core@7.28.0)(eslint@9.39.1(jiti@1.21.7))
       '@babel/plugin-transform-runtime':
         specifier: ^7.28.5
         version: 7.28.5(@babel/core@7.28.0)
@@ -83,6 +86,9 @@ importers:
       '@embroider/core':
         specifier: ^4.1.0
         version: 4.1.0(@glint/template@1.5.2)
+      '@eslint/js':
+        specifier: ^9.39.1
+        version: 9.39.1
       '@glimmer/component':
         specifier: ^2.0.0
         version: 2.0.0
@@ -251,8 +257,8 @@ packages:
     resolution: {integrity: sha512-UlLAnTPrFdNGoFtbSXwcGFQBtQZJCNjaN6hQNP3UPvuNXT1i82N26KL3dZeIpNalWywr9IuQuncaAfUaS1g6sQ==}
     engines: {node: '>=6.9.0'}
 
-  '@babel/eslint-parser@7.28.0':
-    resolution: {integrity: sha512-N4ntErOlKvcbTt01rr5wj3y55xnIdx1ymrfIr8C2WnM1Y9glFgWaGDEULJIazOX3XM9NRzhfJ6zZnQ1sBNWU+w==}
+  '@babel/eslint-parser@7.28.5':
+    resolution: {integrity: sha512-fcdRcWahONYo+JRnJg1/AekOacGvKx12Gu0qXJXFi2WBqQA1i7+O5PaxRB7kxE/Op94dExnCiiar6T09pvdHpA==}
     engines: {node: ^10.13.0 || ^12.13.0 || >=14.0.0}
     peerDependencies:
       '@babel/core': ^7.11.0
@@ -9586,7 +9592,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@babel/eslint-parser@7.28.0(@babel/core@7.28.0)(eslint@9.39.1(jiti@1.21.7))':
+  '@babel/eslint-parser@7.28.5(@babel/core@7.28.0)(eslint@9.39.1(jiti@1.21.7))':
     dependencies:
       '@babel/core': 7.28.0
       '@nicolo-ribaudo/eslint-scope-5-internals': 5.1.1-v1
@@ -15017,7 +15023,7 @@ snapshots:
   ember-eslint-parser@0.5.10(@babel/core@7.28.0)(@typescript-eslint/parser@8.48.0(eslint@9.39.1(jiti@1.21.7))(typescript@5.8.3))(eslint@9.39.1(jiti@1.21.7)):
     dependencies:
       '@babel/core': 7.28.0
-      '@babel/eslint-parser': 7.28.0(@babel/core@7.28.0)(eslint@9.39.1(jiti@1.21.7))
+      '@babel/eslint-parser': 7.28.5(@babel/core@7.28.0)(eslint@9.39.1(jiti@1.21.7))
       '@glimmer/syntax': 0.95.0
       content-tag: 2.0.3
       eslint-scope: 7.2.2
