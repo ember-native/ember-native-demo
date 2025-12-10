@@ -92,7 +92,7 @@
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "typescript": "^5.9.3",
-    "typescript-eslint": "^8.48.0",
+    "typescript-eslint": "^8.49.0",
     "url": "^0.11.4",
     "util": "^0.12.5"
   },
