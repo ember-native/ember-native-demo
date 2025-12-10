@@ -102,8 +102,8 @@ importers:
         specifier: 3.0.5
         version: 3.0.5
       '@nativescript/android':
-        specifier: 8.9.1
-        version: 8.9.1
+        specifier: 9.0.0
+        version: 9.0.0
       '@nativescript/types':
         specifier: ~8.9.1
         version: 8.9.1
@@ -1642,8 +1642,8 @@ packages:
     peerDependencies:
       postcss: ^8.0.0
 
-  '@nativescript/android@8.9.1':
-    resolution: {integrity: sha512-9xy7Vp77icneQCv0fRVwYfJhuhqFYY3/nPoB7OeG/I78WITPUm+2fNyBj0A6Uu4qJ5/rhwiNAWCaVX0IGBs0oQ==}
+  '@nativescript/android@9.0.0':
+    resolution: {integrity: sha512-0ZujT6Dko/Aq4ZViaEpsiyzC7hFCvdDHf1igJwp2J6MF3ZMVZtwD2hxaIKJkCE+kYy96Z+IeCDYyQImSKlL86Q==}
 
   '@nativescript/core@8.9.7':
     resolution: {integrity: sha512-g9pHgq5nDAfGalf9PBL+DA6ZUG3Zvw+13UvShwB0zOW3XbJsYyGCsfO6FqxfDvZlxl9hOSNTuB14Tx9ak7rolQ==}
@@ -11532,7 +11532,7 @@ snapshots:
       resolve-from: 5.0.0
       unique-slug: 2.0.2
 
-  '@nativescript/android@8.9.1': {}
+  '@nativescript/android@9.0.0': {}
 
   '@nativescript/core@8.9.7':
     dependencies:
