@@ -32,3 +32,6 @@
 !eslint.config.mjs
 !patches/
 !patches/*
+!sample-data
+!sample-data/*
+!AGENTS.md

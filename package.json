@@ -23,6 +23,9 @@
   "dependencies": {
     "@ember/test-waiters": "^4.1.1",
     "@embroider/macros": "^1.19.5",
+    "@warp-drive/core": "^5.8.1",
+    "@warp-drive/core-types": "^0.0.0-beta.20",
+    "@warp-drive/json-api": "^5.8.1",
     "@nativescript/core": "~8.9.7",
     "@nativescript/theme": "^3.1.0",
     "@nativescript/unit-test-runner": "~3.0.0",
@@ -31,7 +34,7 @@
     "ember-compatibility-helpers": "^1.2.7",
     "ember-load-initializers": "^3.0.1",
     "ember-modifier": "^4.2.0",
-    "ember-native": "^3.0.2",
+    "ember-native": "^3.1.0",
     "ember-native-devtools": "^1.0.3",
     "ember-source": "^6.6.0",
     "nativescript-ui-listview": "^15.2.3",
@@ -41,6 +44,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.28.5",
+    "@glimmer/validator": "^0.95.0",
     "@babel/eslint-parser": "^7.28.5",
     "@babel/plugin-transform-runtime": "^7.28.5",
     "@babel/plugin-transform-typescript": "^7.27.1",
