@@ -34,7 +34,7 @@ class Page extends Component {
 
       // Use store.request() instead of fetch() + store.push()
       const { content } = await this.store.request<{ data: User[] }>({
-        url: 'https://raw.githubusercontent.com/ember-native/ember-native-demo/main/demo-app/sample-data/users.json',
+        url: 'https://raw.githubusercontent.com/ember-native/ember-native-demo/refs/heads/main/sample-data/users.json',
         method: 'GET',
         cacheOptions: {
           reload: forceReload, // Force reload when button is pressed
