@@ -1,0 +1,54 @@
+{
+  "data": [
+    {
+      "type": "user",
+      "id": "1",
+      "attributes": {
+        "name": "Alice Johnson",
+        "email": "alice@example.com",
+        "avatar": "https://i.pravatar.cc/150?img=1",
+        "bio": "Full-stack developer passionate about mobile apps"
+      }
+    },
+    {
+      "type": "user",
+      "id": "2",
+      "attributes": {
+        "name": "Bob Smith",
+        "email": "bob@example.com",
+        "avatar": "https://i.pravatar.cc/150?img=2",
+        "bio": "UI/UX designer with a love for clean interfaces"
+      }
+    },
+    {
+      "type": "user",
+      "id": "3",
+      "attributes": {
+        "name": "Carol Williams",
+        "email": "carol@example.com",
+        "avatar": "https://i.pravatar.cc/150?img=3",
+        "bio": "DevOps engineer automating everything"
+      }
+    },
+    {
+      "type": "user",
+      "id": "4",
+      "attributes": {
+        "name": "David Brown",
+        "email": "david@example.com",
+        "avatar": "https://i.pravatar.cc/150?img=4",
+        "bio": "Backend specialist focused on scalability"
+      }
+    },
+    {
+      "type": "user",
+      "id": "5",
+      "attributes": {
+        "name": "Emma Davis",
+        "email": "emma@example.com",
+        "avatar": "https://i.pravatar.cc/150?img=5",
+        "bio": "Product manager bridging tech and business"
+      }
+    }
+  ]
+}
