@@ -78,22 +78,39 @@
 .help-section {
   margin-top: 20;
   padding: 15;
-  background-color: #f0f0f0;
+  background-color: #fff3cd;
   border-radius: 8;
+  border-width: 1;
+  border-color: #ffc107;
 }
 
-.help-text {
+.help-title {
   font-size: 14;
-  color: #666;
-  text-align: center;
-  margin-bottom: 8;
-}
-
-.help-link {
-  font-size: 14;
-  color: #611f69;
-  text-align: center;
   font-weight: 600;
+  color: #333;
+  margin-bottom: 10;
+}
+
+.help-step {
+  font-size: 12;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6;
+  margin-top: 6;
+}
+
+.help-substep {
+  font-size: 11;
+  color: #666;
+  margin-bottom: 2;
+  margin-left: 12;
+}
+
+.help-warning {
+  font-size: 12;
+  color: #dc3545;
+  font-weight: 600;
+  margin-top: 8;
 }
 
 // Workspace Selection Section

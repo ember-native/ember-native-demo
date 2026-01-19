@@ -30,11 +30,18 @@ export default class SlackAuthService extends Service {
     this.error = null;
 
     try {
-      // In a real app, this would call the Slack API
-      // For now, we'll simulate with mock data
-      const response = await this.mockSlackApiCall();
-      
-      this.workspaces = response.teams || [];
+      // Check if it's a session cookie (xoxd-) - use internal API
+      if (this.token.startsWith('xoxd-')) {
+        await this.fetchWithSessionCookie();
+      } 
+      // OAuth tokens (xoxb- or xoxp-) - use public API
+      else if (this.token.startsWith('xoxb-') || this.token.startsWith('xoxp-')) {
+        await this.fetchWithOAuthToken();
+      } 
+      // Invalid format
+      else {
+        throw new Error('Invalid token format. Use Bot Token (xoxb-), User Token (xoxp-), or Session Cookie (xoxd-)');
+      }
       
       if (this.workspaces.length === 0) {
         this.error = 'No workspaces found for this token';
@@ -45,6 +52,71 @@ export default class SlackAuthService extends Service {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  /**
+   * Fetch workspace info using OAuth token (public API)
+   */
+  private async fetchWithOAuthToken(): Promise<void> {
+    const response = await fetch('https://slack.com/api/auth.test', {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${this.token}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      let errorMsg = data.error || 'Failed to authenticate with Slack';
+      
+      if (data.error === 'invalid_auth') {
+        errorMsg = 'Invalid token. Please create a Bot Token at api.slack.com/apps → OAuth & Permissions';
+      } else if (data.error === 'token_revoked') {
+        errorMsg = 'Token has been revoked. Please generate a new token';
+      } else if (data.error === 'account_inactive') {
+        errorMsg = 'Account is inactive. Please check your Slack workspace';
+      }
+      
+      throw new Error(errorMsg);
+    }
+
+    this.workspaces = [
+      {
+        id: data.team_id,
+        name: data.team,
+        icon: '💬'
+      }
+    ];
+  }
+
+  /**
+   * Fetch workspace info using session cookie (internal API)
+   * WARNING: This uses undocumented Slack internal API and may break at any time
+   */
+  private async fetchWithSessionCookie(): Promise<void> {
+    const response = await fetch('https://slack.com/api/auth.test', {
+      method: 'POST',
+      headers: {
+        'Cookie': `d=${this.token}`,
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    });
+
+    const data = await response.json();
+
+    if (!data.ok) {
+      throw new Error(data.error || 'Session cookie authentication failed. Cookie may be expired or invalid.');
+    }
+
+    this.workspaces = [
+      {
+        id: data.team_id,
+        name: data.team,
+        icon: '🍪'
+      }
+    ];
   }
 
   /**
@@ -118,39 +190,7 @@ export default class SlackAuthService extends Service {
     }
   }
 
-  /**
-   * Mock Slack API call for demo purposes
-   * In production, this would call the actual Slack API
-   */
-  private async mockSlackApiCall(): Promise<{ teams: Array<{ id: string; name: string; icon?: string }> }> {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 1000));
 
-    // Mock response based on token
-    if (this.token === 'invalid') {
-      throw new Error('Invalid token');
-    }
-
-    return {
-      teams: [
-        {
-          id: 'T01234567',
-          name: 'My Workspace',
-          icon: '🚀'
-        },
-        {
-          id: 'T01234568',
-          name: 'Development Team',
-          icon: '💻'
-        },
-        {
-          id: 'T01234569',
-          name: 'Design Squad',
-          icon: '🎨'
-        }
-      ]
-    };
-  }
 }
 
 declare module '@ember/service' {

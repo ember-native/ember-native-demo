@@ -88,11 +88,16 @@ class AuthComponent extends Component {
             />
 
             <stack-layout class="help-section">
-              <label class="help-text" text="Don't have a token?" />
-              <label 
-                class="help-link" 
-                text="Learn how to get your Slack token →"
-              />
+              <label class="help-title" text="Token Options:" />
+              <label class="help-step" text="Option 1: Bot Token (xoxb-) - Recommended" />
+              <label class="help-substep" text="  • Visit api.slack.com/apps" />
+              <label class="help-substep" text="  • Create App → OAuth & Permissions" />
+              <label class="help-substep" text="  • Install to Workspace" />
+              <label class="help-step" text="Option 2: Session Cookie (xoxd-) - Testing" />
+              <label class="help-substep" text="  • Open Slack in browser" />
+              <label class="help-substep" text="  • DevTools → Application → Cookies" />
+              <label class="help-substep" text="  • Copy 'd' cookie value" />
+              <label class="help-warning" text="⚠️ Cookies may expire or break!" />
             </stack-layout>
           </stack-layout>
         {{else}}
