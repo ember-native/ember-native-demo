@@ -1,4 +1,4 @@
-import Route from '@ember/routing/route';
+import RoutableComponentRoute from 'ember-routable-component';
 import Component from '@glimmer/component';
 import { service } from '@ember/service';
 import { action } from '@ember/object';
@@ -9,20 +9,6 @@ import { not } from 'ember-truth-helpers';
 import type SlackAuthService from '../services/slack-auth';
 import type RouterService from '@ember/routing/router-service';
 
-export class AuthRoute extends Route {
-  @service declare slackAuth: SlackAuthService;
-  @service declare router: RouterService;
-
-  beforeModel() {
-    // If already authenticated, redirect to main app
-    if (this.slackAuth.isAuthenticated) {
-      this.router.transitionTo('index');
-    }
-  }
-}
-
-export default AuthRoute;
-
 class AuthComponent extends Component {
   @service declare slackAuth: SlackAuthService;
   @service declare router: RouterService;
@@ -31,9 +17,9 @@ class AuthComponent extends Component {
   @tracked showWorkspaces = false;
 
   @action
-  updateToken(event: Event): void {
-    const target = event.target as HTMLInputElement;
-    this.tokenInput = target.value;
+  updateToken(args: any): void {
+    // NativeScript textChange event passes PropertyChangeData
+    this.tokenInput = args.value || args.object?.text || '';
   }
 
   @action
@@ -140,4 +126,20 @@ class AuthComponent extends Component {
       </stack-layout>
     </page>
   </template>
+}
+
+export default class AuthRoute extends RoutableComponentRoute(AuthComponent) {
+  @service declare slackAuth: SlackAuthService;
+  @service declare router: RouterService;
+
+  beforeModel() {
+    // If already authenticated, redirect to main app
+    if (this.slackAuth.isAuthenticated) {
+      this.router.transitionTo('index');
+    }
+  }
+
+  activate() {
+    console.log('Auth route activated');
+  }
 }
