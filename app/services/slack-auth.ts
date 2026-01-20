@@ -1,24 +1,42 @@
 import Service from '@ember/service';
 import { tracked } from '@glimmer/tracking';
+import { SecureStorage } from '@nativescript/secure-storage';
 
 export default class SlackAuthService extends Service {
   @tracked token: string | null = null;
+  @tracked dCookie: string | null = null;
+  @tracked workspaceDomain: string | null = null;
   @tracked selectedWorkspace: string | null = null;
   @tracked workspaces: Array<{ id: string; name: string; icon?: string }> = [];
   @tracked isAuthenticated = false;
   @tracked isLoading = false;
   @tracked error: string | null = null;
 
+  private _secureStorage: SecureStorage | null = null;
+
+  private get secureStorage(): SecureStorage | null {
+    if (!this._secureStorage) {
+      try {
+        this._secureStorage = new SecureStorage();
+      } catch (err) {
+        console.warn('SecureStorage not available:', err);
+        return null;
+      }
+    }
+    return this._secureStorage;
+  }
+
   /**
-   * Set the Slack API token
+   * Set the Slack API token and d cookie (both required)
    */
-  setToken(token: string): void {
+  setToken(token: string, dCookie: string): void {
     this.token = token;
+    this.dCookie = dCookie;
     this.error = null;
   }
 
   /**
-   * Fetch available workspaces using the provided token
+   * Fetch available workspaces using the client token
    */
   async fetchWorkspaces(): Promise<void> {
     if (!this.token) {
@@ -26,23 +44,22 @@ export default class SlackAuthService extends Service {
       return;
     }
 
+    if (!this.dCookie) {
+      this.error = 'd cookie is required';
+      return;
+    }
+
+    if (!this.token.startsWith('xoxc-')) {
+      this.error = 'Only xoxc- client tokens are supported';
+      return;
+    }
+
     this.isLoading = true;
     this.error = null;
 
     try {
-      // Check if it's a session cookie (xoxd-) - use internal API
-      if (this.token.startsWith('xoxd-')) {
-        await this.fetchWithSessionCookie();
-      } 
-      // OAuth tokens (xoxb- or xoxp-) - use public API
-      else if (this.token.startsWith('xoxb-') || this.token.startsWith('xoxp-')) {
-        await this.fetchWithOAuthToken();
-      } 
-      // Invalid format
-      else {
-        throw new Error('Invalid token format. Use Bot Token (xoxb-), User Token (xoxp-), or Session Cookie (xoxd-)');
-      }
-      
+      await this.fetchWithClientToken();
+
       if (this.workspaces.length === 0) {
         this.error = 'No workspaces found for this token';
       }
@@ -55,68 +72,41 @@ export default class SlackAuthService extends Service {
   }
 
   /**
-   * Fetch workspace info using OAuth token (public API)
+   * Fetch workspace info using client token (xoxc-) with d cookie
+   * This is how Slack's web/desktop client authenticates
    */
-  private async fetchWithOAuthToken(): Promise<void> {
-    const response = await fetch('https://slack.com/api/auth.test', {
-      method: 'POST',
+  private async fetchWithClientToken(): Promise<void> {
+    const url = `https://slack.com/api/team.info?token=${encodeURIComponent(this.token!)}`;
+
+    console.log('Fetching with client token:', { hasToken: !!this.token, hasCookie: !!this.dCookie });
+
+    const response = await fetch(url, {
+      method: 'GET',
       headers: {
-        'Authorization': `Bearer ${this.token}`,
-        'Content-Type': 'application/json',
+        'Cookie': `d=${this.dCookie}`,
+        'User-Agent': 'Mozilla/5.0 (compatible; SlackLite/1.0)',
       },
     });
 
+    console.log('Response status:', response.status);
     const data = await response.json();
+    console.log('Response data:', JSON.stringify(data).substring(0, 200));
 
     if (!data.ok) {
-      let errorMsg = data.error || 'Failed to authenticate with Slack';
-      
-      if (data.error === 'invalid_auth') {
-        errorMsg = 'Invalid token. Please create a Bot Token at api.slack.com/apps → OAuth & Permissions';
-      } else if (data.error === 'token_revoked') {
-        errorMsg = 'Token has been revoked. Please generate a new token';
-      } else if (data.error === 'account_inactive') {
-        errorMsg = 'Account is inactive. Please check your Slack workspace';
-      }
-      
-      throw new Error(errorMsg);
+      throw new Error(`${data.error || 'Client token authentication failed'} - Status: ${response.status}`);
     }
 
-    this.workspaces = [
-      {
-        id: data.team_id,
-        name: data.team,
-        icon: '💬'
-      }
-    ];
-  }
-
-  /**
-   * Fetch workspace info using session cookie (internal API)
-   * WARNING: This uses undocumented Slack internal API and may break at any time
-   */
-  private async fetchWithSessionCookie(): Promise<void> {
-    const response = await fetch('https://slack.com/api/auth.test', {
-      method: 'POST',
-      headers: {
-        'Cookie': `d=${this.token}`,
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
-    });
-
-    const data = await response.json();
-
-    if (!data.ok) {
-      throw new Error(data.error || 'Session cookie authentication failed. Cookie may be expired or invalid.');
+    if (data.team) {
+      this.workspaces = [
+        {
+          id: data.team.id,
+          name: data.team.name || data.team.domain,
+          icon: '🔐'
+        }
+      ];
+    } else {
+      throw new Error('Could not extract team info from response');
     }
-
-    this.workspaces = [
-      {
-        id: data.team_id,
-        name: data.team,
-        icon: '🍪'
-      }
-    ];
   }
 
   /**
@@ -124,7 +114,7 @@ export default class SlackAuthService extends Service {
    */
   selectWorkspace(workspaceId: string): void {
     const workspace = this.workspaces.find(w => w.id === workspaceId);
-    
+
     if (!workspace) {
       this.error = 'Invalid workspace selected';
       return;
@@ -141,35 +131,47 @@ export default class SlackAuthService extends Service {
   /**
    * Clear authentication and reset state
    */
-  logout(): void {
+  async logout() {
     this.token = null;
+    this.dCookie = null;
     this.selectedWorkspace = null;
     this.workspaces = [];
     this.isAuthenticated = false;
     this.error = null;
 
-    // Clear from storage
-    if (typeof localStorage !== 'undefined') {
-      localStorage.removeItem('slack_token');
-      localStorage.removeItem('slack_workspace');
+    // Clear from secure storage
+    try {
+      await this.secureStorage.remove({ key: 'slack_token' });
+      await this.secureStorage.remove({ key: 'slack_d_cookie' });
+      await this.secureStorage.remove({ key: 'slack_workspace' });
+    } catch (err) {
+      console.error('Failed to clear secure storage:', err);
     }
   }
 
   /**
    * Restore authentication from storage
    */
-  restoreAuth(): void {
-    if (typeof localStorage === 'undefined') {
+  async restoreAuth(): Promise<void> {
+    const storage = this.secureStorage;
+    if (!storage) {
+      console.warn('SecureStorage not available, skipping auth restoration');
       return;
     }
 
-    const storedToken = localStorage.getItem('slack_token');
-    const storedWorkspace = localStorage.getItem('slack_workspace');
+    try {
+      const storedToken = await storage.get({ key: 'slack_token' });
+      const storedDCookie = await storage.get({ key: 'slack_d_cookie' });
+      const storedWorkspace = await storage.get({ key: 'slack_workspace' });
 
-    if (storedToken && storedWorkspace) {
-      this.token = storedToken;
-      this.selectedWorkspace = storedWorkspace;
-      this.isAuthenticated = true;
+      if (storedToken && storedDCookie && storedWorkspace) {
+        this.token = storedToken;
+        this.dCookie = storedDCookie;
+        this.selectedWorkspace = storedWorkspace;
+        this.isAuthenticated = true;
+      }
+    } catch (err) {
+      console.error('Failed to restore from secure storage:', err);
     }
   }
 
@@ -177,20 +179,29 @@ export default class SlackAuthService extends Service {
    * Persist authentication to storage
    */
   private persistAuth(): void {
-    if (typeof localStorage === 'undefined') {
+    const storage = this.secureStorage;
+    if (!storage) {
+      console.warn('SecureStorage not available, skipping auth persistence');
       return;
     }
 
-    if (this.token) {
-      localStorage.setItem('slack_token', this.token);
-    }
-    
-    if (this.selectedWorkspace) {
-      localStorage.setItem('slack_workspace', this.selectedWorkspace);
+    try {
+      if (this.token) {
+        storage.set({ key: 'slack_token', value: this.token });
+      }
+
+      if (this.dCookie) {
+        storage.set({ key: 'slack_d_cookie', value: this.dCookie });
+      }
+
+      if (this.selectedWorkspace) {
+        storage.set({ key: 'slack_workspace', value: this.selectedWorkspace });
+      }
+    } catch (err) {
+      console.error('Failed to persist to secure storage:', err);
+      this.error = 'Failed to save credentials securely';
     }
   }
-
-
 }
 
 declare module '@ember/service' {
@@ -198,3 +209,4 @@ declare module '@ember/service' {
     'slack-auth': SlackAuthService;
   }
 }
+

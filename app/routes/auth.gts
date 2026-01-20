@@ -14,6 +14,7 @@ class AuthComponent extends Component {
   @service declare router: RouterService;
 
   @tracked tokenInput = '';
+  @tracked dCookieInput = '';
   @tracked showWorkspaces = false;
 
   @action
@@ -23,13 +24,26 @@ class AuthComponent extends Component {
   }
 
   @action
+  updateDCookie(args: any): void {
+    // NativeScript textChange event passes PropertyChangeData
+    this.dCookieInput = args.value || args.object?.text || '';
+  }
+
+
+
+  @action
   async submitToken(): Promise<void> {
     if (!this.tokenInput.trim()) {
       this.slackAuth.error = 'Please enter a token';
       return;
     }
 
-    this.slackAuth.setToken(this.tokenInput.trim());
+    if (!this.dCookieInput.trim()) {
+      this.slackAuth.error = 'Please enter d cookie';
+      return;
+    }
+
+    this.slackAuth.setToken(this.tokenInput.trim(), this.dCookieInput.trim());
     await this.slackAuth.fetchWorkspaces();
 
     if (this.slackAuth.workspaces.length > 0) {
@@ -61,15 +75,26 @@ class AuthComponent extends Component {
           {{! Token Input Screen }}
           <stack-layout class="token-input-section">
             <label class="app-title" text="🚀 Slack Lite" />
-            <label class="subtitle" text="Enter your Slack token to get started" />
+            <label class="subtitle" text="Enter your Slack credentials" />
             
             <stack-layout class="input-container">
-              <label class="input-label" text="Slack API Token" />
+              <label class="input-label" text="Slack Client Token (xoxc-)" />
               <text-field
                 class="input-field"
-                hint="xoxb-your-token-here"
+                hint="xoxc-..."
                 text={{this.tokenInput}}
                 {{on "textChange" this.updateToken}}
+                secure="false"
+                autocorrect="false"
+                autocapitalizationType="none"
+              />
+              
+              <label class="input-label" text="D Cookie (required)" />
+              <text-field
+                class="input-field"
+                hint="xoxd-... from browser cookies"
+                text={{this.dCookieInput}}
+                {{on "textChange" this.updateDCookie}}
                 secure="false"
                 autocorrect="false"
                 autocapitalizationType="none"
@@ -88,16 +113,22 @@ class AuthComponent extends Component {
             />
 
             <stack-layout class="help-section">
-              <label class="help-title" text="Token Options:" />
-              <label class="help-step" text="Option 1: Bot Token (xoxb-) - Recommended" />
-              <label class="help-substep" text="  • Visit api.slack.com/apps" />
-              <label class="help-substep" text="  • Create App → OAuth & Permissions" />
-              <label class="help-substep" text="  • Install to Workspace" />
-              <label class="help-step" text="Option 2: Session Cookie (xoxd-) - Testing" />
-              <label class="help-substep" text="  • Open Slack in browser" />
-              <label class="help-substep" text="  • DevTools → Application → Cookies" />
-              <label class="help-substep" text="  • Copy 'd' cookie value" />
-              <label class="help-warning" text="⚠️ Cookies may expire or break!" />
+              <label class="help-title" text="How to get credentials:" />
+              <label class="help-step" text="1. Open Slack in browser" />
+              <label class="help-substep" text="  • Open DevTools (F12)" />
+              <label class="help-substep" text="  • Go to Application → Cookies" />
+              <label class="help-substep" text="  • Find slack.com cookies" />
+              
+              <label class="help-step" text="2. Copy Client Token (xoxc-)" />
+              <label class="help-substep" text="  • Go to Network tab" />
+              <label class="help-substep" text="  • Look for API requests" />
+              <label class="help-substep" text="  • Find 'token' parameter starting with 'xoxc-'" />
+              
+              <label class="help-step" text="3. Copy D Cookie (xoxd-)" />
+              <label class="help-substep" text="  • Back to Application → Cookies" />
+              <label class="help-substep" text="  • Copy value of 'd' cookie (starts with 'xoxd-')" />
+              
+              <label class="help-warning" text="⚠️ Cookies may expire!" />
             </stack-layout>
           </stack-layout>
         {{else}}

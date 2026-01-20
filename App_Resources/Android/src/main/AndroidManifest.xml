@@ -37,6 +37,14 @@
 				<action android:name="android.intent.action.MAIN" />
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
+
+			<!-- Deep linking for Slack OAuth callback -->
+			<intent-filter>
+				<action android:name="android.intent.action.VIEW" />
+				<category android:name="android.intent.category.DEFAULT" />
+				<category android:name="android.intent.category.BROWSABLE" />
+				<data android:scheme="slacklite" android:host="oauth" />
+			</intent-filter>
 		</activity>
 		<activity android:name="com.tns.ErrorReportActivity"/>
 	</application>

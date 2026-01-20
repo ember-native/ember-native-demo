@@ -3,6 +3,13 @@ const path = require('path');
 var Module = require('module');
 var { fileURLToPath, pathToFileURL } = require('node:url');
 
+// Load environment variables from .env file
+try {
+  require('dotenv').config();
+} catch (e) {
+  console.warn('dotenv not installed, environment variables from .env will not be loaded');
+}
+
 Module.registerHooks({
   resolve: (specifier, context, nextResolve) => {
     //do your thing here
@@ -100,8 +107,24 @@ module.exports = (env) => {
       Object.assign(args[0], {
         window: 'globalThis',
         __TEST_RUNNER_STAY_OPEN__: !process.env.CI,
+        'process.env.SLACK_CLIENT_ID': JSON.stringify(process.env.SLACK_CLIENT_ID),
+        'process.env.SLACK_CLIENT_SECRET': JSON.stringify(process.env.SLACK_CLIENT_SECRET),
+        'process.env.SLACK_REDIRECT_URI': JSON.stringify(process.env.SLACK_REDIRECT_URI),
+        'process.env.SLACK_OAUTH_SCOPES': JSON.stringify(process.env.SLACK_OAUTH_SCOPES),
+        'process.env.SLACK_BACKEND_URL': JSON.stringify(process.env.SLACK_BACKEND_URL),
+        'process.env.SLACK_BACKEND_AUTH_ENDPOINT': JSON.stringify(process.env.SLACK_BACKEND_AUTH_ENDPOINT),
+        'process.env.SLACK_BACKEND_CALLBACK_ENDPOINT': JSON.stringify(process.env.SLACK_BACKEND_CALLBACK_ENDPOINT),
         process: {
-          browser: true
+          browser: true,
+          env: {
+            SLACK_CLIENT_ID: JSON.stringify(process.env.SLACK_CLIENT_ID),
+            SLACK_CLIENT_SECRET: JSON.stringify(process.env.SLACK_CLIENT_SECRET),
+            SLACK_REDIRECT_URI: JSON.stringify(process.env.SLACK_REDIRECT_URI),
+            SLACK_OAUTH_SCOPES: JSON.stringify(process.env.SLACK_OAUTH_SCOPES),
+            SLACK_BACKEND_URL: JSON.stringify(process.env.SLACK_BACKEND_URL),
+            SLACK_BACKEND_AUTH_ENDPOINT: JSON.stringify(process.env.SLACK_BACKEND_AUTH_ENDPOINT),
+            SLACK_BACKEND_CALLBACK_ENDPOINT: JSON.stringify(process.env.SLACK_BACKEND_CALLBACK_ENDPOINT),
+          }
         }
       });
       return args;

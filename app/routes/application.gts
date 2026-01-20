@@ -16,17 +16,17 @@ export default class ApplicationRoute extends RoutableComponentRoute(RoutableCom
     @service declare slackAuth: SlackAuthService;
     @service declare router: RouterService;
 
-    beforeModel() {
+    async beforeModel() {
         // Restore authentication state from storage
-        this.slackAuth.restoreAuth();
+        await this.slackAuth.restoreAuth();
     }
 
     activate() {
         console.log('Application route activated');
-        
+
         // Check authentication and redirect if needed
         const currentRoute = this.router.currentRouteName;
-        
+
         if (!this.slackAuth.isAuthenticated && currentRoute !== 'auth') {
             this.router.transitionTo('auth');
         } else if (this.slackAuth.isAuthenticated && currentRoute === 'auth') {
