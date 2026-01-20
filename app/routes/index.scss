@@ -4,6 +4,259 @@
 
 // Sidebar styles
 .sidebar {
+  background-color: #3f0e40;
+  color: #ffffff;
+}
+
+.sidebar-header {
+  padding: 16;
+  background-color: #350d36;
+}
+
+.sidebar-title {
+  font-size: 18;
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.btn-refresh {
+  font-size: 20;
+  background-color: transparent;
+  color: #ffffff;
+  border-width: 0;
+  padding: 8;
+}
+
+.loading-state,
+.error-state {
+  padding: 20;
+  text-align: center;
+}
+
+.error-text {
+  color: #ff6b6b;
+  font-size: 14;
+  text-align: center;
+  margin-bottom: 10;
+}
+
+.channels-list {
+  background-color: #3f0e40;
+}
+
+.channel-section-title {
+  font-size: 12;
+  color: #bcabbc;
+  padding: 12 16 8 16;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.channel-item {
+  padding: 8 16;
+  orientation: horizontal;
+  background-color: transparent;
+  border-radius: 4;
+  margin: 2 8;
+}
+
+.channel-item.selected {
+  background-color: #1164a3;
+}
+
+.channel-icon {
+  font-size: 16;
+  color: #bcabbc;
+  margin-right: 8;
+  width: 20;
+}
+
+.channel-name {
+  font-size: 15;
+  color: #ffffff;
+  flex-grow: 1;
+}
+
+.channel-members {
+  font-size: 12;
+  color: #bcabbc;
+  margin-left: 8;
+}
+
+.empty-state {
+  color: #bcabbc;
+  text-align: center;
+  padding: 20;
+  font-size: 14;
+}
+
+.btn-logout {
+  background-color: #611f69;
+  color: #ffffff;
+  margin: 16;
+  border-radius: 4;
+  font-size: 15;
+}
+
+// Main content styles
+.main-content {
+  background-color: #ffffff;
+}
+
+.content-container {
+  background-color: #ffffff;
+}
+
+.channel-header {
+  padding: 16;
+  background-color: #f8f8f8;
+  border-bottom-width: 1;
+  border-bottom-color: #e0e0e0;
+}
+
+.channel-title {
+  font-size: 18;
+  font-weight: bold;
+  color: #1d1c1d;
+}
+
+.channel-info {
+  font-size: 13;
+  color: #616061;
+  margin-top: 4;
+}
+
+// Messages styles
+.messages-container {
+  background-color: #ffffff;
+}
+
+.messages-scroll {
+  background-color: #ffffff;
+}
+
+.messages-list {
+  padding: 16;
+}
+
+.message-item {
+  margin-bottom: 16;
+  padding: 8;
+  background-color: #f8f8f8;
+  border-radius: 8;
+}
+
+.message-header {
+  margin-bottom: 4;
+}
+
+.message-user {
+  font-size: 15;
+  font-weight: bold;
+  color: #1d1c1d;
+  margin-right: 8;
+}
+
+.message-time {
+  font-size: 12;
+  color: #616061;
+  horizontal-alignment: right;
+}
+
+.message-text {
+  font-size: 15;
+  color: #1d1c1d;
+  line-height: 1.4;
+}
+
+.loading-messages,
+.error-messages {
+  padding: 40;
+  text-align: center;
+  vertical-alignment: center;
+}
+
+.no-messages {
+  padding: 40;
+  text-align: center;
+  vertical-alignment: center;
+}
+
+// Message input styles
+.message-input-container {
+  background-color: #ffffff;
+  border-top-width: 1;
+  border-top-color: #e0e0e0;
+  padding: 8;
+}
+
+.message-input {
+  background-color: #f8f8f8;
+  border-radius: 20;
+  padding: 12 16;
+  font-size: 15;
+  color: #1d1c1d;
+  margin-right: 8;
+  border-width: 1;
+  border-color: #e0e0e0;
+}
+
+.btn-send {
+  background-color: #007a5a;
+  color: #ffffff;
+  border-radius: 20;
+  font-size: 18;
+  padding: 12 20;
+  border-width: 0;
+  min-width: 60;
+}
+
+.btn-send:disabled {
+  background-color: #cccccc;
+  color: #666666;
+}
+
+// No channel state
+.no-channel-state {
+  padding: 40;
+  text-align: center;
+  vertical-alignment: center;
+}
+
+.state-icon {
+  font-size: 48;
+  margin-bottom: 16;
+}
+
+.state-text {
+  font-size: 16;
+  color: #616061;
+}
+
+// Placeholder styles
+.placeholder-icon {
+  font-size: 48;
+  text-align: center;
+  margin-bottom: 16;
+}
+
+.placeholder-text {
+  font-size: 18;
+  font-weight: bold;
+  color: #1d1c1d;
+  text-align: center;
+  margin-bottom: 8;
+}
+
+.placeholder-subtext {
+  font-size: 14;
+  color: #616061;
+  text-align: center;
+  background-color: #ffffff;
+}
+
+// Sidebar styles
+.sidebar {
   background-color: #4a154b;
   width: 280;
 }
@@ -12,7 +265,6 @@
   padding: 16;
   background-color: #3f0e40;
   orientation: horizontal;
-  horizontal-alignment: space-between;
   vertical-alignment: center;
 }
 

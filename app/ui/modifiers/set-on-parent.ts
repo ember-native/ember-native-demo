@@ -10,8 +10,7 @@ interface SetOnParentSignature {
 export default modifier<SetOnParentSignature>(
   (element, [propertyName]) => {
     const nativeElement = (element as any).nativeView;
-    const parentElement = element.parent?.nativeView;
-    console.log('setOnParent', element, parentElement, propertyName);
+    const parentElement = element.parentNode?.nativeView;
 
     if (parentElement && nativeElement) {
       // Set the child on the parent's property
