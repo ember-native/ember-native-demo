@@ -56,7 +56,7 @@ export default class SlackChannelsService extends Service {
 
     try {
       const response = await fetch('https://ibm.enterprise.slack.com/api/client.userBoot', {
-        method: 'POST',
+        method: 'post',
         headers: {
           'Cookie': `d=${this.slackAuth.dCookie}`,
           'Content-Type': 'application/x-www-form-urlencoded',
@@ -73,18 +73,20 @@ export default class SlackChannelsService extends Service {
       // Extract channels from userBoot response
       const channels: Channel[] = [];
       const starredIds = new Set(data.starred || []);
-      
-      // Public channels
+
+
+      // Public channels - only include channels user is a member of
       if (data.channels) {
-        channels.push(...data.channels.map((ch: any) => ({
-          id: ch.id,
-          name: ch.name,
-          is_channel: true,
-          is_private: false,
-          is_member: ch.is_member || false,
-          is_starred: starredIds.has(ch.id),
-          num_members: ch.num_members,
-        })));
+        channels.push(...data.channels
+          .map((ch: any) => ({
+            id: ch.id,
+            name: ch.name,
+            is_channel: true,
+            is_private: false,
+            is_member: true,
+            is_starred: starredIds.has(ch.id),
+            num_members: ch.num_members,
+          })));
       }
 
       // Private channels (groups)
