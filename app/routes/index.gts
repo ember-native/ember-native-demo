@@ -35,6 +35,10 @@ class HomePage extends Component {
     return this.slackMessages.formatTimestamp(ts);
   }
 
+  formatMessageText = (text: string): string => {
+    return this.slackMessages.formatMessageText(text);
+  }
+
   @action
   async loadChannels(): Promise<void> {
     await this.slackChannels.fetchChannels();
@@ -225,7 +229,7 @@ class HomePage extends Component {
                             <label col="0" class="message-user" text={{this.getUserDisplayName message.user}} />
                             <label col="1" class="message-time" text={{this.formatTimestamp message.ts}} />
                           </grid-layout>
-                          <label class="message-text" text={{message.text}} textWrap="true" />
+                          <label class="message-text" text={{this.formatMessageText message.text}} textWrap="true" />
                         </stack-layout>
                       {{else}}
                         <stack-layout class="no-messages">

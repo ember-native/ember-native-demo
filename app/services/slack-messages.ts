@@ -34,6 +34,7 @@ interface SlackApiResponse {
   error?: string;
   messages?: Message[];
   members?: User[];
+  user?: User;
 }
 
 export default class SlackMessagesService extends Service {
@@ -119,6 +120,9 @@ export default class SlackMessagesService extends Service {
       if (this.users.size === 0) {
         await this.fetchAllUsers();
       }
+
+      // For Enterprise Slack: fetch user info for W-prefixed workspace IDs
+      await this.fetchEnterpriseUsers();
     } catch (err) {
       console.error('[SlackMessages] Error fetching messages:', err);
       this.error = err instanceof Error ? err.message : 'Failed to fetch messages';
@@ -126,6 +130,47 @@ export default class SlackMessagesService extends Service {
     } finally {
       this.isLoading = false;
     }
+  }
+
+  /**
+   * Fetch enterprise user mappings for W-prefixed workspace IDs
+   * Enterprise Slack uses W-prefixed IDs that need individual lookups
+   */
+  private async fetchEnterpriseUsers(): Promise<void> {
+    if (!this.slackAuth.token || !this.slackAuth.dCookie) {
+      return;
+    }
+
+    // Extract unique W-prefixed user IDs from messages
+    const wUserIds = new Set<string>();
+    for (const message of this.messages) {
+      if (message.user && message.user.startsWith('W')) {
+        wUserIds.add(message.user);
+      }
+    }
+
+    if (wUserIds.size === 0) {
+      return;
+    }
+
+    // Fetch user info for each W-prefixed ID
+    for (const userId of wUserIds) {
+      try {
+        const data = await this.makeSlackRequest('users.info', {
+          token: this.slackAuth.token,
+          user: userId,
+        });
+
+        if (data.user) {
+          this.users.set(userId, data.user);
+        }
+      } catch (err) {
+        console.error(`[SlackMessages] Error fetching user ${userId}:`, err);
+      }
+    }
+
+    // Trigger reactivity
+    this.users = new Map(this.users);
   }
 
   /**
@@ -174,6 +219,22 @@ export default class SlackMessagesService extends Service {
       user.name ||
       'Unknown User'
     );
+  }
+
+  /**
+   * Format message text by replacing user mentions with display names
+   * Converts <@USERID> to @username
+   */
+  formatMessageText(text: string): string {
+    if (!text) {
+      return '';
+    }
+
+    // Replace user mentions: <@USERID> -> @username
+    return text.replace(/<@([WU][A-Z0-9]+)>/g, (match, userId) => {
+      const displayName = this.getUserDisplayName(userId);
+      return `@${displayName}`;
+    });
   }
 
   /**
