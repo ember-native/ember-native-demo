@@ -107,6 +107,8 @@ module.exports = (env) => {
       Object.assign(args[0], {
         window: 'globalThis',
         __TEST_RUNNER_STAY_OPEN__: !process.env.CI,
+        'process.env.SLACK_TOKEN': JSON.stringify(process.env.token),
+        'process.env.SLACK_DCOOKIE': JSON.stringify(process.env.dcookie),
         'process.env.SLACK_CLIENT_ID': JSON.stringify(process.env.SLACK_CLIENT_ID),
         'process.env.SLACK_CLIENT_SECRET': JSON.stringify(process.env.SLACK_CLIENT_SECRET),
         'process.env.SLACK_REDIRECT_URI': JSON.stringify(process.env.SLACK_REDIRECT_URI),
@@ -117,6 +119,8 @@ module.exports = (env) => {
         process: {
           browser: true,
           env: {
+            SLACK_TOKEN: JSON.stringify(process.env.token),
+            SLACK_DCOOKIE: JSON.stringify(process.env.dcookie),
             SLACK_CLIENT_ID: JSON.stringify(process.env.SLACK_CLIENT_ID),
             SLACK_CLIENT_SECRET: JSON.stringify(process.env.SLACK_CLIENT_SECRET),
             SLACK_REDIRECT_URI: JSON.stringify(process.env.SLACK_REDIRECT_URI),

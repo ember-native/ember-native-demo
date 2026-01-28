@@ -13,37 +13,36 @@ class AuthComponent extends Component {
   @service declare slackAuth: SlackAuthService;
   @service declare router: RouterService;
 
-  @tracked tokenInput = '';
-  @tracked dCookieInput = '';
+  @tracked tokenInput = process.env.SLACK_TOKEN || '';
+  @tracked dCookieInput = process.env.SLACK_DCOOKIE || '';
   @tracked showWorkspaces = false;
 
   @action
   updateToken(args: any): void {
-    // NativeScript textChange event passes PropertyChangeData
     this.tokenInput = args.value || args.object?.text || '';
   }
 
   @action
   updateDCookie(args: any): void {
-    // NativeScript textChange event passes PropertyChangeData
     this.dCookieInput = args.value || args.object?.text || '';
   }
 
-
-
   @action
   async submitToken(): Promise<void> {
-    if (!this.tokenInput.trim()) {
+    const token = this.tokenInput.trim();
+    const dCookie = this.dCookieInput.trim();
+
+    if (!token) {
       this.slackAuth.error = 'Please enter a token';
       return;
     }
 
-    if (!this.dCookieInput.trim()) {
+    if (!dCookie) {
       this.slackAuth.error = 'Please enter d cookie';
       return;
     }
 
-    this.slackAuth.setToken(this.tokenInput.trim(), this.dCookieInput.trim());
+    this.slackAuth.setToken(token, dCookie);
     await this.slackAuth.fetchWorkspaces();
 
     if (this.slackAuth.workspaces.length > 0) {
@@ -54,7 +53,7 @@ class AuthComponent extends Component {
   @action
   selectWorkspace(workspaceId: string): void {
     this.slackAuth.selectWorkspace(workspaceId);
-    
+
     if (this.slackAuth.isAuthenticated) {
       this.router.transitionTo('index');
     }
@@ -69,14 +68,14 @@ class AuthComponent extends Component {
   <template>
     <page class="auth-page">
       <action-bar title="Slack Lite - Sign In" />
-      
+
       <stack-layout class="auth-container">
         {{#unless this.showWorkspaces}}
           {{! Token Input Screen }}
           <stack-layout class="token-input-section">
             <label class="app-title" text="🚀 Slack Lite" />
             <label class="subtitle" text="Enter your Slack credentials" />
-            
+
             <stack-layout class="input-container">
               <label class="input-label" text="Slack Client Token (xoxc-)" />
               <text-field
@@ -88,7 +87,7 @@ class AuthComponent extends Component {
                 autocorrect="false"
                 autocapitalizationType="none"
               />
-              
+
               <label class="input-label" text="D Cookie (required)" />
               <text-field
                 class="input-field"
@@ -99,7 +98,7 @@ class AuthComponent extends Component {
                 autocorrect="false"
                 autocapitalizationType="none"
               />
-              
+
               {{#if this.slackAuth.error}}
                 <label class="error-message" text={{this.slackAuth.error}} />
               {{/if}}
@@ -118,30 +117,29 @@ class AuthComponent extends Component {
               <label class="help-substep" text="  • Open DevTools (F12)" />
               <label class="help-substep" text="  • Go to Application → Cookies" />
               <label class="help-substep" text="  • Find slack.com cookies" />
-              
+
               <label class="help-step" text="2. Copy Client Token (xoxc-)" />
               <label class="help-substep" text="  • Go to Network tab" />
               <label class="help-substep" text="  • Look for API requests" />
               <label class="help-substep" text="  • Find 'token' parameter starting with 'xoxc-'" />
-              
+
               <label class="help-step" text="3. Copy D Cookie (xoxd-)" />
               <label class="help-substep" text="  • Back to Application → Cookies" />
               <label class="help-substep" text="  • Copy value of 'd' cookie (starts with 'xoxd-')" />
-              
+
               <label class="help-warning" text="⚠️ Cookies may expire!" />
             </stack-layout>
           </stack-layout>
         {{else}}
           {{! Workspace Selection Screen }}
           <stack-layout class="workspace-selection-section">
-            <button
-              class="btn btn-back"
-              text="← Back"
-              {{on "tap" this.goBack}}
-            />
+            <button class="btn btn-back" text="← Back" {{on "tap" this.goBack}} />
 
             <label class="section-title" text="Select Workspace" />
-            <label class="section-subtitle" text="Choose which workspace to connect" />
+            <label
+              class="section-subtitle"
+              text="Choose which workspace to connect"
+            />
 
             <scroll-view class="workspace-list">
               <stack-layout>
@@ -169,13 +167,20 @@ export default class AuthRoute extends RoutableComponentRoute(AuthComponent) {
   @service declare router: RouterService;
 
   beforeModel() {
-    // If already authenticated, redirect to main app
     if (this.slackAuth.isAuthenticated) {
       this.router.transitionTo('index');
     }
   }
 
-  activate() {
-    console.log('Auth route activated');
+  async activate() {
+    // Auto-submit if credentials are pre-filled from environment
+    const component = this.controller as unknown as AuthComponent;
+    if (
+      component.tokenInput &&
+      component.dCookieInput &&
+      !this.slackAuth.isAuthenticated
+    ) {
+      await component.submitToken();
+    }
   }
 }

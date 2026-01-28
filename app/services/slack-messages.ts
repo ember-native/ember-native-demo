@@ -29,6 +29,13 @@ interface User {
   };
 }
 
+interface SlackApiResponse {
+  ok: boolean;
+  error?: string;
+  messages?: Message[];
+  members?: User[];
+}
+
 export default class SlackMessagesService extends Service {
   @service declare slackAuth: SlackAuthService;
 
@@ -39,84 +46,82 @@ export default class SlackMessagesService extends Service {
   @tracked currentChannelId: string | null = null;
 
   /**
+   * Build common headers for Slack API requests
+   */
+  private getRequestHeaders(): Record<string, string> {
+    return {
+      'Cookie': `d=${this.slackAuth.dCookie}; d-s=${Date.now()}`,
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+      'Authorization': `Bearer ${this.slackAuth.token}`,
+    };
+  }
+
+  /**
+   * Get workspace URL from auth service
+   */
+  private getWorkspaceUrl(): string {
+    return this.slackAuth.workspaces[0]?.url || 'https://slack.com';
+  }
+
+  /**
+   * Make a Slack API request
+   */
+  private async makeSlackRequest(
+    endpoint: string,
+    params: Record<string, string>
+  ): Promise<SlackApiResponse> {
+    const url = `${this.getWorkspaceUrl()}/api/${endpoint}`;
+    const body = Object.entries(params)
+      .map(([key, value]) => `${key}=${encodeURIComponent(value)}`)
+      .join('&');
+
+    const response = await Http.request({
+      url,
+      method: 'POST',
+      headers: this.getRequestHeaders(),
+      content: body,
+    });
+
+    const data = response.content?.toJSON() as SlackApiResponse;
+
+    if (!data.ok) {
+      throw new Error(data.error || 'API request failed');
+    }
+
+    return data;
+  }
+
+  /**
    * Fetch messages for a specific channel
    */
   async fetchMessages(channelId: string): Promise<void> {
-    console.log('[SlackMessages] fetchMessages called with channelId:', channelId);
-
-    if (!this.slackAuth.token) {
-      console.error('[SlackMessages] No token available');
+    if (!this.slackAuth.token || !this.slackAuth.dCookie) {
       this.error = 'Not authenticated';
       return;
     }
 
-    if (!this.slackAuth.dCookie) {
-      console.error('[SlackMessages] No dCookie available');
-      this.error = 'd cookie is required';
-      return;
-    }
-
-    console.log('[SlackMessages] Token prefix:', this.slackAuth.token.substring(0, 10));
-    console.log('[SlackMessages] Token length:', this.slackAuth.token.length);
-    console.log('[SlackMessages] dCookie prefix:', this.slackAuth.dCookie.substring(0, 10));
-    console.log('[SlackMessages] dCookie length:', this.slackAuth.dCookie.length);
-    console.log('[SlackMessages] Starting fetch with token and dCookie present');
     this.isLoading = true;
     this.error = null;
     this.currentChannelId = channelId;
 
     try {
-      // Fetch conversation info which includes recent messages and user information
-      const url = 'https://ibm.enterprise.slack.com/api/conversations.history';
-      const body = `token=${encodeURIComponent(this.slackAuth.token)}&channel=${encodeURIComponent(channelId)}&limit=28&ignore_replies=true&include_pin_count=true&inclusive=true&no_user_profile=true&include_stories=true&include_free_team_extra_messages=true&include_date_joined=false&include_all_metadata=true`;
-
-      console.log('[SlackMessages] Fetching from:', url);
-      console.log('[SlackMessages] Request body length:', body.length);
-
-      const response = await Http.request({
-        url,
-        method: 'POST',
-        headers: {
-          'Cookie': `d=${this.slackAuth.dCookie}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        content: body,
+      const data = await this.makeSlackRequest('conversations.history', {
+        token: this.slackAuth.token,
+        channel: channelId,
+        limit: '50',
       });
-
-      console.log('[SlackMessages] Response status:', response.statusCode);
-      const data = response.content?.toJSON();
-      console.log('[SlackMessages] Response data:', JSON.stringify(data).substring(0, 200));
-
-      if (!data.ok) {
-        console.error('[SlackMessages] API returned error:', data.error);
-        throw new Error(JSON.stringify(data) || 'Failed to fetch messages');
-      }
-
-      console.log('[SlackMessages] Received', data.messages?.length || 0, 'messages');
 
       // Sort messages by timestamp (oldest first)
       this.messages = (data.messages || []).reverse();
 
-      // Extract user information from the response if available
-      if (data.users) {
-        console.log('[SlackMessages] Response includes', data.users.length, 'users');
-        for (const user of data.users) {
-          this.users.set(user.id, user);
-        }
-        // Trigger reactivity
-        this.users = new Map(this.users);
-      }
-
-      // If users not in response, fetch all users at once
-      if (!data.users || data.users.length === 0) {
-        console.log('[SlackMessages] No users in response, fetching all users');
+      // Fetch users if not already loaded
+      if (this.users.size === 0) {
         await this.fetchAllUsers();
       }
-
-      console.log('[SlackMessages] Successfully loaded messages');
     } catch (err) {
       console.error('[SlackMessages] Error fetching messages:', err);
-      this.error = 'Failed to fetch messages';
+      this.error = err instanceof Error ? err.message : 'Failed to fetch messages';
       this.messages = [];
     } finally {
       this.isLoading = false;
@@ -127,41 +132,25 @@ export default class SlackMessagesService extends Service {
    * Fetch all users at once using users.list
    */
   private async fetchAllUsers(): Promise<void> {
-    console.log('[SlackMessages] fetchAllUsers called');
-
     if (!this.slackAuth.token || !this.slackAuth.dCookie) {
-      console.error('[SlackMessages] Missing token or dCookie in fetchAllUsers');
       return;
     }
 
     try {
-      console.log('[SlackMessages] Fetching users list');
-      const response = await Http.request({
-        url: 'https://ibm.enterprise.slack.com/api/users.list',
-        method: 'POST',
-        headers: {
-          'Cookie': `d=${this.slackAuth.dCookie}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        content: `token=${encodeURIComponent(this.slackAuth.token)}&limit=1000`,
+      const data = await this.makeSlackRequest('users.list', {
+        token: this.slackAuth.token,
+        limit: '1000',
       });
 
-      console.log('[SlackMessages] Users list response status:', response.statusCode);
-      const data = response.content?.toJSON();
-      console.log('[SlackMessages] Users list response ok:', data.ok, 'members count:', data.members?.length || 0);
-
-      if (data.ok && data.members) {
+      if (data.members) {
         for (const user of data.members) {
           this.users.set(user.id, user);
         }
         // Trigger reactivity
         this.users = new Map(this.users);
-        console.log('[SlackMessages] Successfully loaded', this.users.size, 'users');
-      } else {
-        console.error('[SlackMessages] Failed to fetch users:', data.error);
       }
     } catch (err) {
-      console.error('[SlackMessages] Error in fetchAllUsers:', err);
+      console.error('[SlackMessages] Error fetching users:', err);
     }
   }
 
@@ -169,63 +158,51 @@ export default class SlackMessagesService extends Service {
    * Get display name for a user
    */
   getUserDisplayName(userId: string): string {
-    const user = this.users.get(userId);
-    if (!user) return 'Unknown User';
+    if (!this.users || !userId) {
+      return 'Unknown User';
+    }
 
-    return user.profile.display_name ||
-           user.profile.real_name ||
-           user.real_name ||
-           user.name ||
-           'Unknown User';
+    const user = this.users.get(userId);
+    if (!user) {
+      return 'Unknown User';
+    }
+
+    return (
+      user.profile?.display_name ||
+      user.profile?.real_name ||
+      user.real_name ||
+      user.name ||
+      'Unknown User'
+    );
   }
 
   /**
    * Send a message to the current channel
    */
   async sendMessage(text: string): Promise<void> {
-    console.log('[SlackMessages] sendMessage called with text length:', text.length);
-
     if (!this.slackAuth.token || !this.slackAuth.dCookie) {
-      console.error('[SlackMessages] Not authenticated for sendMessage');
       throw new Error('Not authenticated');
     }
 
     if (!this.currentChannelId) {
-      console.error('[SlackMessages] No channel selected');
       throw new Error('No channel selected');
     }
 
     if (!text.trim()) {
-      console.error('[SlackMessages] Empty message text');
       throw new Error('Message cannot be empty');
     }
 
     try {
-      console.log('[SlackMessages] Sending message to channel:', this.currentChannelId);
-      const response = await Http.request({
-        url: 'https://ibm.enterprise.slack.com/api/chat.postMessage',
-        method: 'POST',
-        headers: {
-          'Cookie': `d=${this.slackAuth.dCookie}`,
-          'Content-Type': 'application/x-www-form-urlencoded',
-        },
-        content: `token=${encodeURIComponent(this.slackAuth.token)}&channel=${encodeURIComponent(this.currentChannelId)}&text=${encodeURIComponent(text)}`,
+      await this.makeSlackRequest('chat.postMessage', {
+        token: this.slackAuth.token,
+        channel: this.currentChannelId,
+        text: text.trim(),
       });
 
-      console.log('[SlackMessages] Send message response status:', response.statusCode);
-      const data = response.content?.toJSON();
-      console.log('[SlackMessages] Send message response ok:', data.ok);
-
-      if (!data.ok) {
-        console.error('[SlackMessages] Failed to send message:', data.error);
-        throw new Error(data.error || 'Failed to send message');
-      }
-
-      console.log('[SlackMessages] Message sent successfully, refreshing messages');
       // Refresh messages to show the new one
       await this.fetchMessages(this.currentChannelId);
     } catch (err) {
-      console.error('[SlackMessages] Error in sendMessage:', err);
+      console.error('[SlackMessages] Error sending message:', err);
       throw new Error(err instanceof Error ? err.message : 'Failed to send message');
     }
   }
@@ -243,20 +220,20 @@ export default class SlackMessagesService extends Service {
     if (isToday) {
       return date.toLocaleTimeString('en-US', {
         hour: '2-digit',
-        minute: '2-digit'
-      });
-    } else {
-      return date.toLocaleDateString('en-US', {
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit'
+        minute: '2-digit',
       });
     }
+
+    return date.toLocaleDateString('en-US', {
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
   }
 
   /**
-   * Clear messages
+   * Clear messages and user cache
    */
   clear(): void {
     this.messages = [];
@@ -271,4 +248,3 @@ declare module '@ember/service' {
     'slack-messages': SlackMessagesService;
   }
 }
-

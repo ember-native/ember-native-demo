@@ -27,6 +27,14 @@ class HomePage extends Component {
     );
   }
 
+  getUserDisplayName = (userId: string): string => {
+    return this.slackMessages.getUserDisplayName(userId);
+  }
+
+  formatTimestamp = (ts: string): string => {
+    return this.slackMessages.formatTimestamp(ts);
+  }
+
   @action
   async loadChannels(): Promise<void> {
     await this.slackChannels.fetchChannels();
@@ -214,8 +222,8 @@ class HomePage extends Component {
                       {{#each this.slackMessages.messages as |message|}}
                         <stack-layout class="message-item">
                           <grid-layout columns="auto, *" class="message-header">
-                            <label col="0" class="message-user" text={{this.slackMessages.getUserDisplayName message.user}} />
-                            <label col="1" class="message-time" text={{this.slackMessages.formatTimestamp message.ts}} />
+                            <label col="0" class="message-user" text={{this.getUserDisplayName message.user}} />
+                            <label col="1" class="message-time" text={{this.formatTimestamp message.ts}} />
                           </grid-layout>
                           <label class="message-text" text={{message.text}} textWrap="true" />
                         </stack-layout>
