@@ -66,6 +66,10 @@ module.exports = (env) => {
     config.resolve.extensions.add('.gjs');
     config.resolve.extensions.add('.gts');
 
+    // Allow extension-less ESM imports (fixes "fully specified" errors)
+    // Required for @nativescript/core@9.0.18+ which uses imports without extensions
+    config.resolve.set('fullySpecified', false);
+
     // App-specific aliases
     config.resolve.alias.set('~', '/app');
     config.resolve.alias.delete('@');
