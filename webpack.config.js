@@ -88,17 +88,7 @@ module.exports = (env) => {
 
     // Allow extension-less ESM imports (fixes "fully specified" errors)
     // Required for @nativescript/core@9.0.18+ which uses imports without extensions
-    // Add platform-specific extensions to resolve
-    config.resolve.extensions
-      .add('.android.js')
-      .add('.ios.js')
-      .add('.android.ts')
-      .add('.ios.ts');
-    
-    // Disable fullySpecified for all modules to allow extensionless imports
-    config.module.rule('disable-fully-specified')
-      .test(/\.m?js$/)
-      .resolve.set('fullySpecified', false);
+    config.resolve.set('fullySpecified', false);
 
     // App-specific aliases
     config.resolve.alias.set('~', '/app');
