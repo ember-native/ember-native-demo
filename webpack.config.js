@@ -10,37 +10,57 @@ Module.registerHooks({
     if(context.parentURL && fileURLToPath(context.parentURL).includes('node:'))
       return nextResolve(specifier, context);
 
+    // Helper function to try resolving with platform-specific extensions
+    const tryResolveWithPlatformExtensions = (baseSpecifier, resolvePaths) => {
+      // Try original specifier first
+      try {
+        const resolved = require.resolve(baseSpecifier, resolvePaths ? { paths: resolvePaths } : undefined);
+        if (fs.existsSync(resolved)) {
+          return resolved;
+        }
+      } catch (e) {
+        // Continue to try platform-specific extensions
+      }
+
+      // If original fails, try platform-specific extensions
+      // NativeScript uses .android.js, .ios.js, .android.ts, .ios.ts
+      const platformExtensions = ['.android.js', '.ios.js', '.android.ts', '.ios.ts'];
+      
+      for (const ext of platformExtensions) {
+        try {
+          const platformSpecifier = baseSpecifier + ext;
+          const resolved = require.resolve(platformSpecifier, resolvePaths ? { paths: resolvePaths } : undefined);
+          if (fs.existsSync(resolved)) {
+            return resolved;
+          }
+        } catch (e) {
+          // Continue trying other extensions
+        }
+      }
+      
+      return null;
+    };
+
     if (context.parentURL) {
       const parentURL = fs.realpathSync(fileURLToPath(context.parentURL));
-      try {
-        const resolved = require.resolve(specifier, {
-          paths: [path.dirname(parentURL)]
-        });
-        if (fs.existsSync(resolved)) {
-          specifier = fs.realpathSync(resolved);
-          if (context.conditions.includes?.('import')) {
-            specifier = pathToFileURL(specifier).toString();
-          }
-        }
-        return nextResolve(specifier, context);
-        // eslint-disable-next-line no-unused-vars
-      } catch (e) {
-        //console.log('failed to resolve', specifier,' from ', parentURL, e);
-      }
-    }
-
-    try {
-      const resolved = require.resolve(specifier);
-      if (fs.existsSync(resolved)) {
+      const resolved = tryResolveWithPlatformExtensions(specifier, [path.dirname(parentURL)]);
+      
+      if (resolved) {
         specifier = fs.realpathSync(resolved);
         if (context.conditions.includes?.('import')) {
           specifier = pathToFileURL(specifier).toString();
         }
+        return nextResolve(specifier, context);
+      }
+    }
+
+    const resolved = tryResolveWithPlatformExtensions(specifier, null);
+    if (resolved) {
+      specifier = fs.realpathSync(resolved);
+      if (context.conditions.includes?.('import')) {
+        specifier = pathToFileURL(specifier).toString();
       }
       return nextResolve(specifier, context);
-      // eslint-disable-next-line no-unused-vars
-    } catch (e) {
-      // console.log('failed to resolve', specifier, e);
     }
 
     return nextResolve(originalSpecifier, context);
