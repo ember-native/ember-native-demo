@@ -7,60 +7,36 @@ Module.registerHooks({
   resolve: (specifier, context, nextResolve) => {
     //do your thing here
     const originalSpecifier = specifier;
-    if(context.parentURL && fileURLToPath(context.parentURL).includes('node:'))
-      return nextResolve(specifier, context);
-
-    // Helper function to try resolving with platform-specific extensions
-    const tryResolveWithPlatformExtensions = (baseSpecifier, resolvePaths) => {
-      // Try original specifier first
-      try {
-        const resolved = require.resolve(baseSpecifier, resolvePaths ? { paths: resolvePaths } : undefined);
-        if (fs.existsSync(resolved)) {
-          return resolved;
-        }
-      } catch (e) {
-        // Continue to try platform-specific extensions
-      }
-
-      // If original fails, try platform-specific extensions
-      // NativeScript uses .android.js, .ios.js, .android.ts, .ios.ts
-      const platformExtensions = ['.android.js', '.ios.js', '.android.ts', '.ios.ts'];
-      
-      for (const ext of platformExtensions) {
-        try {
-          const platformSpecifier = baseSpecifier + ext;
-          const resolved = require.resolve(platformSpecifier, resolvePaths ? { paths: resolvePaths } : undefined);
-          if (fs.existsSync(resolved)) {
-            return resolved;
-          }
-        } catch (e) {
-          // Continue trying other extensions
-        }
-      }
-      
-      return null;
-    };
+    if(context.parentURL && fileURLToPath(context.parentURL).includes('node:')) return nextResolve(specifier, context);
 
     if (context.parentURL) {
       const parentURL = fs.realpathSync(fileURLToPath(context.parentURL));
-      const resolved = tryResolveWithPlatformExtensions(specifier, [path.dirname(parentURL)]);
-      
-      if (resolved) {
+      try {
+        const resolved = require.resolve(specifier, { paths: [path.dirname(parentURL)] });
+        if (fs.existsSync(resolved)) {
+          specifier = fs.realpathSync(resolved);
+          if (context.conditions.includes?.('import')) {
+            specifier = pathToFileURL(specifier).toString();
+          }
+        }
+        return nextResolve(specifier, context);
+        // eslint-disable-next-line no-unused-vars
+      } catch (e) {
+        //console.log('failed to resolve', specifier,' from ', parentURL, e);
+      }
+    }
+    try {
+      const resolved = require.resolve(specifier);
+      if (fs.existsSync(resolved)) {
         specifier = fs.realpathSync(resolved);
         if (context.conditions.includes?.('import')) {
           specifier = pathToFileURL(specifier).toString();
         }
-        return nextResolve(specifier, context);
-      }
-    }
-
-    const resolved = tryResolveWithPlatformExtensions(specifier, null);
-    if (resolved) {
-      specifier = fs.realpathSync(resolved);
-      if (context.conditions.includes?.('import')) {
-        specifier = pathToFileURL(specifier).toString();
       }
       return nextResolve(specifier, context);
+      // eslint-disable-next-line no-unused-vars
+    } catch (e) {
+      // console.log('failed to resolve', specifier, e);
     }
 
     return nextResolve(originalSpecifier, context);
@@ -69,14 +45,15 @@ Module.registerHooks({
 
 const webpack = require('@nativescript/webpack');
 const configureEmberNative = require('ember-native/utils/webpack.config.js');
+const { execSync } = require("node:child_process");
 
 module.exports = (env) => {
-  webpack.init(env);
+	webpack.init(env);
 
   process.env.EMBER_HMR_ENABLED = 'true';
 
-  // Learn how to customize:
-  // https://docs.nativescript.org/webpack
+	// Learn how to customize:
+	// https://docs.nativescript.org/webpack
 
   // Use ember-native webpack configuration (includes embroider adapter)
   configureEmberNative(webpack);
@@ -85,11 +62,7 @@ module.exports = (env) => {
     // Add .gjs and .gts extensions
     config.resolve.extensions.add('.gjs');
     config.resolve.extensions.add('.gts');
-
-    // Allow extension-less ESM imports (fixes "fully specified" errors)
-    // Required for @nativescript/core@9.0.18+ which uses imports without extensions
-    config.resolve.set('fullySpecified', false);
-
+    // Test-specific aliases
     // App-specific aliases
     config.resolve.alias.set('~', '/app');
     config.resolve.alias.delete('@');
@@ -128,6 +101,7 @@ module.exports = (env) => {
           browser: true
         }
       });
+      console.log('define plugin', args);
       return args;
     });
   });
@@ -137,9 +111,7 @@ module.exports = (env) => {
       // make sure to keep pre-defined externals
       config.get('externals').concat([
         // add your own externals
-        {
-          'ember-compatibility-helpers': 'global globalThis'
-        },
+        { 'ember-compatibility-helpers': 'global globalThis' },
       ]),
     );
   });
@@ -171,7 +143,10 @@ module.exports = (env) => {
   // Configure webpack resolveLoader for pnpm
   webpack.chainWebpack((config) => {
     const nativescriptWebpackPath = fs.realpathSync(path.dirname(require.resolve('@nativescript/webpack/package.json')));
-
+    console.log(path.resolve(nativescriptWebpackPath, '..', '..'));
+    console.log(fs.readdirSync(path.resolve(nativescriptWebpackPath, '..', '..')));
+    console.log(path.resolve(nativescriptWebpackPath, 'dist', 'loaders'))
+    console.log(fs.readdirSync(path.resolve(nativescriptWebpackPath, 'dist', 'loaders')));
     config.resolveLoader.modules
       .add(path.resolve(__dirname, 'node_modules'))
       .add(path.resolve(nativescriptWebpackPath, '..', '..'))
@@ -179,6 +154,25 @@ module.exports = (env) => {
       .end();
   });
 
-  const conf = webpack.resolveConfig();
-  return conf;
+	let conf = webpack.resolveConfig();
+  console.log('conf', conf)
+  //console.log('module.rules', conf.module.rules.map(r => r.use))
+
+  // Wrap config in async function to run Embroider prebuild
+  return (() => {
+    try {
+      require('@embroider/vite');
+      console.log('🔨 Running Embroider prebuild...');
+      execSync('pnpm ember build', {
+        env: {
+          ...process.env,
+          EMBROIDER_PREBUILD: 'true',
+        }
+      })
+      console.log('✓ Embroider prebuild completed');
+    } catch (e) {
+      console.warn('⚠ Embroider prebuild failed:', e?.message || e);
+    }
+    return conf;
+  })();
 };
