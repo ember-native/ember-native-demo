@@ -9,6 +9,13 @@ Module.registerHooks({
     const originalSpecifier = specifier;
     if(context.parentURL && fileURLToPath(context.parentURL).includes('node:')) return nextResolve(specifier, context);
 
+    // Skip custom resolution for packages with conditional exports when importing
+    // This allows Node.js to properly resolve ESM vs CJS based on package.json exports
+    const packagesWithConditionalExports = ['acorn'];
+    if (context.conditions?.includes('import') && packagesWithConditionalExports.some(pkg => specifier === pkg || specifier.startsWith(pkg + '/'))) {
+      return nextResolve(originalSpecifier, context);
+    }
+
     if (context.parentURL) {
       const parentURL = fs.realpathSync(fileURLToPath(context.parentURL));
       try {
