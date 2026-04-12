@@ -65,9 +65,6 @@ module.exports = (env) => {
     // App-specific aliases
     config.resolve.alias.set('~', '/app');
     config.resolve.alias.delete('@');
-    
-    config.resolve.mainFields.clear().add('module').add('main');
-    config.resolve.conditionNames.add('import').add('module');
   });
 
   // HMR loaders for routes, controllers, templates
