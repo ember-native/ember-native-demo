@@ -121,12 +121,36 @@ function createUniversalESMResolverPlugin(contextPatterns = ['@nativescript/core
         ? resource.request.split('/').slice(0, 2).join('/')
         : resource.request.split('/')[0];
       
+      // Skip @nativescript packages - they handle their own resolution
+      if (packageName.startsWith('@nativescript')) {
+        return;
+      }
+      
+      // Skip common packages that don't have conditional export issues
+      const skipPackages = ['tslib', 'reflect-metadata'];
+      if (skipPackages.includes(packageName)) {
+        return;
+      }
+      
       // Try to resolve ESM entry point
       const esmPath = resolveESMEntry(packageName);
       
-      // Only replace if we found a different ESM entry point
+      // Only replace if:
+      // 1. We found an ESM path
+      // 2. It's different from the original request
+      // 3. The package actually has conditional exports (has 'exports' field)
       if (esmPath && esmPath !== resource.request) {
-        resource.request = esmPath;
+        try {
+          const pkgPath = require.resolve(`${packageName}/package.json`, { paths: [__dirname] });
+          const pkgJson = require(pkgPath);
+          
+          // Only replace if package has conditional exports
+          if (pkgJson.exports) {
+            resource.request = esmPath;
+          }
+        } catch (e) {
+          // Skip if we can't read package.json
+        }
       }
     }
   ];
