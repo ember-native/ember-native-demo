@@ -44,6 +44,94 @@ const webpack = require('@nativescript/webpack');
 const webpackLib = require('webpack');
 const configureEmberNative = require('ember-native/utils/webpack.config.js');
 
+/**
+ * Cache for resolved ESM paths to avoid repeated lookups
+ */
+const esmPathCache = new Map();
+
+/**
+ * Generic helper to resolve ESM entry point for packages with conditional exports
+ * @param {string} packageName - The package name to resolve
+ * @returns {string|null} - The resolved ESM path or null if not found
+ */
+function resolveESMEntry(packageName) {
+  if (esmPathCache.has(packageName)) {
+    return esmPathCache.get(packageName);
+  }
+  
+  try {
+    const pkgPath = require.resolve(`${packageName}/package.json`, { paths: [__dirname] });
+    const pkgJson = require(pkgPath);
+    const pkgDir = path.dirname(pkgPath);
+    
+    let esmPath = null;
+    
+    // Check for conditional exports
+    if (pkgJson.exports) {
+      const mainExport = pkgJson.exports['.'];
+      
+      // Handle different export formats
+      if (typeof mainExport === 'string') {
+        esmPath = path.join(pkgDir, mainExport);
+      } else if (Array.isArray(mainExport)) {
+        // Find import condition in array
+        const importEntry = mainExport.find(e => e && e.import);
+        if (importEntry && importEntry.import) {
+          esmPath = path.join(pkgDir, importEntry.import);
+        }
+      } else if (typeof mainExport === 'object') {
+        // Prefer 'import' over 'module' over 'default'
+        const esmField = mainExport.import || mainExport.module || mainExport.default;
+        if (esmField) {
+          esmPath = path.join(pkgDir, esmField);
+        }
+      }
+    }
+    
+    // Fallback to 'module' field
+    if (!esmPath && pkgJson.module) {
+      esmPath = path.join(pkgDir, pkgJson.module);
+    }
+    
+    esmPathCache.set(packageName, esmPath);
+    return esmPath;
+  } catch (e) {
+    esmPathCache.set(packageName, null);
+    return null;
+  }
+}
+
+/**
+ * Universal ESM resolver plugin that automatically handles any package with conditional exports
+ * No package names needed - works for all packages dynamically
+ * @param {string[]} contextPatterns - Patterns to match in resource.context (e.g., ['@nativescript/core'])
+ */
+function createUniversalESMResolverPlugin(contextPatterns = ['@nativescript/core']) {
+  return [
+    // Match any bare module import (no relative paths)
+    /^[^./]/,
+    (resource) => {
+      // Only process imports from specified contexts
+      if (!resource.context || !contextPatterns.some(pattern => resource.context.includes(pattern))) {
+        return;
+      }
+      
+      // Extract package name from request (handle scoped packages)
+      const packageName = resource.request.startsWith('@') 
+        ? resource.request.split('/').slice(0, 2).join('/')
+        : resource.request.split('/')[0];
+      
+      // Try to resolve ESM entry point
+      const esmPath = resolveESMEntry(packageName);
+      
+      // Only replace if we found a different ESM entry point
+      if (esmPath && esmPath !== resource.request) {
+        resource.request = esmPath;
+      }
+    }
+  ];
+}
+
 module.exports = (env) => {
 	webpack.init(env);
 
@@ -60,27 +148,10 @@ module.exports = (env) => {
     config.resolve.extensions.add('.gjs');
     config.resolve.extensions.add('.gts');
     
-    // Use NormalModuleReplacementPlugin to force ESM versions for packages with conditional exports
-    // This works better than resolve.alias because it happens during webpack's module resolution
-    config.plugin('acorn-esm-fix').use(webpackLib.NormalModuleReplacementPlugin, [
-      /^acorn$/,
-      (resource) => {
-        // Only replace when imported from @nativescript/core
-        if (resource.context && resource.context.includes('@nativescript/core')) {
-          resource.request = path.resolve(__dirname, 'node_modules/.pnpm/acorn@8.16.0/node_modules/acorn/dist/acorn.mjs');
-        }
-      }
-    ]);
-    
-    config.plugin('css-what-esm-fix').use(webpackLib.NormalModuleReplacementPlugin, [
-      /^css-what$/,
-      (resource) => {
-        // Only replace when imported from @nativescript/core
-        if (resource.context && resource.context.includes('@nativescript/core')) {
-          resource.request = path.resolve(__dirname, 'node_modules/.pnpm/css-what@7.0.0/node_modules/css-what/dist/esm/index.js');
-        }
-      }
-    ]);
+    // Universal ESM resolution fix - automatically handles ALL packages with conditional exports
+    // No need to specify package names - works dynamically for any package
+    const pluginConfig = createUniversalESMResolverPlugin(['@nativescript/core']);
+    config.plugin('universal-esm-fix').use(webpackLib.NormalModuleReplacementPlugin, pluginConfig);
     
     // Test-specific aliases
     // App-specific aliases
