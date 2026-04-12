@@ -66,9 +66,8 @@ module.exports = (env) => {
     config.resolve.alias.set('~', '/app');
     config.resolve.alias.delete('@');
     
-    // Fix for NativeScript 9.x: Ensure acorn is properly resolved
-    // @nativescript/core@9.0.18 requires acorn but webpack may not resolve it correctly
-    config.resolve.alias.set('acorn$', require.resolve('acorn/dist/acorn.mjs'));
+    config.resolve.mainFields.clear().add('module').add('main');
+    config.resolve.conditionNames.add('import').add('module');
   });
 
   // HMR loaders for routes, controllers, templates
