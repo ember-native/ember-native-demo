@@ -5,16 +5,8 @@ var { fileURLToPath, pathToFileURL } = require('node:url');
 
 Module.registerHooks({
   resolve: (specifier, context, nextResolve) => {
-    //do your thing here
     const originalSpecifier = specifier;
     if(context.parentURL && fileURLToPath(context.parentURL).includes('node:')) return nextResolve(specifier, context);
-
-    // Skip custom resolution for packages with conditional exports when importing
-    // This allows Node.js to properly resolve ESM vs CJS based on package.json exports
-    const packagesWithConditionalExports = ['acorn'];
-    if (context.conditions?.includes('import') && packagesWithConditionalExports.some(pkg => specifier === pkg || specifier.startsWith(pkg + '/'))) {
-      return nextResolve(originalSpecifier, context);
-    }
 
     if (context.parentURL) {
       const parentURL = fs.realpathSync(fileURLToPath(context.parentURL));
@@ -27,7 +19,6 @@ Module.registerHooks({
           }
         }
         return nextResolve(specifier, context);
-        // eslint-disable-next-line no-unused-vars
       } catch (e) {
         //console.log('failed to resolve', specifier,' from ', parentURL, e);
       }
@@ -41,7 +32,6 @@ Module.registerHooks({
         }
       }
       return nextResolve(specifier, context);
-      // eslint-disable-next-line no-unused-vars
     } catch (e) {
       // console.log('failed to resolve', specifier, e);
     }
@@ -51,6 +41,7 @@ Module.registerHooks({
 });
 
 const webpack = require('@nativescript/webpack');
+const webpackLib = require('webpack');
 const configureEmberNative = require('ember-native/utils/webpack.config.js');
 
 module.exports = (env) => {
@@ -68,6 +59,29 @@ module.exports = (env) => {
     // Add .gjs and .gts extensions
     config.resolve.extensions.add('.gjs');
     config.resolve.extensions.add('.gts');
+    
+    // Use NormalModuleReplacementPlugin to force ESM versions for packages with conditional exports
+    // This works better than resolve.alias because it happens during webpack's module resolution
+    config.plugin('acorn-esm-fix').use(webpackLib.NormalModuleReplacementPlugin, [
+      /^acorn$/,
+      (resource) => {
+        // Only replace when imported from @nativescript/core
+        if (resource.context && resource.context.includes('@nativescript/core')) {
+          resource.request = path.resolve(__dirname, 'node_modules/.pnpm/acorn@8.16.0/node_modules/acorn/dist/acorn.mjs');
+        }
+      }
+    ]);
+    
+    config.plugin('css-what-esm-fix').use(webpackLib.NormalModuleReplacementPlugin, [
+      /^css-what$/,
+      (resource) => {
+        // Only replace when imported from @nativescript/core
+        if (resource.context && resource.context.includes('@nativescript/core')) {
+          resource.request = path.resolve(__dirname, 'node_modules/.pnpm/css-what@7.0.0/node_modules/css-what/dist/esm/index.js');
+        }
+      }
+    ]);
+    
     // Test-specific aliases
     // App-specific aliases
     config.resolve.alias.set('~', '/app');
