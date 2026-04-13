@@ -80,7 +80,7 @@
     "eslint-plugin-ember": "^12.7.5",
     "eslint-plugin-n": "^17.21.0",
     "eslint-plugin-qunit": "^8.2.5",
-    "globals": "^16.3.0",
+    "globals": "^17.5.0",
     "https-browserify": "^1.0.0",
     "karma": "^4.4.1",
     "karma-coverage": "2.2.1",
