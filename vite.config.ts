@@ -1,71 +1,76 @@
 import { defineConfig } from 'vite';
 import { ember, esBuildResolver } from '@embroider/vite';
-import path from 'path';
-import { readFileSync } from 'fs';
+import { typescriptConfig } from '@nativescript/vite/typescript';
+import { babelPlugin } from "@warp-drive/core/build-config";
+import module from 'node:module';
+import type { Plugin } from 'esbuild';
+
+// Optional dependencies that should be marked as external
+const optionalDependencies = [
+  'bufferutil',
+  'utf-8-validate',
+  'supports-color',
+  'ember-source',
+  'ember-native-devtools',
+];
+
+// Custom esbuild plugin to resolve node modules before esBuildResolver
+const nodeModuleResolver = (): Plugin => ({
+  name: 'node-module-resolver',
+  setup(build) {
+    // Handle all imports to check if they're node modules
+    build.onResolve({ filter: /.*/ }, (args) => {
+      // Skip relative and absolute paths
+      if (args.path.startsWith('.') || args.path.startsWith('/')) {
+        return null;
+      }
+
+      let moduleName = args.path;
+
+      // Strip node: prefix if present
+      if (moduleName.startsWith('node:')) {
+        moduleName = moduleName.replace(/^node:/, '');
+      }
+
+      // Check if it's an optional dependency
+      if (optionalDependencies.includes(moduleName)) {
+        return {
+          path: moduleName,
+          external: true,
+        };
+      }
+
+      // Check if it's a built-in module using module.builtinModules
+      if (module.builtinModules?.includes(moduleName)) {
+        return {
+          path: moduleName,
+          external: true,
+        };
+      }
+
+      // Let the next resolver (esBuildResolver) handle it
+      return null;
+    });
+  },
+});
+
 
 export default defineConfig(({ mode }) => {
   const isDevMode = mode === 'development';
   const platform = 'android'; // Can be made dynamic based on CLI flags
 
+  const config = typescriptConfig({ mode }, {
+    esbuildPlugins: [
+      nodeModuleResolver(),
+      esBuildResolver()
+    ]
+  });
+
   return {
+    ...config,
     plugins: [
-      ember(),
+      ...ember(),
+      ...config.plugins,
     ],
-    resolve: {
-      extensions: ['.android.ts', '.android.js', '.ts', '.js', '.mjs', '.json'],
-      dedupe: [
-        'ember-source',
-        '@glimmer/component',
-        '@glimmer/tracking',
-        '@nativescript/core',
-      ],
-    },
-    optimizeDeps: {
-      exclude: [
-        '@nativescript/core',
-        '@ember/component',
-        '@ember/debug',
-        '@ember/destroyable',
-        '@ember/runloop',
-        '@ember/owner',
-        '@ember/service',
-        '@ember/object',
-        '@ember/application',
-        '@ember/routing',
-        '@ember/test-helpers',
-        '@ember/test-waiters',
-        '@glimmer/component',
-        '@glimmer/tracking',
-        '@glimmer/validator',
-        'ember-source',
-        'ember-modifier',
-        '@warp-drive/core',
-        '@warp-drive/json-api',
-        '@warp-drive/core-types',
-        '@embroider/macros',
-      ],
-      esbuildOptions: {
-        plugins: [esBuildResolver()],
-        target: 'es2020',
-        define: {
-          global: 'globalThis',
-          'process.env.NODE_ENV': JSON.stringify(mode),
-        },
-      },
-    },
-    esbuild: {
-      target: 'es2020',
-      keepNames: true,
-    },
-    server: isDevMode ? {
-      host: '0.0.0.0',
-      port: 5173,
-      strictPort: true,
-      cors: true,
-    } : {},
-    build: {
-      target: 'es2020',
-      minify: mode === 'production',
-    },
   };
 });
