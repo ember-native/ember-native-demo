@@ -125,14 +125,10 @@
     "os": false
   },
   "pnpm": {
+    "overrides": {
+      "lru-cache": "^10.0.0"
+    },
     "ignoredBuiltDependencies": [
-      "core-js",
-      "@nativescript/core",
-      "@nativescript/unit-test-runner",
-      "chromedriver",
-      "@parcel/watcher",
-      "core-js-pure",
-      "nativescript",
       "core-js",
       "@nativescript/core",
       "@nativescript/unit-test-runner",
@@ -152,8 +148,6 @@
     ],
     "patchedDependencies": {
       "@nativescript/unit-test-runner": "patches/@nativescript__unit-test-runner.patch"
-    },
-    "overrides": {
     }
   },
   "ember": {
