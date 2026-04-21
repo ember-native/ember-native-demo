@@ -69,6 +69,7 @@
     "@nativescript/types": "~8.9.1",
     "@nativescript/vite": "2.0.1",
     "@nativescript/webpack": "^5.0.33",
+    "@rollup/plugin-babel": "^7.0.0",
     "@types/qunit": "2.19.13",
     "babel-import-util": "^3.0.1",
     "babel-loader": "^10.0.0",

@@ -6,6 +6,9 @@ export default {
   appResourcesPath: 'App_Resources',
   bundler: 'vite',
   bundlerConfigPath: 'vite.config.ts',
+  cli: {
+    packageManager: 'pnpm'
+  },
   version: '1.0.0',
   android: {
     v8Flags: '--expose_gc',
