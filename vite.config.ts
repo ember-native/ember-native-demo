@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite';
-import { ember, esBuildResolver } from '@embroider/vite';
+import { ember, esBuildResolver, extensions } from '@embroider/vite';
+import { babel } from "@rollup/plugin-babel";
 import { typescriptConfig } from '@nativescript/vite/typescript';
-import { babelPlugin } from "@warp-drive/core/build-config";
 import module from 'node:module';
 import type { Plugin } from 'esbuild';
 
@@ -12,6 +12,19 @@ const optionalDependencies = [
   'supports-color',
   'ember-source',
   'ember-native-devtools',
+];
+
+// Packages with CJS/ESM interop issues that should be external
+const externalPackages = [
+  '@asamuzakjp/css-color',
+  '@csstools/css-calc',
+  '@csstools/css-color-parser',
+  '@csstools/css-parser-algorithms',
+  '@csstools/css-tokenizer',
+  'lru-cache',
+  'cssstyle',
+  'jsdom',
+  'happy-dom',
 ];
 
 // Custom esbuild plugin to resolve node modules before esBuildResolver
@@ -36,6 +49,14 @@ const nodeModuleResolver = (): Plugin => ({
       if (optionalDependencies.includes(moduleName)) {
         return {
           path: moduleName,
+          external: true,
+        };
+      }
+
+      // Check if it's a package with CJS/ESM interop issues
+      if (externalPackages.some(pkg => moduleName === pkg || moduleName.startsWith(pkg + '/'))) {
+        return {
+          path: args.path,
           external: true,
         };
       }
@@ -69,8 +90,36 @@ export default defineConfig(({ mode }) => {
   return {
     ...config,
     plugins: [
+      {
+        enforce: 'pre',
+        resolveId(id) {
+          if (id.startsWith('node:')) {
+            return id;
+          }
+          if (module.builtinModules?.includes(id)) {
+            return id;
+          }
+        }
+      },
       ...ember(),
       ...config.plugins,
+      babel({
+        babelHelpers: "runtime",
+        extensions,
+      }),
     ],
+    optimizeDeps: {
+      exclude: [
+        ...externalPackages,
+        ...optionalDependencies,
+      ],
+    },
+    ssr: {
+      external: [
+        ...externalPackages,
+        ...optionalDependencies,
+      ],
+      noExternal: false,
+    },
   };
 });
