@@ -4,28 +4,9 @@ import { babel } from "@rollup/plugin-babel";
 import { typescriptConfig } from '@nativescript/vite/typescript';
 import module from 'node:module';
 import type { Plugin } from 'esbuild';
+import * as fs from "node:fs";
+import commonjs from 'vite-plugin-commonjs'
 
-// Optional dependencies that should be marked as external
-const optionalDependencies = [
-  'bufferutil',
-  'utf-8-validate',
-  'supports-color',
-  'ember-source',
-  'ember-native-devtools',
-];
-
-// Packages with CJS/ESM interop issues that should be external
-const externalPackages = [
-  '@asamuzakjp/css-color',
-  '@csstools/css-calc',
-  '@csstools/css-color-parser',
-  '@csstools/css-parser-algorithms',
-  '@csstools/css-tokenizer',
-  'lru-cache',
-  'cssstyle',
-  'jsdom',
-  'happy-dom',
-];
 
 // Custom esbuild plugin to resolve node modules before esBuildResolver
 const nodeModuleResolver = (): Plugin => ({
@@ -43,22 +24,6 @@ const nodeModuleResolver = (): Plugin => ({
       // Strip node: prefix if present
       if (moduleName.startsWith('node:')) {
         moduleName = moduleName.replace(/^node:/, '');
-      }
-
-      // Check if it's an optional dependency
-      if (optionalDependencies.includes(moduleName)) {
-        return {
-          path: moduleName,
-          external: true,
-        };
-      }
-
-      // Check if it's a package with CJS/ESM interop issues
-      if (externalPackages.some(pkg => moduleName === pkg || moduleName.startsWith(pkg + '/'))) {
-        return {
-          path: args.path,
-          external: true,
-        };
       }
 
       // Check if it's a built-in module using module.builtinModules
@@ -92,15 +57,24 @@ export default defineConfig(({ mode }) => {
     plugins: [
       {
         enforce: 'pre',
-        resolveId(id) {
+        resolveId(id, importer, meta) {
+          if (fs.existsSync(id)) {
+            id = fs.realpathSync(id);
+          }
+          if(fs.existsSync(importer)) {
+            importer = fs.realpathSync(importer);
+          }
+
           if (id.startsWith('node:')) {
             return id;
           }
           if (module.builtinModules?.includes(id)) {
             return id;
           }
+          return this.resolve(id, importer, meta);
         }
       },
+      commonjs(),
       ...ember(),
       ...config.plugins,
       babel({
