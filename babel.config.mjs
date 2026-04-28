@@ -19,6 +19,7 @@ const warpDriveMacros = babelPlugin({
 export default {
   sourceType: 'module',
   plugins: [
+    '@babel/plugin-transform-unicode-regex',
     [
       '@babel/plugin-transform-typescript',
       {

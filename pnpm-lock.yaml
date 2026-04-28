@@ -10,11 +10,26 @@ patchedDependencies:
   '@nativescript/unit-test-runner':
     hash: 6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84
     path: patches/@nativescript__unit-test-runner.patch
+  '@nativescript/vite':
+    hash: 171d5f3ead8595f6a3b0f160e2adc457cee741ac3e03063410d905ea6855c3b1
+    path: patches/@nativescript__vite.patch
 
 importers:
 
   .:
     dependencies:
+      '@csstools/css-calc':
+        specifier: ^3.2.0
+        version: 3.2.0(fd61f445dd90f9d67b97905671bc743c)
+      '@csstools/css-color-parser':
+        specifier: ^4.1.0
+        version: 4.1.0(fd61f445dd90f9d67b97905671bc743c)
+      '@csstools/css-parser-algorithms':
+        specifier: ^4.0.0
+        version: 4.0.0(@csstools/css-tokenizer@4.0.0)
+      '@csstools/css-tokenizer':
+        specifier: ^4.0.0
+        version: 4.0.0
       '@ember/test-waiters':
         specifier: ^4.1.1
         version: 4.1.1(c8332dc3f90c0e60eb130a3a85f980b9)
@@ -42,9 +57,15 @@ importers:
       '@warp-drive/json-api':
         specifier: ^5.8.1
         version: 5.8.2(e9eb4f28ea425e34428e05179705440e)
+      bufferutil:
+        specifier: ^4.1.0
+        version: 4.1.0
       chromedriver:
         specifier: ^137.0.1
         version: 137.0.4
+      css-what:
+        specifier: ^8.0.0
+        version: 8.0.0
       ember-compatibility-helpers:
         specifier: ^1.2.7
         version: 1.2.7(@babel/core@7.29.0)
@@ -56,13 +77,10 @@ importers:
         version: 4.3.0(@babel/core@7.29.0)
       ember-native:
         specifier: ^3.1.0
-        version: 3.1.0(b224255c5c2a0f4e8609a7577cf7eccf)
-      ember-native-devtools:
-        specifier: ^1.0.3
-        version: 1.0.3
-      ember-source:
-        specifier: ^6.12.0
-        version: 6.12.0(@glimmer/component@2.1.1)(rsvp@4.8.5)
+        version: 3.1.0(5a7984169facb65f7819145f617dc444)
+      emoji-regex:
+        specifier: ^10.6.0
+        version: 10.6.0
       nativescript-ui-listview:
         specifier: ^15.2.3
         version: 15.2.3
@@ -74,7 +92,13 @@ importers:
         version: 5.0.5
       selenium-webdriver:
         specifier: ^4.34.0
-        version: 4.43.0
+        version: 4.43.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      tslib:
+        specifier: ^2.8.1
+        version: 2.8.1
+      utf-8-validate:
+        specifier: ^6.0.6
+        version: 6.0.6
     devDependencies:
       '@babel/core':
         specifier: ^7.28.5
@@ -88,6 +112,9 @@ importers:
       '@babel/plugin-transform-typescript':
         specifier: ^7.28.5
         version: 7.28.6(@babel/core@7.29.0)
+      '@babel/plugin-transform-unicode-regex':
+        specifier: ^7.27.1
+        version: 7.27.1(@babel/core@7.29.0)
       '@babel/runtime':
         specifier: ^7.29.2
         version: 7.29.2
@@ -96,13 +123,13 @@ importers:
         version: 5.4.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@embroider/compat':
         specifier: ^4.1.17
-        version: 4.1.17(aeb5d9f8bdcfb5e866a2a41764179e3d)
+        version: 4.1.17(f585e8c8618b24b11ca097ab403bc082)
       '@embroider/core':
         specifier: ^4.4.7
-        version: 4.4.7(@glint/template@1.7.7)
+        version: 4.4.7(274b4699c46eff401bcb8ff65c1e34e1)
       '@embroider/vite':
         specifier: ^1.7.2
-        version: 1.7.2(06527cc9922042f8ca8762b7778c9463)
+        version: 1.7.2(c6e9d675547592fcaf9a3670916d2d05)
       '@eslint/js':
         specifier: ^9.39.1
         version: 9.39.4
@@ -126,13 +153,16 @@ importers:
         version: 8.9.1
       '@nativescript/vite':
         specifier: 2.0.1
-        version: 2.0.1(9f046f988f944e5048a12e1cd31536af)
+        version: 2.0.1(patch_hash=171d5f3ead8595f6a3b0f160e2adc457cee741ac3e03063410d905ea6855c3b1)(46ba8ff4ef5bc2d8167123efe054ab31)
       '@nativescript/webpack':
         specifier: ^5.0.33
-        version: 5.0.33(f25b39a3b297b5fcecbc91af8067703d)
+        version: 5.0.33(7d0c0db3580ebce4a92dd481c6f0b850)
       '@rollup/plugin-babel':
         specifier: ^7.0.0
         version: 7.0.0(896c7ba45fb028d84d1727820139011f)
+      '@rollup/plugin-commonjs':
+        specifier: ^29.0.2
+        version: 29.0.2(rollup@4.60.2)
       '@types/qunit':
         specifier: 2.19.13
         version: 2.19.13
@@ -168,10 +198,13 @@ importers:
         version: 2.13.1(@glint/template@1.7.7)(webpack@5.106.2)
       ember-cli:
         specifier: ^6.12.0
-        version: 6.12.0(2a40f5d7605eab77add4fed8682d74d9)
+        version: 6.12.0(01c509375619f63b76c23681ca62d113)
       ember-cli-version-checker:
         specifier: ^5.1.2
         version: 5.1.2
+      ember-native-devtools:
+        specifier: ^1.0.3
+        version: 1.0.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       ember-qunit:
         specifier: ^9.0.4
         version: 9.0.4(ccac685a9f0303164367b88029c1ee61)
@@ -181,12 +214,15 @@ importers:
       ember-routable-component:
         specifier: ^1.2.0
         version: 1.2.0(6d319b1a0d9582607008b9b09e953766)
+      ember-source:
+        specifier: ^6.12.0
+        version: 6.12.0(@glimmer/component@2.1.1)(rsvp@4.8.5)
       ember-template-lint:
         specifier: ^7.9.2
         version: 7.9.3
       ember-vite-hmr:
         specifier: ^2.0.7
-        version: 2.1.3(20c53346027afbbdb67e0cbb4d7e2e33)
+        version: 2.1.3(8f5a5750dfb5203397f4657122daf817)
       esbuild:
         specifier: 0.27.7
         version: 0.27.7
@@ -219,7 +255,7 @@ importers:
         version: 2.1.0
       karma:
         specifier: ^4.4.1
-        version: 4.4.1
+        version: 4.4.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       karma-coverage:
         specifier: 2.2.1
         version: 2.2.1
@@ -228,13 +264,13 @@ importers:
         version: 1.0.0
       karma-qunit:
         specifier: 4.2.1
-        version: 4.2.1(karma@4.4.1)(qunit@2.25.0)
+        version: 4.2.1(2d5b6935178a82f7ebd093c9095c8b93)
       loader.js:
         specifier: ^4.7.0
         version: 4.7.0
       nativescript:
         specifier: ^9.0.5
-        version: 9.0.5(@types/node@25.6.0)
+        version: 9.0.5(c073af7ff5260df8adcaf38de0a91ba7)
       nyc:
         specifier: 17.1.0
         version: 17.1.0
@@ -255,7 +291,7 @@ importers:
         version: 4.60.2
       socket.io:
         specifier: ^4.8.1
-        version: 4.8.3
+        version: 4.8.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       source-map-js:
         specifier: ^1.2.1
         version: 1.2.1
@@ -1060,12 +1096,23 @@ packages:
     resolution: {integrity: sha512-S11EXWJyy0Mz5SYvRmY8nJYTFFd1LCNV+7cXyAgQtOOuzb4EsgfqDufL+9esx72/eLhsRdGZwaldu/h+E4t4BA==}
     engines: {node: '>=18'}
 
+  '@csstools/color-helpers@6.0.2':
+    resolution: {integrity: sha512-LMGQLS9EuADloEFkcTBR3BwV/CGHV7zyDxVRtVDTwdI2Ca4it0CCVTT9wCkxSgokjE5Ho41hEPgb8OEUwoXr6Q==}
+    engines: {node: '>=20.19.0'}
+
   '@csstools/css-calc@2.1.4':
     resolution: {integrity: sha512-3N8oaj+0juUw/1H3YwmDDJXCgTB1gKU6Hc/bB502u9zR0q2vd786XJH9QfrKIEgFlZmhZiq6epXl4rHqhzsIgQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@csstools/css-parser-algorithms': ^3.0.5
       '@csstools/css-tokenizer': ^3.0.4
+
+  '@csstools/css-calc@3.2.0':
+    resolution: {integrity: sha512-bR9e6o2BDB12jzN/gIbjHa5wLJ4UjD1CB9pM7ehlc0ddk6EBz+yYS1EV2MF55/HUxrHcB/hehAyt5vhsA3hx7w==}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      '@csstools/css-parser-algorithms': ^4.0.0
+      '@csstools/css-tokenizer': ^4.0.0
 
   '@csstools/css-color-parser@3.1.0':
     resolution: {integrity: sha512-nbtKwh3a6xNVIp/VRuXV64yTKnb1IjTAEEh3irzS+HkKjAOYLTGNb9pmVNntZ8iVBHcWDA2Dof0QtPgFI1BaTA==}
@@ -1074,15 +1121,32 @@ packages:
       '@csstools/css-parser-algorithms': ^3.0.5
       '@csstools/css-tokenizer': ^3.0.4
 
+  '@csstools/css-color-parser@4.1.0':
+    resolution: {integrity: sha512-U0KhLYmy2GVj6q4T3WaAe6NPuFYCPQoE3b0dRGxejWDgcPp8TP7S5rVdM5ZrFaqu4N67X8YaPBw14dQSYx3IyQ==}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      '@csstools/css-parser-algorithms': ^4.0.0
+      '@csstools/css-tokenizer': ^4.0.0
+
   '@csstools/css-parser-algorithms@3.0.5':
     resolution: {integrity: sha512-DaDeUkXZKjdGhgYaHNJTV9pV7Y9B3b644jCLs9Upc3VeNGg6LWARAT6O+Q+/COo+2gg/bM5rhpMAtf70WqfBdQ==}
     engines: {node: '>=18'}
     peerDependencies:
       '@csstools/css-tokenizer': ^3.0.4
 
+  '@csstools/css-parser-algorithms@4.0.0':
+    resolution: {integrity: sha512-+B87qS7fIG3L5h3qwJ/IFbjoVoOe/bpOdh9hAjXbvx0o8ImEmUsGXN0inFOnk2ChCFgqkkGFQ+TpM5rbhkKe4w==}
+    engines: {node: '>=20.19.0'}
+    peerDependencies:
+      '@csstools/css-tokenizer': ^4.0.0
+
   '@csstools/css-tokenizer@3.0.4':
     resolution: {integrity: sha512-Vd/9EVDiu6PPJt9yAh6roZP6El1xHrdvIVGjyBsHR0RYwNHgL7FJPyIIW4fANJNG6FtyZfvlRPpFI4ZM/lubvw==}
     engines: {node: '>=18'}
+
+  '@csstools/css-tokenizer@4.0.0':
+    resolution: {integrity: sha512-QxULHAm7cNu72w97JUNCBFODFaXpbDg+dP8b/oWFAZ2MTRppA3U00Y2L1HqaS4J6yBqxwa/Y3nMBaxVKbB/NsA==}
+    engines: {node: '>=20.19.0'}
 
   '@discoveryjs/json-ext@0.5.7':
     resolution: {integrity: sha512-dBVuXR082gk3jsFp7Rd/JI4kytwGHecnCoTtXFb7DB6CNHp4rg5k1bhg0nWdLGLnOV71lmDzGQaLMy8iPLY0pw==}
@@ -2426,42 +2490,49 @@ packages:
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@napi-rs/nice-linux-arm64-musl@1.1.1':
     resolution: {integrity: sha512-+2Rzdb3nTIYZ0YJF43qf2twhqOCkiSrHx2Pg6DJaCPYhhaxbLcdlV8hCRMHghQ+EtZQWGNcS2xF4KxBhSGeutg==}
     engines: {node: '>= 10'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@napi-rs/nice-linux-ppc64-gnu@1.1.1':
     resolution: {integrity: sha512-4FS8oc0GeHpwvv4tKciKkw3Y4jKsL7FRhaOeiPei0X9T4Jd619wHNe4xCLmN2EMgZoeGg+Q7GY7BsvwKpL22Tg==}
     engines: {node: '>= 10'}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@napi-rs/nice-linux-riscv64-gnu@1.1.1':
     resolution: {integrity: sha512-HU0nw9uD4FO/oGCCk409tCi5IzIZpH2agE6nN4fqpwVlCn5BOq0MS1dXGjXaG17JaAvrlpV5ZeyZwSon10XOXw==}
     engines: {node: '>= 10'}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@napi-rs/nice-linux-s390x-gnu@1.1.1':
     resolution: {integrity: sha512-2YqKJWWl24EwrX0DzCQgPLKQBxYDdBxOHot1KWEq7aY2uYeX+Uvtv4I8xFVVygJDgf6/92h9N3Y43WPx8+PAgQ==}
     engines: {node: '>= 10'}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@napi-rs/nice-linux-x64-gnu@1.1.1':
     resolution: {integrity: sha512-/gaNz3R92t+dcrfCw/96pDopcmec7oCcAQ3l/M+Zxr82KT4DljD37CpgrnXV+pJC263JkW572pdbP3hP+KjcIg==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@napi-rs/nice-linux-x64-musl@1.1.1':
     resolution: {integrity: sha512-xScCGnyj/oppsNPMnevsBe3pvNaoK7FGvMjT35riz9YdhB2WtTG47ZlbxtOLpjeO9SqqQ2J2igCmz6IJOD5JYw==}
     engines: {node: '>= 10'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@napi-rs/nice-openharmony-arm64@1.1.1':
     resolution: {integrity: sha512-6uJPRVwVCLDeoOaNyeiW0gp2kFIM4r7PL2MczdZQHkFi9gVlgm+Vn+V6nTWRcu856mJ2WjYJiumEajfSm7arPQ==}
@@ -2767,36 +2838,42 @@ packages:
     engines: {node: '>= 10.0.0'}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@parcel/watcher-linux-arm-musl@2.5.6':
     resolution: {integrity: sha512-Ve3gUCG57nuUUSyjBq/MAM0CzArtuIOxsBdQ+ftz6ho8n7s1i9E1Nmk/xmP323r2YL0SONs1EuwqBp2u1k5fxg==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@parcel/watcher-linux-arm64-glibc@2.5.6':
     resolution: {integrity: sha512-f2g/DT3NhGPdBmMWYoxixqYr3v/UXcmLOYy16Bx0TM20Tchduwr4EaCbmxh1321TABqPGDpS8D/ggOTaljijOA==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@parcel/watcher-linux-arm64-musl@2.5.6':
     resolution: {integrity: sha512-qb6naMDGlbCwdhLj6hgoVKJl2odL34z2sqkC7Z6kzir8b5W65WYDpLB6R06KabvZdgoHI/zxke4b3zR0wAbDTA==}
     engines: {node: '>= 10.0.0'}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@parcel/watcher-linux-x64-glibc@2.5.6':
     resolution: {integrity: sha512-kbT5wvNQlx7NaGjzPFu8nVIW1rWqV780O7ZtkjuWaPUgpv2NMFpjYERVi0UYj1msZNyCzGlaCWEtzc+exjMGbQ==}
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@parcel/watcher-linux-x64-musl@2.5.6':
     resolution: {integrity: sha512-1JRFeC+h7RdXwldHzTsmdtYR/Ku8SylLgTU/reMuqdVD7CtLwf0VR1FqeprZ0eHQkO0vqsbvFLXUmYm/uNKJBg==}
     engines: {node: '>= 10.0.0'}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@parcel/watcher-win32-arm64@2.5.6':
     resolution: {integrity: sha512-3ukyebjc6eGlw9yRt678DxVF7rjXatWiHvTXqphZLvo7aC5NdEgFufVwjFfY51ijYEWpXbqF5jtrK275z52D4Q==}
@@ -2945,24 +3022,28 @@ packages:
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-arm64-musl@1.0.0-rc.4':
     resolution: {integrity: sha512-lU+6rgXXViO61B4EudxtVMXSOfiZONR29Sys5VGSetUY7X8mg9FCKIIjcPPj8xNDeYzKl+H8F/qSKOBVFJChCQ==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rolldown/binding-linux-x64-gnu@1.0.0-rc.4':
     resolution: {integrity: sha512-DZaN1f0PGp/bSvKhtw50pPsnln4T13ycDq1FrDWRiHmWt1JeW+UtYg9touPFf8yt993p8tS2QjybpzKNTxYEwg==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rolldown/binding-linux-x64-musl@1.0.0-rc.4':
     resolution: {integrity: sha512-RnGxwZLN7fhMMAItnD6dZ7lvy+TI7ba+2V54UF4dhaWa/p8I/ys1E73KO6HmPmgz92ZkfD8TXS1IMV8+uhbR9g==}
     engines: {node: ^20.19.0 || >=22.12.0}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rolldown/binding-openharmony-arm64@1.0.0-rc.4':
     resolution: {integrity: sha512-6lcI79+X8klGiGd8yHuTgQRjuuJYNggmEml+RsyN596P23l/zf9FVmJ7K0KVKkFAeYEdg0iMUKyIxiV5vebDNQ==}
@@ -3101,66 +3182,79 @@ packages:
     resolution: {integrity: sha512-2QxQrM+KQ7DAW4o22j+XZ6RKdxjLD7BOWTP0Bv0tmjdyhXSsr2Ul1oJDQqh9Zf5qOwTuTc7Ek83mOFaKnodPjg==}
     cpu: [arm]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm-musleabihf@4.60.2':
     resolution: {integrity: sha512-TbziEu2DVsTEOPif2mKWkMeDMLoYjx95oESa9fkQQK7r/Orta0gnkcDpzwufEcAO2BLBsD7mZkXGFqEdMRRwfw==}
     cpu: [arm]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-arm64-gnu@4.60.2':
     resolution: {integrity: sha512-bO/rVDiDUuM2YfuCUwZ1t1cP+/yqjqz+Xf2VtkdppefuOFS2OSeAfgafaHNkFn0t02hEyXngZkxtGqXcXwO8Rg==}
     cpu: [arm64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-arm64-musl@4.60.2':
     resolution: {integrity: sha512-hr26p7e93Rl0Za+JwW7EAnwAvKkehh12BU1Llm9Ykiibg4uIr2rbpxG9WCf56GuvidlTG9KiiQT/TXT1yAWxTA==}
     cpu: [arm64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-loong64-gnu@4.60.2':
     resolution: {integrity: sha512-pOjB/uSIyDt+ow3k/RcLvUAOGpysT2phDn7TTUB3n75SlIgZzM6NKAqlErPhoFU+npgY3/n+2HYIQVbF70P9/A==}
     cpu: [loong64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-loong64-musl@4.60.2':
     resolution: {integrity: sha512-2/w+q8jszv9Ww1c+6uJT3OwqhdmGP2/4T17cu8WuwyUuuaCDDJ2ojdyYwZzCxx0GcsZBhzi3HmH+J5pZNXnd+Q==}
     cpu: [loong64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-ppc64-gnu@4.60.2':
     resolution: {integrity: sha512-11+aL5vKheYgczxtPVVRhdptAM2H7fcDR5Gw4/bTcteuZBlH4oP9f5s9zYO9aGZvoGeBpqXI/9TZZihZ609wKw==}
     cpu: [ppc64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-ppc64-musl@4.60.2':
     resolution: {integrity: sha512-i16fokAGK46IVZuV8LIIwMdtqhin9hfYkCh8pf8iC3QU3LpwL+1FSFGej+O7l3E/AoknL6Dclh2oTdnRMpTzFQ==}
     cpu: [ppc64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-riscv64-gnu@4.60.2':
     resolution: {integrity: sha512-49FkKS6RGQoriDSK/6E2GkAsAuU5kETFCh7pG4yD/ylj9rKhTmO3elsnmBvRD4PgJPds5W2PkhC82aVwmUcJ7A==}
     cpu: [riscv64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-riscv64-musl@4.60.2':
     resolution: {integrity: sha512-mjYNkHPfGpUR00DuM1ZZIgs64Hpf4bWcz9Z41+4Q+pgDx73UwWdAYyf6EG/lRFldmdHHzgrYyge5akFUW0D3mQ==}
     cpu: [riscv64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-linux-s390x-gnu@4.60.2':
     resolution: {integrity: sha512-ALyvJz965BQk8E9Al/JDKKDLH2kfKFLTGMlgkAbbYtZuJt9LU8DW3ZoDMCtQpXAltZxwBHevXz5u+gf0yA0YoA==}
     cpu: [s390x]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-gnu@4.60.2':
     resolution: {integrity: sha512-UQjrkIdWrKI626Du8lCQ6MJp/6V1LAo2bOK9OTu4mSn8GGXIkPXk/Vsp4bLHCd9Z9Iz2OTEaokUE90VweJgIYQ==}
     cpu: [x64]
     os: [linux]
+    libc: [glibc]
 
   '@rollup/rollup-linux-x64-musl@4.60.2':
     resolution: {integrity: sha512-bTsRGj6VlSdn/XD4CGyzMnzaBs9bsRxy79eTqTCBsA8TMIEky7qg48aPkvJvFe1HyzQ5oMZdg7AnVlWQSKLTnw==}
     cpu: [x64]
     os: [linux]
+    libc: [musl]
 
   '@rollup/rollup-openbsd-x64@4.60.2':
     resolution: {integrity: sha512-6d4Z3534xitaA1FcMWP7mQPq5zGwBmGbhphh2DwaA1aNIXUu3KTOfwrWpbwI4/Gr0uANo7NTtaykFyO2hPuFLg==}
@@ -4616,6 +4710,10 @@ packages:
   bufferpack@0.0.6:
     resolution: {integrity: sha512-MTWvLHElqczrIVhge9qHtqgNigJFyh0+tCDId5yCbFAfuekHWIG+uAgvoHVflwrDPuY/e47JE1ki5qcM7w4uLg==}
 
+  bufferutil@4.1.0:
+    resolution: {integrity: sha512-ZMANVnAixE6AWWnPzlW2KpUrxhm9woycYvPOo67jWHyFowASTEd9s+QN1EIMsSDtwhIxN4sWE1jotpuDUIgyIw==}
+    engines: {node: '>=6.14.2'}
+
   builtin-status-codes@3.0.0:
     resolution: {integrity: sha512-HpGFw18DgFWlncDfjTa2rcQ4W88O1mC8e8yZ2AvQY5KDaktSTwo+KRf6nHK6FRI5FyRyb/5T6+TSxfP7QyGsmQ==}
 
@@ -5310,6 +5408,10 @@ packages:
   css-what@7.0.0:
     resolution: {integrity: sha512-wD5oz5xibMOPHzy13CyGmogB3phdvcDaB5t0W/Nr5Z2O/agcB8YwOz6e2Lsp10pNDzBoDO9nVa3RGs/2BttpHQ==}
     engines: {node: '>= 6'}
+
+  css-what@8.0.0:
+    resolution: {integrity: sha512-DH0Bqq3DNp5tdOReuNyAA+Ev4Y2GS5FMbZpeTLP6C4CDi0h5nL0BmUPChXw3o/qbHLDWHl49sbNqQVY7bMSDdw==}
+    engines: {node: '>=20.19.0'}
 
   css@3.0.0:
     resolution: {integrity: sha512-DG9pFfwOrzc+hawpmqX/dHYHJG+Bsdb0klhyi1sDneOgGOXy9wQIC8hzyVp1e4NRYDBdxcylvywPkkXCHAzTyQ==}
@@ -8302,6 +8404,10 @@ packages:
     resolution: {integrity: sha512-s+w+rBWnpTMwSFbaE0UXsRlg7hU4FjekKU4eyAih5T8nJuNZT1nNsskXpxmeqSK9UzkBl6UgRlnKc8hz8IEqOw==}
     hasBin: true
 
+  node-gyp-build@4.8.4:
+    resolution: {integrity: sha512-LA4ZjwlnUblHVgq0oBF3Jl/6h/Nvs5fzBLwdEF4nuxnFdsfajde4WfxtJr3CaiH+F6ewcIB/q4jQ4UzPyid+CQ==}
+    hasBin: true
+
   node-gyp@12.3.0:
     resolution: {integrity: sha512-QNcUWM+HgJplcPzBvFBZ9VXacyGZ4+VTOb80PwWR+TlVzoHbRKULNEzpRsnaoxG3Wzr7Qh7BYxGDU3CbKib2Yg==}
     engines: {node: ^20.17.0 || >=22.9.0}
@@ -10802,6 +10908,10 @@ packages:
   username-sync@1.0.3:
     resolution: {integrity: sha512-m/7/FSqjJNAzF2La448c/aEom0gJy7HY7Y509h6l0ePvEkFictAGptwWaj1msWJ38JbfEDOUoE8kqFee9EHKdA==}
 
+  utf-8-validate@6.0.6:
+    resolution: {integrity: sha512-q3l3P9UtEEiAHcsgsqTgf9PPjctrDWoIXW3NpOHFdRDbLvu4DLIcxHangJ4RLrWkBcKjmcs/6NkerI8T/rE4LA==}
+    engines: {node: '>=6.14.2'}
+
   utif2@4.1.0:
     resolution: {integrity: sha512-+oknB9FHrJ7oW7A2WZYajOcv4FcDR4CfoGB0dPNfxbi4GO05RRnFmt5oa23+9w32EanrYcSJWspUiJkLMs+37w==}
 
@@ -11470,13 +11580,13 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.13
       '@jridgewell/trace-mapping': 0.3.31
 
-  '@analogjs/vite-plugin-angular@2.4.10(9fa719a5b7fde86b902dbd7686b76c73)':
+  '@analogjs/vite-plugin-angular@2.4.10(13c759a36eb87b4a9da4f1c170fee411)':
     dependencies:
       tinyglobby: 0.2.16
       ts-morph: 21.0.1
     optionalDependencies:
-      '@angular-devkit/build-angular': 21.2.7(ae8f95ad4a2d82baa2d82af140f08ea9)
-      '@angular/build': 21.2.7(8befdb386c99acf31a9da8185199854d)
+      '@angular-devkit/build-angular': 21.2.7(62b6ac8cf413b14f8a87d2ac4ffdfe39)
+      '@angular/build': 21.2.7(c72616aaff5030ff64a3850810babbe4)
 
   '@angular-devkit/architect@0.2102.7(chokidar@5.0.0)':
     dependencies:
@@ -11485,13 +11595,13 @@ snapshots:
     transitivePeerDependencies:
       - chokidar
 
-  '@angular-devkit/build-angular@21.2.7(ae8f95ad4a2d82baa2d82af140f08ea9)':
+  '@angular-devkit/build-angular@21.2.7(62b6ac8cf413b14f8a87d2ac4ffdfe39)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2102.7(chokidar@5.0.0)
       '@angular-devkit/build-webpack': 0.2102.7(fb76f63cc5249dd073a41d53e8237f84)
       '@angular-devkit/core': 21.2.7(chokidar@5.0.0)
-      '@angular/build': 21.2.7(29b7d1cf5c37987f101e00f06c934175)
+      '@angular/build': 21.2.7(a54f3a99f97fc4b64f2ed9331193d3fb)
       '@angular/compiler-cli': 21.2.9(16bc8c27b38506904f4a145cc190e039)
       '@babel/core': 7.29.0
       '@babel/generator': 7.29.1
@@ -11540,12 +11650,12 @@ snapshots:
       typescript: 5.9.3
       webpack: 5.105.2(esbuild@0.27.3)(webpack-cli@6.0.1)
       webpack-dev-middleware: 7.4.5(5423c5d75c1484632f9341ffd75f8c44)
-      webpack-dev-server: 5.2.3(693246e70867ad1907e547f6aefaa5b5)
+      webpack-dev-server: 5.2.3(2aca3b1233bb19e03cb0a1071a36e15b)
       webpack-merge: 6.0.1
       webpack-subresource-integrity: 5.1.0(b9d80a2ab8d9a521025cdb959d0d4c35)
     optionalDependencies:
       esbuild: 0.27.3
-      karma: 4.4.1
+      karma: 4.4.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - '@angular/compiler'
       - '@emnapi/core'
@@ -11576,7 +11686,7 @@ snapshots:
       '@angular-devkit/architect': 0.2102.7(chokidar@5.0.0)
       rxjs: 7.8.2
       webpack: 5.105.2(esbuild@0.27.3)(webpack-cli@6.0.1)
-      webpack-dev-server: 5.2.3(693246e70867ad1907e547f6aefaa5b5)
+      webpack-dev-server: 5.2.3(2aca3b1233bb19e03cb0a1071a36e15b)
     transitivePeerDependencies:
       - chokidar
 
@@ -11591,7 +11701,7 @@ snapshots:
     optionalDependencies:
       chokidar: 5.0.0
 
-  '@angular/build@21.2.7(29b7d1cf5c37987f101e00f06c934175)':
+  '@angular/build@21.2.7(a54f3a99f97fc4b64f2ed9331193d3fb)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2102.7(chokidar@5.0.0)
@@ -11625,7 +11735,7 @@ snapshots:
       vite: 7.3.2(205e7d951f5c998bec360d2b8500e5f2)
       watchpack: 2.5.1
     optionalDependencies:
-      karma: 4.4.1
+      karma: 4.4.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       less: 4.4.2
       lmdb: 3.5.1
       postcss: 8.5.6
@@ -11644,7 +11754,7 @@ snapshots:
       - tsx
       - yaml
 
-  '@angular/build@21.2.7(8befdb386c99acf31a9da8185199854d)':
+  '@angular/build@21.2.7(c72616aaff5030ff64a3850810babbe4)':
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@angular-devkit/architect': 0.2102.7(chokidar@5.0.0)
@@ -11678,7 +11788,7 @@ snapshots:
       vite: 7.3.2(4a82348c6ddf3c45ae9c86011d491ac3)
       watchpack: 2.5.1
     optionalDependencies:
-      karma: 4.4.1
+      karma: 4.4.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       less: 4.4.2
       lmdb: 3.5.1
       postcss: 8.5.10
@@ -12592,10 +12702,17 @@ snapshots:
 
   '@csstools/color-helpers@5.1.0': {}
 
+  '@csstools/color-helpers@6.0.2': {}
+
   '@csstools/css-calc@2.1.4(f5bbab77a7781b6ee795024fdb514bb3)':
     dependencies:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
+
+  '@csstools/css-calc@3.2.0(fd61f445dd90f9d67b97905671bc743c)':
+    dependencies:
+      '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
+      '@csstools/css-tokenizer': 4.0.0
 
   '@csstools/css-color-parser@3.1.0(f5bbab77a7781b6ee795024fdb514bb3)':
     dependencies:
@@ -12604,11 +12721,24 @@ snapshots:
       '@csstools/css-parser-algorithms': 3.0.5(@csstools/css-tokenizer@3.0.4)
       '@csstools/css-tokenizer': 3.0.4
 
+  '@csstools/css-color-parser@4.1.0(fd61f445dd90f9d67b97905671bc743c)':
+    dependencies:
+      '@csstools/color-helpers': 6.0.2
+      '@csstools/css-calc': 3.2.0(fd61f445dd90f9d67b97905671bc743c)
+      '@csstools/css-parser-algorithms': 4.0.0(@csstools/css-tokenizer@4.0.0)
+      '@csstools/css-tokenizer': 4.0.0
+
   '@csstools/css-parser-algorithms@3.0.5(@csstools/css-tokenizer@3.0.4)':
     dependencies:
       '@csstools/css-tokenizer': 3.0.4
 
+  '@csstools/css-parser-algorithms@4.0.0(@csstools/css-tokenizer@4.0.0)':
+    dependencies:
+      '@csstools/css-tokenizer': 4.0.0
+
   '@csstools/css-tokenizer@3.0.4': {}
+
+  '@csstools/css-tokenizer@4.0.0': {}
 
   '@discoveryjs/json-ext@0.5.7': {}
 
@@ -12708,7 +12838,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/compat@4.1.17(aeb5d9f8bdcfb5e866a2a41764179e3d)':
+  '@embroider/compat@4.1.17(f585e8c8618b24b11ca097ab403bc082)':
     dependencies:
       '@babel/code-frame': 7.29.0
       '@babel/core': 7.29.0
@@ -12719,7 +12849,7 @@ snapshots:
       '@babel/preset-env': 7.29.2(@babel/core@7.29.0)
       '@babel/runtime': 7.29.2
       '@babel/traverse': 7.29.0
-      '@embroider/core': 4.4.7(@glint/template@1.7.7)
+      '@embroider/core': 4.4.7(274b4699c46eff401bcb8ff65c1e34e1)
       '@embroider/macros': 1.20.2(c8332dc3f90c0e60eb130a3a85f980b9)
       '@types/babel__code-frame': 7.27.0
       assert-never: 1.4.0
@@ -12743,7 +12873,7 @@ snapshots:
       fast-sourcemap-concat: 2.1.1
       fs-extra: 9.1.0
       fs-tree-diff: 2.0.1
-      jsdom: 26.1.0
+      jsdom: 26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       lodash: 4.18.1
       pkg-up: 3.1.0
       resolve: 1.22.12
@@ -12761,7 +12891,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@embroider/core@4.4.7(@glint/template@1.7.7)':
+  '@embroider/core@4.4.7(274b4699c46eff401bcb8ff65c1e34e1)':
     dependencies:
       '@babel/core': 7.29.0
       '@babel/parser': 7.29.2
@@ -12782,7 +12912,7 @@ snapshots:
       fs-tree-diff: 2.0.1
       handlebars: 4.7.9
       js-string-escape: 1.0.1
-      jsdom: 25.0.1
+      jsdom: 25.0.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       lodash: 4.18.1
       resolve: 1.22.12
       resolve-package-path: 4.0.3
@@ -12853,10 +12983,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@embroider/vite@1.7.2(06527cc9922042f8ca8762b7778c9463)':
+  '@embroider/vite@1.7.2(c6e9d675547592fcaf9a3670916d2d05)':
     dependencies:
       '@babel/core': 7.29.0
-      '@embroider/core': 4.4.7(@glint/template@1.7.7)
+      '@embroider/core': 4.4.7(274b4699c46eff401bcb8ff65c1e34e1)
       '@embroider/macros': 1.20.2(c8332dc3f90c0e60eb130a3a85f980b9)
       '@embroider/reverse-exports': 0.2.0
       assert-never: 1.4.0
@@ -12867,7 +12997,7 @@ snapshots:
       debug: 4.4.3
       fast-glob: 3.3.3
       fs-extra: 10.1.0
-      jsdom: 25.0.1
+      jsdom: 25.0.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       send: 0.18.0
       source-map-url: 0.4.1
       terser: 5.46.1
@@ -14088,11 +14218,11 @@ snapshots:
       '@nativescript/hook': 2.0.0
       glob-regex: 0.3.2
 
-  '@nativescript/vite@2.0.1(9f046f988f944e5048a12e1cd31536af)':
+  '@nativescript/vite@2.0.1(patch_hash=171d5f3ead8595f6a3b0f160e2adc457cee741ac3e03063410d905ea6855c3b1)(46ba8ff4ef5bc2d8167123efe054ab31)':
     dependencies:
-      '@analogjs/vite-plugin-angular': 2.4.10(9fa719a5b7fde86b902dbd7686b76c73)
-      '@angular-devkit/build-angular': 21.2.7(ae8f95ad4a2d82baa2d82af140f08ea9)
-      '@angular/build': 21.2.7(8befdb386c99acf31a9da8185199854d)
+      '@analogjs/vite-plugin-angular': 2.4.10(13c759a36eb87b4a9da4f1c170fee411)
+      '@angular-devkit/build-angular': 21.2.7(62b6ac8cf413b14f8a87d2ac4ffdfe39)
+      '@angular/build': 21.2.7(c72616aaff5030ff64a3850810babbe4)
       '@babel/core': 7.29.0
       '@babel/generator': 7.29.1
       '@babel/parser': 7.29.2
@@ -14111,7 +14241,7 @@ snapshots:
       vite-plugin-solid: 2.11.12(8f549f51eafbc0ffad934e24cbb21b87)
       vite-plugin-static-copy: 3.4.0(d4f61d30e2c0092455c3a7850a7ee49f)
       vue-tsc: 3.2.7(typescript@5.9.3)
-      ws: 8.20.0
+      ws: 8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - '@angular/compiler'
       - '@angular/compiler-cli'
@@ -14162,7 +14292,7 @@ snapshots:
       - webpack-cli
       - yaml
 
-  '@nativescript/webpack@5.0.33(f25b39a3b297b5fcecbc91af8067703d)':
+  '@nativescript/webpack@5.0.33(7d0c0db3580ebce4a92dd481c6f0b850)':
     dependencies:
       '@babel/core': 7.29.0
       '@pmmmwh/react-refresh-webpack-plugin': 0.6.2(7e5cb10a9420926641332ff734c8a73c)
@@ -14196,9 +14326,9 @@ snapshots:
       ts-loader: 9.5.7(typescript@5.9.3)(webpack@5.106.2)
       vue-loader: 17.4.2(ef6fd65e0bbff454bd36fa067ad42a80)
       webpack: 5.106.2(esbuild@0.27.7)(webpack-cli@6.0.1)
-      webpack-bundle-analyzer: 4.10.2
+      webpack-bundle-analyzer: 4.10.2(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       webpack-chain: 6.5.1
-      webpack-cli: 6.0.1(2bb34b4d180de47fa381188b48edc510)
+      webpack-cli: 6.0.1(5df4669886d81961e852447e16fec13e)
       webpack-merge: 6.0.1
       webpack-virtual-modules: 0.4.6
     transitivePeerDependencies:
@@ -14285,7 +14415,7 @@ snapshots:
       proggy: 4.0.0
       promise-all-reject-late: 1.0.1
       promise-call-limit: 3.0.2
-      semver: 7.7.3
+      semver: 7.7.4
       ssri: 13.0.1
       treeverse: 3.0.0
       walk-up-path: 4.0.0
@@ -14294,7 +14424,7 @@ snapshots:
 
   '@npmcli/fs@5.0.0':
     dependencies:
-      semver: 7.7.3
+      semver: 7.7.4
 
   '@npmcli/git@7.0.2':
     dependencies:
@@ -14304,7 +14434,7 @@ snapshots:
       lru-cache: 11.3.5
       npm-pick-manifest: 11.0.3
       proc-log: 6.1.0
-      semver: 7.7.3
+      semver: 7.7.4
       which: 6.0.1
 
   '@npmcli/installed-package-contents@4.0.0':
@@ -14325,7 +14455,7 @@ snapshots:
       json-parse-even-better-errors: 5.0.0
       pacote: 21.0.4
       proc-log: 6.1.0
-      semver: 7.7.3
+      semver: 7.7.4
     transitivePeerDependencies:
       - supports-color
 
@@ -14340,7 +14470,7 @@ snapshots:
       hosted-git-info: 9.0.2
       json-parse-even-better-errors: 5.0.0
       proc-log: 6.1.0
-      semver: 7.7.3
+      semver: 7.7.4
       spdx-expression-parse: 4.0.0
 
   '@npmcli/promise-spawn@9.0.1':
@@ -14708,7 +14838,7 @@ snapshots:
       webpack: 5.106.2(esbuild@0.27.7)(webpack-cli@6.0.1)
     optionalDependencies:
       type-fest: 4.41.0
-      webpack-dev-server: 5.2.3(693246e70867ad1907e547f6aefaa5b5)
+      webpack-dev-server: 5.2.3(2aca3b1233bb19e03cb0a1071a36e15b)
 
   '@pnpm/constants@1001.3.1': {}
 
@@ -15555,19 +15685,19 @@ snapshots:
   '@webpack-cli/configtest@3.0.1(webpack-cli@6.0.1)(webpack@5.106.2)':
     dependencies:
       webpack: 5.106.2(esbuild@0.27.7)(webpack-cli@6.0.1)
-      webpack-cli: 6.0.1(2bb34b4d180de47fa381188b48edc510)
+      webpack-cli: 6.0.1(5df4669886d81961e852447e16fec13e)
 
   '@webpack-cli/info@3.0.1(webpack-cli@6.0.1)(webpack@5.106.2)':
     dependencies:
       webpack: 5.106.2(esbuild@0.27.7)(webpack-cli@6.0.1)
-      webpack-cli: 6.0.1(2bb34b4d180de47fa381188b48edc510)
+      webpack-cli: 6.0.1(5df4669886d81961e852447e16fec13e)
 
   '@webpack-cli/serve@3.0.1(16a9f95d06617bd86b07bb6929927c18)':
     dependencies:
       webpack: 5.106.2(esbuild@0.27.7)(webpack-cli@6.0.1)
-      webpack-cli: 6.0.1(2bb34b4d180de47fa381188b48edc510)
+      webpack-cli: 6.0.1(5df4669886d81961e852447e16fec13e)
     optionalDependencies:
-      webpack-dev-server: 5.2.3(693246e70867ad1907e547f6aefaa5b5)
+      webpack-dev-server: 5.2.3(2aca3b1233bb19e03cb0a1071a36e15b)
 
   '@xml-tools/parser@1.0.11':
     dependencies:
@@ -16955,6 +17085,10 @@ snapshots:
 
   bufferpack@0.0.6: {}
 
+  bufferutil@4.1.0:
+    dependencies:
+      node-gyp-build: 4.8.4
+
   builtin-status-codes@3.0.0: {}
 
   bundle-name@4.1.0:
@@ -17558,6 +17692,8 @@ snapshots:
 
   css-what@7.0.0: {}
 
+  css-what@8.0.0: {}
+
   css@3.0.0:
     dependencies:
       inherits: 2.0.4
@@ -18108,7 +18244,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-cli@6.12.0(2a40f5d7605eab77add4fed8682d74d9):
+  ember-cli@6.12.0(01c509375619f63b76c23681ca62d113):
     dependencies:
       '@ember-tooling/blueprint-blueprint': 0.2.1
       '@ember-tooling/blueprint-model': 0.5.0
@@ -18187,7 +18323,7 @@ snapshots:
       silent-error: 1.1.1
       sort-package-json: 3.6.1
       symlink-or-copy: 1.3.1
-      testem: 3.20.0(64f5eaad86720bfcafe9c14c3aa01c04)
+      testem: 3.20.0(f01e8ba20d2419895208619b3ded65a9)
       tiny-lr: 2.0.0
       tree-sync: 2.1.0
       walk-sync: 4.0.1
@@ -18342,25 +18478,25 @@ snapshots:
       - '@babel/core'
       - supports-color
 
-  ember-native-devtools@1.0.3:
+  ember-native-devtools@1.0.3(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       chromedriver: 129.0.4
       ember-inspector: 4.15.1
-      selenium-webdriver: 4.43.0
+      selenium-webdriver: 4.43.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - bufferutil
       - debug
       - supports-color
       - utf-8-validate
 
-  ember-native@3.1.0(b224255c5c2a0f4e8609a7577cf7eccf):
+  ember-native@3.1.0(5a7984169facb65f7819145f617dc444):
     dependencies:
       '@babel/plugin-syntax-decorators': 7.28.6(@babel/core@7.29.0)
       '@ember/render-modifiers': 3.0.0(e38124df485b593f5d3b009cf43c31c0)
       '@ember/string': 4.0.1
       '@ember/test-waiters': 4.1.1(c8332dc3f90c0e60eb130a3a85f980b9)
       '@embroider/addon-shim': 1.10.2
-      '@embroider/vite': 1.7.2(06527cc9922042f8ca8762b7778c9463)
+      '@embroider/vite': 1.7.2(c6e9d675547592fcaf9a3670916d2d05)
       '@eslint/js': 9.39.4
       '@glimmer/component': 2.1.1
       '@nativescript/core': 9.0.18
@@ -18482,14 +18618,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  ember-vite-hmr@2.1.3(20c53346027afbbdb67e0cbb4d7e2e33):
+  ember-vite-hmr@2.1.3(8f5a5750dfb5203397f4657122daf817):
     dependencies:
       '@babel/core': 7.29.0
       '@babel/plugin-transform-typescript': 7.28.6(@babel/core@7.29.0)
       '@babel/traverse': 7.29.0
       '@babel/types': 7.29.0
       '@embroider/addon-shim': 1.10.2
-      '@embroider/compat': 4.1.17(aeb5d9f8bdcfb5e866a2a41764179e3d)
+      '@embroider/compat': 4.1.17(f585e8c8618b24b11ca097ab403bc082)
       '@glimmer/syntax': 0.95.0
       '@types/supports-color': 10.0.0
       babel-import-util: 3.0.1
@@ -18520,7 +18656,7 @@ snapshots:
     dependencies:
       once: 1.4.0
 
-  engine.io-client@3.2.1:
+  engine.io-client@3.2.1(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       component-emitter: 1.2.1
       component-inherit: 0.0.3
@@ -18530,7 +18666,7 @@ snapshots:
       indexof: 0.0.1
       parseqs: 0.0.5
       parseuri: 0.0.5
-      ws: 3.3.3
+      ws: 3.3.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       xmlhttprequest-ssl: 1.5.5
       yeast: 0.1.2
     transitivePeerDependencies:
@@ -18548,20 +18684,20 @@ snapshots:
 
   engine.io-parser@5.2.3: {}
 
-  engine.io@3.2.1:
+  engine.io@3.2.1(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       accepts: 1.3.8
       base64id: 1.0.0
       cookie: 0.3.1
       debug: 3.1.0
       engine.io-parser: 2.1.3
-      ws: 3.3.3
+      ws: 3.3.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  engine.io@6.6.6:
+  engine.io@6.6.6(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       '@types/cors': 2.8.19
       '@types/node': 25.6.0
@@ -18572,7 +18708,7 @@ snapshots:
       cors: 2.8.6
       debug: 4.4.3
       engine.io-parser: 5.2.3
-      ws: 8.18.3
+      ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
@@ -20530,7 +20666,7 @@ snapshots:
 
   jsbn@0.1.1: {}
 
-  jsdom@25.0.1:
+  jsdom@25.0.1(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       cssstyle: 4.6.0
       data-urls: 5.0.0
@@ -20551,14 +20687,14 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-      ws: 8.20.0
+      ws: 8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  jsdom@26.1.0:
+  jsdom@26.1.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       cssstyle: 4.6.0
       data-urls: 5.0.0
@@ -20578,7 +20714,7 @@ snapshots:
       whatwg-encoding: 3.1.1
       whatwg-mimetype: 4.0.0
       whatwg-url: 14.2.0
-      ws: 8.20.0
+      ws: 8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       xml-name-validator: 5.0.0
     transitivePeerDependencies:
       - bufferutil
@@ -20681,16 +20817,16 @@ snapshots:
     dependencies:
       shelljs: 0.9.2
 
-  karma-qunit@4.2.1(karma@4.4.1)(qunit@2.25.0):
+  karma-qunit@4.2.1(2d5b6935178a82f7ebd093c9095c8b93):
     dependencies:
-      karma: 4.4.1
+      karma: 4.4.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       qunit: 2.25.0
 
   karma-source-map-support@1.4.0:
     dependencies:
       source-map-support: 0.5.21
 
-  karma@4.4.1:
+  karma@4.4.1(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       bluebird: 3.7.2
       body-parser: 1.20.4
@@ -20714,7 +20850,7 @@ snapshots:
       range-parser: 1.2.1
       rimraf: 2.7.1
       safe-buffer: 5.2.1
-      socket.io: 2.1.1
+      socket.io: 2.1.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       source-map: 0.6.1
       tmp: 0.0.33
       useragent: 2.3.0
@@ -21391,7 +21527,7 @@ snapshots:
     dependencies:
       nativescript-ui-core: 15.2.3
 
-  nativescript@9.0.5(@types/node@25.6.0):
+  nativescript@9.0.5(c073af7ff5260df8adcaf38de0a91ba7):
     dependencies:
       '@foxt/js-srp': 0.0.3-patch2
       '@nativescript/doctor': 2.0.17
@@ -21445,7 +21581,7 @@ snapshots:
       universal-analytics: 0.5.3
       uuid: 11.1.0
       winreg: 1.2.5
-      ws: 8.18.3
+      ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       xml2js: 0.6.2
       yargs: 17.7.2
       yazl: 3.3.1
@@ -21505,6 +21641,8 @@ snapshots:
       detect-libc: 2.1.2
     optional: true
 
+  node-gyp-build@4.8.4: {}
+
   node-gyp@12.3.0:
     dependencies:
       env-paths: 2.2.1
@@ -21555,7 +21693,7 @@ snapshots:
 
   npm-install-checks@8.0.0:
     dependencies:
-      semver: 7.7.3
+      semver: 7.7.4
 
   npm-normalize-package-bin@5.0.0: {}
 
@@ -21576,7 +21714,7 @@ snapshots:
       npm-install-checks: 8.0.0
       npm-normalize-package-bin: 5.0.0
       npm-package-arg: 13.0.2
-      semver: 7.7.3
+      semver: 7.7.4
 
   npm-registry-fetch@19.1.1:
     dependencies:
@@ -23158,12 +23296,12 @@ snapshots:
 
   select-hose@2.0.0: {}
 
-  selenium-webdriver@4.43.0:
+  selenium-webdriver@4.43.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       '@bazel/runfiles': 6.5.0
       jszip: 3.10.1
       tmp: 0.2.5
-      ws: 8.20.0
+      ws: 8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -23459,23 +23597,23 @@ snapshots:
 
   socket.io-adapter@1.1.2: {}
 
-  socket.io-adapter@2.5.6:
+  socket.io-adapter@2.5.6(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       debug: 4.4.3
-      ws: 8.18.3
+      ws: 8.18.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  socket.io-client@2.1.1:
+  socket.io-client@2.1.1(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       backo2: 1.0.2
       base64-arraybuffer: 0.1.5
       component-bind: 1.0.0
       component-emitter: 1.2.1
       debug: 3.1.0
-      engine.io-client: 3.2.1
+      engine.io-client: 3.2.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       has-binary2: 1.0.3
       has-cors: 1.1.0
       indexof: 0.0.1
@@ -23504,27 +23642,27 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  socket.io@2.1.1:
+  socket.io@2.1.1(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       debug: 3.1.0
-      engine.io: 3.2.1
+      engine.io: 3.2.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       has-binary2: 1.0.3
       socket.io-adapter: 1.1.2
-      socket.io-client: 2.1.1
+      socket.io-client: 2.1.1(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       socket.io-parser: 3.2.0
     transitivePeerDependencies:
       - bufferutil
       - supports-color
       - utf-8-validate
 
-  socket.io@4.8.3:
+  socket.io@4.8.3(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       accepts: 1.3.8
       base64id: 2.0.0
       cors: 2.8.6
       debug: 4.4.3
-      engine.io: 6.6.6
-      socket.io-adapter: 2.5.6
+      engine.io: 6.6.6(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      socket.io-adapter: 2.5.6(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       socket.io-parser: 4.2.6
     transitivePeerDependencies:
       - bufferutil
@@ -24008,7 +24146,7 @@ snapshots:
       glob: 7.2.3
       minimatch: 3.1.5
 
-  testem@3.20.0(64f5eaad86720bfcafe9c14c3aa01c04):
+  testem@3.20.0(f01e8ba20d2419895208619b3ded65a9):
     dependencies:
       '@xmldom/xmldom': 0.9.10
       backbone: 1.6.1
@@ -24030,7 +24168,7 @@ snapshots:
       printf: 0.6.1
       proc-log: 6.1.0
       rimraf: 6.1.3
-      socket.io: 4.8.3
+      socket.io: 4.8.3(bufferutil@4.1.0)(utf-8-validate@6.0.6)
       spawn-args: 0.2.0
       styled_string: 0.0.1
       tap-parser: 18.3.3
@@ -24488,6 +24626,10 @@ snapshots:
 
   username-sync@1.0.3: {}
 
+  utf-8-validate@6.0.6:
+    dependencies:
+      node-gyp-build: 4.8.4
+
   utif2@4.1.0:
     dependencies:
       pako: 1.0.11
@@ -24738,7 +24880,7 @@ snapshots:
 
   webidl-conversions@7.0.0: {}
 
-  webpack-bundle-analyzer@4.10.2:
+  webpack-bundle-analyzer@4.10.2(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
       acorn: 8.16.0
@@ -24751,7 +24893,7 @@ snapshots:
       opener: 1.5.2
       picocolors: 1.1.1
       sirv: 2.0.4
-      ws: 7.5.10
+      ws: 7.5.10(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     transitivePeerDependencies:
       - bufferutil
       - utf-8-validate
@@ -24761,7 +24903,7 @@ snapshots:
       deepmerge: 1.5.2
       javascript-stringify: 2.1.0
 
-  webpack-cli@6.0.1(2bb34b4d180de47fa381188b48edc510):
+  webpack-cli@6.0.1(5df4669886d81961e852447e16fec13e):
     dependencies:
       '@discoveryjs/json-ext': 0.6.3
       '@webpack-cli/configtest': 3.0.1(webpack-cli@6.0.1)(webpack@5.106.2)
@@ -24778,8 +24920,8 @@ snapshots:
       webpack: 5.106.2(esbuild@0.27.7)(webpack-cli@6.0.1)
       webpack-merge: 6.0.1
     optionalDependencies:
-      webpack-bundle-analyzer: 4.10.2
-      webpack-dev-server: 5.2.3(693246e70867ad1907e547f6aefaa5b5)
+      webpack-bundle-analyzer: 4.10.2(bufferutil@4.1.0)(utf-8-validate@6.0.6)
+      webpack-dev-server: 5.2.3(2aca3b1233bb19e03cb0a1071a36e15b)
 
   webpack-dev-middleware@7.4.5(5423c5d75c1484632f9341ffd75f8c44):
     dependencies:
@@ -24794,7 +24936,7 @@ snapshots:
     transitivePeerDependencies:
       - tslib
 
-  webpack-dev-server@5.2.3(693246e70867ad1907e547f6aefaa5b5):
+  webpack-dev-server@5.2.3(2aca3b1233bb19e03cb0a1071a36e15b):
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
@@ -24823,10 +24965,10 @@ snapshots:
       sockjs: 0.3.24
       spdy: 4.0.2
       webpack-dev-middleware: 7.4.5(5423c5d75c1484632f9341ffd75f8c44)
-      ws: 8.20.0
+      ws: 8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6)
     optionalDependencies:
       webpack: 5.105.2(esbuild@0.27.3)(webpack-cli@6.0.1)
-      webpack-cli: 6.0.1(2bb34b4d180de47fa381188b48edc510)
+      webpack-cli: 6.0.1(5df4669886d81961e852447e16fec13e)
     transitivePeerDependencies:
       - bufferutil
       - debug
@@ -24883,7 +25025,7 @@ snapshots:
       watchpack: 2.5.1
       webpack-sources: 3.3.4
     optionalDependencies:
-      webpack-cli: 6.0.1(2bb34b4d180de47fa381188b48edc510)
+      webpack-cli: 6.0.1(5df4669886d81961e852447e16fec13e)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -24916,7 +25058,7 @@ snapshots:
       watchpack: 2.5.1
       webpack-sources: 3.3.4
     optionalDependencies:
-      webpack-cli: 6.0.1(2bb34b4d180de47fa381188b48edc510)
+      webpack-cli: 6.0.1(5df4669886d81961e852447e16fec13e)
     transitivePeerDependencies:
       - '@swc/core'
       - esbuild
@@ -25057,17 +25199,29 @@ snapshots:
     dependencies:
       signal-exit: 4.1.0
 
-  ws@3.3.3:
+  ws@3.3.3(bufferutil@4.1.0)(utf-8-validate@6.0.6):
     dependencies:
       async-limiter: 1.0.1
       safe-buffer: 5.1.2
       ultron: 1.1.1
+    optionalDependencies:
+      bufferutil: 4.1.0
+      utf-8-validate: 6.0.6
 
-  ws@7.5.10: {}
+  ws@7.5.10(bufferutil@4.1.0)(utf-8-validate@6.0.6):
+    optionalDependencies:
+      bufferutil: 4.1.0
+      utf-8-validate: 6.0.6
 
-  ws@8.18.3: {}
+  ws@8.18.3(bufferutil@4.1.0)(utf-8-validate@6.0.6):
+    optionalDependencies:
+      bufferutil: 4.1.0
+      utf-8-validate: 6.0.6
 
-  ws@8.20.0: {}
+  ws@8.20.0(bufferutil@4.1.0)(utf-8-validate@6.0.6):
+    optionalDependencies:
+      bufferutil: 4.1.0
+      utf-8-validate: 6.0.6
 
   wsl-utils@0.1.0:
     dependencies:

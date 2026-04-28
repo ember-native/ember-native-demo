@@ -35,3 +35,4 @@
 !sample-data
 !sample-data/*
 !AGENTS.md
+!vite.config.ts
