@@ -1,3 +1,5 @@
+const path = require('path');
+const fs = require('fs');
 const webpack = require('@nativescript/webpack');
 const configureEmberNative = require('ember-native/utils/webpack.config.js');
 
