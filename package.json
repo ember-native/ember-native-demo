@@ -87,7 +87,7 @@
     "karma-nativescript-launcher": "1.0.0",
     "karma-qunit": "4.2.1",
     "nativescript": "^9.0.5",
-    "nyc": "17.1.0",
+    "nyc": "18.0.0",
     "path-browserify": "^1.0.1",
     "querystring-es3": "^0.2.1",
     "qunit": "^2.25.0",
