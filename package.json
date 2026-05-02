@@ -134,9 +134,6 @@
       "@parcel/watcher",
       "core-js-pure",
       "nativescript"
-    ],
-    "patchedDependencies": {
-      "@nativescript/unit-test-runner": "patches/@nativescript__unit-test-runner.patch"
-    }
+    ]
   }
 }
