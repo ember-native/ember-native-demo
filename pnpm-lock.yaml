@@ -114,8 +114,8 @@ importers:
         specifier: 3.0.5
         version: 3.0.5
       '@nativescript/android':
-        specifier: 9.0.2
-        version: 9.0.2
+        specifier: 9.0.4
+        version: 9.0.4
       '@nativescript/types':
         specifier: ~8.9.1
         version: 8.9.1
@@ -1659,8 +1659,8 @@ packages:
     peerDependencies:
       postcss: ^8.0.0
 
-  '@nativescript/android@9.0.2':
-    resolution: {integrity: sha512-kkliGNCZhbs5SM/EFA7KQaNLJLGFFJF/y6lAWr2hsfNv7n5DU5+5+pNIJ/+u4zyYoKijR2Iq3q/1QKBXthCGoQ==}
+  '@nativescript/android@9.0.4':
+    resolution: {integrity: sha512-htfv7Ku/M6Tq6fQjhV0nSwxa9agNYEs9x4zBdOW8mRye5CZS7xTJq83MffYkItrtN/jJeeaxiSAgu0F+L4oHgA==}
 
   '@nativescript/core@8.9.7':
     resolution: {integrity: sha512-g9pHgq5nDAfGalf9PBL+DA6ZUG3Zvw+13UvShwB0zOW3XbJsYyGCsfO6FqxfDvZlxl9hOSNTuB14Tx9ak7rolQ==}
@@ -2492,6 +2492,7 @@ packages:
   '@xmldom/xmldom@0.8.12':
     resolution: {integrity: sha512-9k/gHF6n/pAi/9tqr3m3aqkuiNosYTurLLUtc7xQ9sxB/wm7WPygCv8GYa6mS0fLJEHhqMC1ATYhz++U/lRHqg==}
     engines: {node: '>=10.0.0'}
+    deprecated: this version has critical issues, please update to the latest version
 
   '@xtuc/ieee754@1.2.0':
     resolution: {integrity: sha512-DX8nKgqcGwsc0eJSqYt5lwP4DH5FlHnmuWWBRy7X0NcaGR0ZtuyeESgMwTYVEtxmsNGY+qit4QYT/MIYTOTPeA==}
@@ -8550,19 +8551,22 @@ packages:
 
   uuid@3.4.0:
     resolution: {integrity: sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==}
-    deprecated: Please upgrade  to version 7 or higher.  Older versions may use Math.random() in certain circumstances, which is known to be problematic.  See https://v8.dev/blog/math-random for details.
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@7.0.3:
     resolution: {integrity: sha512-DPSke0pXhTZgoF/d+WSt2QaKMCFSfx7QegxEWT+JOuHF5aWrKEn0G+ztjuJg/gG8/ItK+rbPCD/yNv8yyih6Cg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@8.3.2:
     resolution: {integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   uuid@9.0.1:
     resolution: {integrity: sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==}
+    deprecated: uuid@10 and below is no longer supported.  For ESM codebases, update to uuid@latest.  For CommonJS codebases, use uuid@11 (but be aware this version will likely be deprecated in 2028).
     hasBin: true
 
   v8-compile-cache-lib@3.0.1:
@@ -11125,7 +11129,7 @@ snapshots:
       resolve-from: 5.0.0
       unique-slug: 2.0.2
 
-  '@nativescript/android@9.0.2': {}
+  '@nativescript/android@9.0.4': {}
 
   '@nativescript/core@8.9.7':
     dependencies:
