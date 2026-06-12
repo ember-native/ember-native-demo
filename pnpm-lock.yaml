@@ -54,7 +54,7 @@ importers:
         version: 4.2.2(@babel/core@7.28.5)
       ember-native:
         specifier: ^3.1.0
-        version: 3.1.0(@babel/core@7.28.5)(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.2)(loader.js@4.7.0)(postcss@8.5.6)(prettier@3.7.3)(rollup@4.53.3)(ts-node@10.9.2(@types/node@25.6.0)(typescript@5.9.3))(vite@7.2.6(@types/node@25.6.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.39.1))(webpack@5.99.8)
+        version: 3.1.0(@babel/core@7.28.5)(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.3)(loader.js@4.7.0)(postcss@8.5.6)(prettier@3.7.3)(rollup@4.53.3)(ts-node@10.9.2(@types/node@25.6.0)(typescript@5.9.3))(vite@7.2.6(@types/node@25.6.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.39.1))(webpack@5.99.8)
       ember-native-devtools:
         specifier: ^1.0.3
         version: 1.0.3
@@ -165,8 +165,8 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))
       ember-template-lint:
-        specifier: ^7.9.2
-        version: 7.9.2
+        specifier: ^7.9.3
+        version: 7.9.3
       eslint:
         specifier: ^9.39.1
         version: 9.39.1(jiti@1.21.7)
@@ -4362,8 +4362,8 @@ packages:
       ember-template-lint: '>= 4.0.0'
       prettier: '>= 3.0.0'
 
-  ember-template-lint@7.9.2:
-    resolution: {integrity: sha512-j2vt1laRRn1yipSrVm6+E2UbVrERTDoX/ye66Kc+FtI+W+SJSAuEPvMA+t2sofkqvP0u+TEg8Bc66YbShblAgg==}
+  ember-template-lint@7.9.3:
+    resolution: {integrity: sha512-iqC4rv/oVlXViGuf7hlOA/bC550ZqacZKAc8WvQV0ueeCtIYPkYYK+Tc7FwpM8qGx3jiwu/ZsTuNfPInI5pL7Q==}
     engines: {node: ^18.18.0 || >= 20.9.0}
     hasBin: true
 
@@ -14487,7 +14487,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  ember-native@3.1.0(@babel/core@7.28.5)(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.2)(loader.js@4.7.0)(postcss@8.5.6)(prettier@3.7.3)(rollup@4.53.3)(ts-node@10.9.2(@types/node@25.6.0)(typescript@5.9.3))(vite@7.2.6(@types/node@25.6.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.39.1))(webpack@5.99.8):
+  ember-native@3.1.0(@babel/core@7.28.5)(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.28.5))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.3)(loader.js@4.7.0)(postcss@8.5.6)(prettier@3.7.3)(rollup@4.53.3)(ts-node@10.9.2(@types/node@25.6.0)(typescript@5.9.3))(vite@7.2.6(@types/node@25.6.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.39.1))(webpack@5.99.8):
     dependencies:
       '@babel/plugin-syntax-decorators': 7.27.1(@babel/core@7.28.5)
       '@ember/render-modifiers': 3.0.0(@glint/template@1.5.2)(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))
@@ -14510,7 +14510,7 @@ snapshots:
       ember-maybe-import-regenerator: 1.0.0
       ember-modifier: 4.2.2(@babel/core@7.28.5)
       ember-source: 6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5)
-      ember-template-lint-plugin-prettier: 5.0.0(ember-template-lint@7.9.2)(prettier@3.7.3)
+      ember-template-lint-plugin-prettier: 5.0.0(ember-template-lint@7.9.3)(prettier@3.7.3)
       ember-truth-helpers: 4.0.3(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))
       loader.js: 4.7.0
       prettier-linter-helpers: 1.0.0
@@ -14666,14 +14666,14 @@ snapshots:
       - rsvp
       - supports-color
 
-  ember-template-lint-plugin-prettier@5.0.0(ember-template-lint@7.9.2)(prettier@3.7.3):
+  ember-template-lint-plugin-prettier@5.0.0(ember-template-lint@7.9.3)(prettier@3.7.3):
     dependencies:
       '@prettier/sync': 0.2.1(prettier@3.7.3)
-      ember-template-lint: 7.9.2
+      ember-template-lint: 7.9.3
       prettier: 3.7.3
       prettier-linter-helpers: 1.0.0
 
-  ember-template-lint@7.9.2:
+  ember-template-lint@7.9.3:
     dependencies:
       '@lint-todo/utils': 13.1.1
       content-tag: 3.1.3
