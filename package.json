@@ -46,7 +46,7 @@
     "@babel/core": "^7.28.5",
     "@glimmer/validator": "^0.95.0",
     "@babel/eslint-parser": "^7.28.5",
-    "@babel/plugin-transform-runtime": "^7.28.5",
+    "@babel/plugin-transform-runtime": "^7.29.0",
     "@babel/plugin-transform-typescript": "^7.28.5",
     "@ember/test-helpers": "^5.2.2",
     "@embroider/compat": "^4.1.0",
