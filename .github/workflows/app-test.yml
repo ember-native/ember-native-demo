@@ -30,7 +30,7 @@ jobs:
       - name: Setup Maven Action
         uses: s4u/setup-maven-action@v1.18.0
 
-      - run: npm i -g pnpm
+      - run: npm i -g pnpm@10
 
       - uses: actions/setup-node@v6
         with:
