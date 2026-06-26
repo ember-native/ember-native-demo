@@ -69,7 +69,7 @@
     "concurrently": "^9.2.1",
     "content-tag": "^4.0.0",
     "css-loader": "^7.1.2",
-    "decorator-transforms": "^2.3.0",
+    "decorator-transforms": "^2.3.2",
     "ember-cli-version-checker": "^5.1.2",
     "ember-qunit": "^9.0.4",
     "ember-resolver": "^13.1.1",
