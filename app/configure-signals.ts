@@ -1,11 +1,10 @@
 import { tagForProperty } from '@ember/-internals/metal';
 import { _backburner } from '@ember/runloop';
-import { consumeTag, createCache, dirtyTag, getValue } from '@glimmer/validator';
+import { consumeTag, createCache, dirtyTag, getValue, DirtyableTag } from '@glimmer/validator';
 import { setupSignals } from '@warp-drive/core/configure';
 import type { SignalHooks } from '@warp-drive/core/configure';
 
 type Tag = ReturnType<typeof tagForProperty>;
-const emberDirtyTag = dirtyTag as unknown as (tag: Tag) => void;
 
 export function buildSignalConfig(): SignalHooks {
   return {
@@ -17,8 +16,8 @@ export function buildSignalConfig(): SignalHooks {
       consumeTag(signal);
     },
     
-    notifySignal(signal: Tag) {
-      emberDirtyTag(signal);
+    notifySignal(signal: DirtyableTag) {
+      dirtyTag(signal);
     },
     
     createMemo: <F>(object: object, key: string | symbol, fn: () => F): (() => F) => {
