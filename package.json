@@ -43,7 +43,7 @@
     "selenium-webdriver": "^4.34.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.28.5",
+    "@babel/core": "^7.29.6",
     "@glimmer/validator": "^0.95.0",
     "@babel/eslint-parser": "^7.28.5",
     "@babel/plugin-transform-runtime": "^7.29.0",
@@ -82,7 +82,7 @@
     "eslint-plugin-qunit": "^8.2.5",
     "globals": "^17.6.0",
     "https-browserify": "^1.0.0",
-    "karma": "^4.4.1",
+    "karma": "^6.4.4",
     "karma-coverage": "2.2.1",
     "karma-nativescript-launcher": "1.0.0",
     "karma-qunit": "4.2.1",
@@ -92,7 +92,7 @@
     "querystring-es3": "^0.2.1",
     "qunit": "^2.25.0",
     "qunit-dom": "^3.5.0",
-    "socket.io": "^4.8.1",
+    "socket.io": "^4.8.3",
     "stream-browserify": "^3.0.0",
     "stream-http": "^3.2.0",
     "typescript": "^5.9.3",
