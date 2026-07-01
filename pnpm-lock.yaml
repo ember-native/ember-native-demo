@@ -32,14 +32,14 @@ importers:
         specifier: ^2.0.2
         version: 2.0.2
       '@warp-drive/core':
-        specifier: ^5.8.1
-        version: 5.8.1(@babel/core@7.28.5)(@glint/template@1.5.2)
+        specifier: ^5.8.2
+        version: 5.8.2(@babel/core@7.28.5)(@glint/template@1.5.2)
       '@warp-drive/core-types':
         specifier: ^0.0.0-beta.20
         version: 0.0.0(@glint/template@1.5.2)
       '@warp-drive/json-api':
-        specifier: ^5.8.1
-        version: 5.8.1(@glint/template@1.5.2)(@warp-drive/core@5.8.1(@babel/core@7.28.5)(@glint/template@1.5.2))
+        specifier: ^5.8.2
+        version: 5.8.2(@glint/template@1.5.2)(@warp-drive/core@5.8.2(@babel/core@7.28.5)(@glint/template@1.5.2))
       chromedriver:
         specifier: ^149.0.3
         version: 149.0.3
@@ -2615,20 +2615,20 @@ packages:
     resolution: {integrity: sha512-L6T8Y2MZKgVBsrBhPgzKtA4WCruUdpAQHNi/jWhEjKiLPtPf3JAix6ApFpPYvBUdonDxoQM53PrR25Wu/j0Wtw==}
     engines: {node: '>= 18.20.4'}
 
-  '@warp-drive/build-config@5.8.1':
-    resolution: {integrity: sha512-uT0zdNf7vdHEYYdYJ/1+coE0MwRiV6dg/dTwAaYtlsTFd57NrxE+s+1qd5aAjuwdB/GVlBP/D/IlUwWggbxXbg==}
+  '@warp-drive/build-config@5.8.2':
+    resolution: {integrity: sha512-QU/6tSexAi/t149upEK3P04yGXdEwieTfQ5ihBON3A/3xGipveGIVJx6B8EYCot0AC2n91GmTc8ezzQmAK64/g==}
 
   '@warp-drive/core-types@0.0.0':
     resolution: {integrity: sha512-k40Kb6fuCwN7SzE+FkKuF2mrJaxTzMDJxZZ6UGMYw1UfoHpX/aK70nXCmXpbFW74X1jCUC8cTcvoe54NqNUcRg==}
     engines: {node: '>= 18.20.4'}
 
-  '@warp-drive/core@5.8.1':
-    resolution: {integrity: sha512-7Id5mvUjqRqlG2Tgz8Y/k1M5gmcUExfSWW3XBDbMDotF63YcmgukDLO145cFJtqiO3q8nZXC8PoftYCmoTwhuA==}
+  '@warp-drive/core@5.8.2':
+    resolution: {integrity: sha512-6dtfOaHK+9ErQMy6OlewRJw2nkAPb2CPMoTFncsZBbEAQlyn1zwjTSpk1Czr5TOc0YQ84vrTK6IOwTzdHG4r+A==}
 
-  '@warp-drive/json-api@5.8.1':
-    resolution: {integrity: sha512-JnxNUGUIwfvqBJkO9HRSighpE0HSyyrE1dmgK1KljDJm45U7frx3PtWykB4AoRDWx9+HSEVS1Dj4QRlXGK0IZQ==}
+  '@warp-drive/json-api@5.8.2':
+    resolution: {integrity: sha512-YHT9FfjAfYVms85PO0P7kccri75USDQZb0x9pjfuJPRsLosh0YdZEiEfSmQwxMPche5Bs3CqtiUVq9v9JmTAow==}
     peerDependencies:
-      '@warp-drive/core': 5.8.1
+      '@warp-drive/core': 5.8.2
 
   '@webassemblyjs/ast@1.14.1':
     resolution: {integrity: sha512-nuBEDgQfm1ccRp/8bCQrx1frohyufl4JlbMMZ4P1wpeOfDhF6FQkxZJ1b/e+PLwr6X1Nhw6OLme5usuBWYBvuQ==}
@@ -10772,7 +10772,7 @@ snapshots:
       pkg-entry-points: 1.1.1
       resolve-package-path: 4.0.3
       resolve.exports: 2.0.3
-      semver: 7.8.5
+      semver: 7.7.4
       typescript-memoize: 1.1.1
     transitivePeerDependencies:
       - supports-color
@@ -11879,7 +11879,7 @@ snapshots:
 
   '@npmcli/fs@5.0.0':
     dependencies:
-      semver: 7.8.5
+      semver: 7.7.4
 
   '@npmcli/git@7.0.2':
     dependencies:
@@ -11889,7 +11889,7 @@ snapshots:
       lru-cache: 11.5.1
       npm-pick-manifest: 11.0.3
       proc-log: 6.1.0
-      semver: 7.8.5
+      semver: 7.7.3
       which: 6.0.1
 
   '@npmcli/installed-package-contents@4.0.0':
@@ -11910,7 +11910,7 @@ snapshots:
       json-parse-even-better-errors: 5.0.0
       pacote: 21.0.4
       proc-log: 6.1.0
-      semver: 7.8.5
+      semver: 7.7.4
     transitivePeerDependencies:
       - supports-color
 
@@ -11925,7 +11925,7 @@ snapshots:
       hosted-git-info: 9.0.2
       json-parse-even-better-errors: 5.0.0
       proc-log: 6.1.0
-      semver: 7.8.5
+      semver: 7.7.3
       spdx-expression-parse: 4.0.0
 
   '@npmcli/promise-spawn@9.0.1':
@@ -12768,13 +12768,13 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@warp-drive/build-config@5.8.1(@babel/core@7.28.5)(@glint/template@1.5.2)':
+  '@warp-drive/build-config@5.8.2(@babel/core@7.28.5)(@glint/template@1.5.2)':
     dependencies:
       '@embroider/addon-shim': 1.10.3
       '@embroider/macros': 1.20.5(@glint/template@1.5.2)
       babel-import-util: 2.1.1
       babel-plugin-debug-macros: 2.0.0(@babel/core@7.28.5)
-      semver: 7.7.4
+      semver: 7.8.5
     transitivePeerDependencies:
       - '@babel/core'
       - '@glint/template'
@@ -12788,19 +12788,19 @@ snapshots:
       - '@glint/template'
       - supports-color
 
-  '@warp-drive/core@5.8.1(@babel/core@7.28.5)(@glint/template@1.5.2)':
+  '@warp-drive/core@5.8.2(@babel/core@7.28.5)(@glint/template@1.5.2)':
     dependencies:
       '@embroider/macros': 1.20.5(@glint/template@1.5.2)
-      '@warp-drive/build-config': 5.8.1(@babel/core@7.28.5)(@glint/template@1.5.2)
+      '@warp-drive/build-config': 5.8.2(@babel/core@7.28.5)(@glint/template@1.5.2)
     transitivePeerDependencies:
       - '@babel/core'
       - '@glint/template'
       - supports-color
 
-  '@warp-drive/json-api@5.8.1(@glint/template@1.5.2)(@warp-drive/core@5.8.1(@babel/core@7.28.5)(@glint/template@1.5.2))':
+  '@warp-drive/json-api@5.8.2(@glint/template@1.5.2)(@warp-drive/core@5.8.2(@babel/core@7.28.5)(@glint/template@1.5.2))':
     dependencies:
       '@embroider/macros': 1.20.5(@glint/template@1.5.2)
-      '@warp-drive/core': 5.8.1(@babel/core@7.28.5)(@glint/template@1.5.2)
+      '@warp-drive/core': 5.8.2(@babel/core@7.28.5)(@glint/template@1.5.2)
       fuse.js: 7.1.0
       json-to-ast: 2.1.0
     transitivePeerDependencies:
@@ -14726,7 +14726,7 @@ snapshots:
       pkg-entry-points: 1.1.1
       resolve: 1.22.12
       resolve-package-path: 4.0.3
-      semver: 7.8.5
+      semver: 7.7.4
       style-loader: 2.0.0(webpack@5.99.8)
       typescript-memoize: 1.1.1
       walk-sync: 3.0.0
@@ -15452,7 +15452,7 @@ snapshots:
   eslint-compat-utils@0.5.1(eslint@9.39.1(jiti@1.21.7)):
     dependencies:
       eslint: 9.39.1(jiti@1.21.7)
-      semver: 7.8.5
+      semver: 7.7.2
 
   eslint-config-prettier@10.1.5(eslint@9.39.1(jiti@1.21.7)):
     dependencies:
@@ -17779,7 +17779,7 @@ snapshots:
 
   npm-install-checks@8.0.0:
     dependencies:
-      semver: 7.8.5
+      semver: 7.7.4
 
   npm-normalize-package-bin@5.0.0: {}
 
@@ -17787,7 +17787,7 @@ snapshots:
     dependencies:
       hosted-git-info: 9.0.2
       proc-log: 6.1.0
-      semver: 7.8.5
+      semver: 7.7.3
       validate-npm-package-name: 7.0.2
 
   npm-packlist@10.0.4:
@@ -17800,7 +17800,7 @@ snapshots:
       npm-install-checks: 8.0.0
       npm-normalize-package-bin: 5.0.0
       npm-package-arg: 13.0.2
-      semver: 7.8.5
+      semver: 7.7.3
 
   npm-registry-fetch@19.1.1:
     dependencies:
