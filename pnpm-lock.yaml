@@ -144,8 +144,8 @@ importers:
         specifier: ^10.0.3
         version: 10.0.3
       content-tag:
-        specifier: ^4.0.0
-        version: 4.0.0
+        specifier: ^4.2.0
+        version: 4.2.0
       css-loader:
         specifier: ^7.1.2
         version: 7.1.2(webpack@5.99.8)
@@ -3935,9 +3935,6 @@ packages:
 
   content-tag@3.1.3:
     resolution: {integrity: sha512-4Kiv9mEroxuMXfWUNUHcljVJgxThCNk7eEswdHMXdzJnkBBaYDqDwzHkoh3F74JJhfU3taJOsgpR6oEGIDg17g==}
-
-  content-tag@4.0.0:
-    resolution: {integrity: sha512-qqJiY9nueYAI396MOmfOk+w/0KL6ERKxANQcSKcR0CrNTc38yT//b73l+WHr9brZx57bFHNaW7a/6Yll0bn95w==}
 
   content-tag@4.2.0:
     resolution: {integrity: sha512-f/o+F3qSa4gg23I7RWy6cMDxP2nPo99YWusxw2bjne7ZC6Acqqf4uB/+87AekOq1ehTocHH7b7nMd2X4S3NHVw==}
@@ -14227,8 +14224,6 @@ snapshots:
   content-tag@2.0.3: {}
 
   content-tag@3.1.3: {}
-
-  content-tag@4.0.0: {}
 
   content-tag@4.2.0: {}
 

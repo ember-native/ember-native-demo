@@ -67,7 +67,7 @@
     "browserify-fs": "^1.0.0",
     "buffer": "^6.0.3",
     "concurrently": "^10.0.3",
-    "content-tag": "^4.0.0",
+    "content-tag": "^4.2.0",
     "css-loader": "^7.1.2",
     "decorator-transforms": "^2.3.2",
     "ember-cli-version-checker": "^5.1.2",
