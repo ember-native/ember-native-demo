@@ -72,7 +72,7 @@
     "decorator-transforms": "^2.3.2",
     "ember-cli-version-checker": "^5.1.2",
     "ember-qunit": "^9.0.4",
-    "ember-resolver": "^13.1.1",
+    "ember-resolver": "^13.2.0",
     "ember-routable-component": "^1.2.0",
     "ember-template-lint": "^7.9.3",
     "eslint": "^9.39.1",
