@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-patchedDependencies:
-  '@nativescript/unit-test-runner':
-    hash: 6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84
-    path: patches/@nativescript__unit-test-runner.patch
-
 importers:
 
   .:
@@ -27,7 +22,7 @@ importers:
         version: 3.1.0
       '@nativescript/unit-test-runner':
         specifier: ~3.0.0
-        version: 3.0.4(patch_hash=6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84)
+        version: 3.0.4
       '@valor/nativescript-websockets':
         specifier: ^2.0.2
         version: 2.0.2
@@ -53,8 +48,8 @@ importers:
         specifier: ^4.2.0
         version: 4.2.2(@babel/core@7.29.6)
       ember-native:
-        specifier: ^3.3.0
-        version: 3.3.0(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.29.6))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.3)(eslint@9.39.1(jiti@1.21.7))(loader.js@4.7.0)(postcss@8.5.16)(prettier@3.7.3)(ts-node@10.9.2(@types/node@26.1.0)(typescript@5.9.3))(vite@7.2.6(@types/node@26.1.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.48.0))(webpack@5.99.8)
+        specifier: ^3.4.0
+        version: 3.4.0(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.29.6))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.3)(eslint@9.39.1(jiti@1.21.7))(loader.js@4.7.0)(postcss@8.5.16)(prettier@3.7.3)(ts-node@10.9.2(@types/node@26.1.0)(typescript@5.9.3))(vite@7.2.6(@types/node@26.1.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.48.0))(webpack@5.99.8)
       ember-native-devtools:
         specifier: ^1.0.3
         version: 1.0.3
@@ -4989,8 +4984,8 @@ packages:
     engines: {node: '>=18'}
     hasBin: true
 
-  ember-native@3.3.0:
-    resolution: {integrity: sha512-ik6S9h5jkpVTBf1KAR6nGmxu4mgyTbHjOgQtU3ChPrOfAMSdFPd/YAjTCVFiQXdIkfZvft1D+eCawD0zxxichA==}
+  ember-native@3.4.0:
+    resolution: {integrity: sha512-kt6PVd1x0yiqUVXPYpnJSYjM4q8M4ue7u2zQJ0rupU065pBjlN6Wn0GFYn+AGHRgjcM3bZRYy0DNEohHxuf1bA==}
     peerDependencies:
       '@glimmer/component': '*'
       '@nativescript/core': '*'
@@ -8347,7 +8342,7 @@ packages:
     hasBin: true
 
   rollup-plugin-astroturf@https://codeload.github.com/patricklx/rollup-plugin-astroturf/tar.gz/5354c7a:
-    resolution: {gitHosted: true, integrity: sha512-Mn+RefOR3pj4SwVcsIPmjfAhvSZecSOHYSwBb6ciluuE1GM+CdJN+1CpVmMmm6c2UE7NA17SfywuE1ac+4C2QA==, tarball: https://codeload.github.com/patricklx/rollup-plugin-astroturf/tar.gz/5354c7a}
+    resolution: {integrity: sha512-Mn+RefOR3pj4SwVcsIPmjfAhvSZecSOHYSwBb6ciluuE1GM+CdJN+1CpVmMmm6c2UE7NA17SfywuE1ac+4C2QA==, tarball: https://codeload.github.com/patricklx/rollup-plugin-astroturf/tar.gz/5354c7a}
     version: 0.1.0
     peerDependencies:
       '@babel/core': '>=7'
@@ -12696,7 +12691,7 @@ snapshots:
       '@nativescript/types-android': 8.9.0
       '@nativescript/types-ios': 8.9.1
 
-  '@nativescript/unit-test-runner@3.0.4(patch_hash=6d4efff75b8bc7c4ca3390f985d30d188d6572249de25fa4779a9b1ff6eb2c84)':
+  '@nativescript/unit-test-runner@3.0.4':
     dependencies:
       '@nativescript/hook': 2.0.0
       glob-regex: 0.3.2
@@ -13879,17 +13874,17 @@ snapshots:
       '@webassemblyjs/ast': 1.14.1
       '@xtuc/long': 4.2.2
 
-  '@webpack-cli/configtest@1.2.0(webpack-cli@4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8))(webpack@5.99.8)':
+  '@webpack-cli/configtest@1.2.0(webpack-cli@4.10.0)(webpack@5.99.8)':
     dependencies:
       webpack: 5.99.8(webpack-cli@4.10.0)
       webpack-cli: 4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8)
 
-  '@webpack-cli/info@1.5.0(webpack-cli@4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8))':
+  '@webpack-cli/info@1.5.0(webpack-cli@4.10.0)':
     dependencies:
       envinfo: 7.14.0
       webpack-cli: 4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8)
 
-  '@webpack-cli/serve@1.7.0(webpack-cli@4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8))':
+  '@webpack-cli/serve@1.7.0(webpack-cli@4.10.0)':
     dependencies:
       webpack-cli: 4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8)
 
@@ -16061,7 +16056,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  ember-native@3.3.0(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.29.6))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.3)(eslint@9.39.1(jiti@1.21.7))(loader.js@4.7.0)(postcss@8.5.16)(prettier@3.7.3)(ts-node@10.9.2(@types/node@26.1.0)(typescript@5.9.3))(vite@7.2.6(@types/node@26.1.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.48.0))(webpack@5.99.8):
+  ember-native@3.4.0(@embroider/core@4.1.0(@glint/template@1.5.2))(@glimmer/component@2.1.1)(@glint/template@1.5.2)(@nativescript/core@8.9.7)(ember-modifier@4.2.2(@babel/core@7.29.6))(ember-source@6.9.0(@glimmer/component@2.1.1)(rsvp@4.8.5))(ember-template-lint@7.9.3)(eslint@9.39.1(jiti@1.21.7))(loader.js@4.7.0)(postcss@8.5.16)(prettier@3.7.3)(ts-node@10.9.2(@types/node@26.1.0)(typescript@5.9.3))(vite@7.2.6(@types/node@26.1.0)(jiti@1.21.7)(sass@1.88.0)(terser@5.48.0))(webpack@5.99.8):
     dependencies:
       '@babel/core': 7.29.6
       '@babel/plugin-syntax-decorators': 7.29.7(@babel/core@7.29.6)
@@ -21689,9 +21684,9 @@ snapshots:
   webpack-cli@4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8):
     dependencies:
       '@discoveryjs/json-ext': 0.5.7
-      '@webpack-cli/configtest': 1.2.0(webpack-cli@4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8))(webpack@5.99.8)
-      '@webpack-cli/info': 1.5.0(webpack-cli@4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8))
-      '@webpack-cli/serve': 1.7.0(webpack-cli@4.10.0(webpack-bundle-analyzer@4.10.2)(webpack@5.99.8))
+      '@webpack-cli/configtest': 1.2.0(webpack-cli@4.10.0)(webpack@5.99.8)
+      '@webpack-cli/info': 1.5.0(webpack-cli@4.10.0)
+      '@webpack-cli/serve': 1.7.0(webpack-cli@4.10.0)
       colorette: 2.0.20
       commander: 7.2.0
       cross-spawn: 7.0.6
