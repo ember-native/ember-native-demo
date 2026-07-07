@@ -138,5 +138,8 @@
     "patchedDependencies": {
       "@nativescript/unit-test-runner": "patches/@nativescript__unit-test-runner.patch"
     }
+  },
+  "ember": {
+    "edition": "octane"
   }
 }
