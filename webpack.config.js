@@ -17,6 +17,9 @@ module.exports = (env) => {
   // ember-native's built-in ones.
   configureEmberNative(webpack, {
     virtualModules: [
+      'ember-concurrency/-embroider-implicit-modules.js',
+      'ember-truth-helpers/-embroider-implicit-modules.js',
+      '@ember/test-waiters/-embroider-implicit-modules.js',      
       '@ember/test-helpers/-embroider-implicit-modules.js',
       '@glimmer/component/-embroider-implicit-modules.js',
       '@warp-drive/core-types/-embroider-implicit-modules.js',
