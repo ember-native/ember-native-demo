@@ -12,8 +12,24 @@ module.exports = (env) => {
   // Learn how to customize:
   // https://docs.nativescript.org/webpack
 
-  // Use ember-native webpack configuration (includes embroider adapter)
-  configureEmberNative(webpack);
+  // Use ember-native webpack configuration (includes embroider adapter).
+  // Register the app's additional embroider implicit virtual modules alongside
+  // ember-native's built-in ones.
+  configureEmberNative(webpack, {
+    virtualModules: [
+      '@ember/test-waiters/-embroider-implicit-modules.js',
+      '@ember/test-helpers/-embroider-implicit-modules.js',
+      '@glimmer/component/-embroider-implicit-modules.js',
+      '@warp-drive/core-types/-embroider-implicit-modules.js',
+      '@warp-drive/core/-embroider-implicit-modules.js',
+      '@warp-drive/json-api/-embroider-implicit-modules.js',
+      'ember-modifier/-embroider-implicit-modules.js',
+      'ember-native/-embroider-implicit-modules.js',
+      'ember-qunit/-embroider-implicit-modules.js',
+      'ember-routable-component/-embroider-implicit-modules.js',
+      'ember-source/-embroider-implicit-modules.js',
+    ],
+  });
 
   webpack.chainWebpack((config) => {
     // Add .gjs and .gts extensions
