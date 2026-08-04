@@ -30,6 +30,11 @@ this exact bundler.
   and "cdd299f") for the debugging trail so far. Don't re-diagnose from
   scratch; pick up where that document leaves off, or check whether a newer
   `ember-native` release has since fixed it (`npm view ember-native versions`).
+  Filed upstream as https://github.com/ember-native/ember-native/issues/408
+  (2026-08-04) with the bisection pointer to `cdd299f` - a PR wasn't opened
+  since the root cause isn't confirmed yet (crash happens before any JS runs,
+  points at CLI/native module-loader behavior, not Vite config content). Check
+  that issue for updates before re-investigating.
 - The Android emulator (`emulator-5554`) on this machine is shared with other
   concurrent agent sessions/apps (e.g. `org.pjp.gitonlinehelper` was seen
   running there too) - expect noisy/slow installs and occasional resource
