@@ -95,8 +95,13 @@ module.exports = function (config) {
     options.reporters = (options.reporters || []).concat(['coverage']);
   }
 
-  options.captureTimeout = 2000;
-  options.browserNoActivityTimeout = 2000;
+  // The device-side runner needs well over a second between connecting to
+  // karma and sending its first message: `app/tests/test-helper.ts` polls for
+  // the test root frame in 1s steps before any test runs. Anything close to
+  // karma's old 2000ms here disconnects the emulator mid-startup with
+  // "Disconnected, because no message in 2000 ms".
+  options.captureTimeout = 120000;
+  options.browserNoActivityTimeout = 120000;
 
   config.set(options);
 }

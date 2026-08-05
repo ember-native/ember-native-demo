@@ -17,73 +17,103 @@ this exact bundler.
   installed" error even though it's present.
 - `pnpm build` / `pnpm run` (the real app, debug or release) build and boot
   cleanly end-to-end on a real emulator - verified 2026-08-04.
-- `pnpm test` (on-device QUnit via `nativescript.test.vite.config.ts` +
-  `vite.test.config.ts`) currently **crashes on launch** with a generic
-  `com.tns.NativeScriptException: Cannot instantiate module bundle.mjs / Error:
-  Module evaluation promise rejected: vendor.mjs` - no further detail in logcat.
-  This reproduces **identically in `ember-native`'s own upstream `demo-app`**
-  (same crash, same generic message, confirmed by running its `pnpm test` from
-  a clean state on 2026-08-04), so it is a pre-existing, still-open upstream
-  issue in `ember-native`'s Vite test-bundling pipeline, not something this
-  app's migration introduced - see `VITE_MIGRATION_NOTES.md`'s later
-  "Follow-up session" entries (search for "Module evaluation promise rejected"
-  and "cdd299f") for the debugging trail so far. Don't re-diagnose from
-  scratch; pick up where that document leaves off, or check whether a newer
-  `ember-native` release has since fixed it (`npm view ember-native versions`).
-  Filed upstream as https://github.com/ember-native/ember-native/issues/408
-  (2026-08-04) with the bisection pointer to `cdd299f` - a PR wasn't opened
-  since the root cause isn't confirmed yet (crash happens before any JS runs,
-  points at CLI/native module-loader behavior, not Vite config content). Check
-  that issue for updates before re-investigating.
 - The Android emulator (`emulator-5554`) on this machine is shared with other
   concurrent agent sessions/apps (e.g. `org.pjp.gitonlinehelper` was seen
   running there too) - expect noisy/slow installs and occasional resource
   contention; don't assume a slow or stalled install means your build is broken.
+  Seen 2026-08-05: `adb shell` timing out entirely, a 4-minute `adb install`,
+  and ~7 minutes between app launch and the test runner's first
+  `NSUTR: fetching .../context.json` line, all while the run was perfectly
+  healthy. Check `lsof -nP -iTCP:<karma port>` for an ESTABLISHED
+  `qemu-system-...` connection before concluding a run is wedged.
 
-## PR #218 CI analysis (2026-08-04, re: the `vendor.mjs` crash above)
+## The `Module evaluation promise rejected: vendor.mjs` boot crash - ROOT-CAUSED AND FIXED (2026-08-05)
 
-Checked `ember-native`'s own memory/`ember-native-todo.md` (in the separate
-`~/IdeaProjects/todos` repo) for issue #408's status: **ember-native's own
-investigation superseded the `cdd299f` bisection above** - the real root
-cause was actually the `@ember/test-helpers` globals-banner commit (two
-boot-order bugs: a `document` stub missing `createElement`, and a CJS
-`module.exports` leak in a CLI-regenerated test file), fixed and verified
-with `TOTAL: 7 SUCCESS`, squash-merged to `main` 2026-08-01, and published as
-`ember-native@5.0.0` on npm 2026-08-02. **This repo's `pnpm-lock.yaml`
-already resolves to `ember-native@5.0.0`, and the installed
-`node_modules/ember-native/dist/utils/vite.config.js` was confirmed
-(2026-08-04) to already contain that exact fix** (`earlyGlobalsBanner()`
-with the `createElement` stub) - so bumping the version again won't help.
+Historical context: the on-device test path (`pnpm test`) crashed on launch for
+weeks with a generic, contentless
+`com.tns.NativeScriptException: Cannot instantiate module bundle.mjs / Error:
+Module evaluation promise rejected: .../vendor.mjs`. It was filed upstream as
+https://github.com/ember-native/ember-native/issues/408 with a (wrong)
+bisection pointing at `cdd299f`, and a later session blamed this app's extra
+native UI deps. **Both theories were wrong.** The real cause:
 
-**Despite that, PR #218's `test app` CI job still hit the identical crash**
-(confirmed from the actual job log, run `30908531229`, 2026-08-04): the app
-still crashes on boot with the same generic `Module evaluation promise
-rejected: vendor.mjs` message even with the fix present. Since the message
-is contentless by design (thrown before any JS body executes), this is
-either a genuine regression in `ember-native@5.0.0` vs. what was verified
-pre-release, or a *different* exception during `vendor.mjs` evaluation
-producing the same generic wrapper text - possibly related to this app's
-extra native UI deps (`nativescript-ui-listview`, `nativescript-ui-
-sidedrawer`) that `ember-native`'s own `demo-app` doesn't use and so
-wouldn't have been covered by upstream's own verification. Not yet
-root-caused - next session should bisect with those two packages excluded
-from the test bundle to check if they're implicated, and check
-`ember-native-todo.md`/issue #408 for updates first.
+- `ember-native@5.0.0`'s `earlyGlobalsBanner()` (in
+  `dist/utils/vite.config.js`) prepends a *placeholder* `document` global -
+  `{ location: { search: '' }, createElement: () => ({}) }` - to the top of
+  **every emitted chunk**, so that `@ember/test-helpers`' top-level
+  `document.location` reads don't throw. That fix is real and necessary.
+- But making `document` "defined" un-short-circuits every
+  `typeof document === 'undefined'` guard in any *other* vendor-bundled
+  library. `ember-source@6.9.0` (what this app's lockfile resolved to) still
+  ships glimmer's legacy DOM compat detection, which runs at
+  `@glimmer/runtime/index.js`'s own module top level:
+  `applyTextNodeMergingFix(doc, ...)` does
+  `document.createElement('div').appendChild(document.createTextNode('first'))`.
+  Against the placeholder that's `({}).appendChild(...)` on a `document` with
+  no `createTextNode` - a `TypeError` thrown during `vendor.mjs` evaluation,
+  which NativeScript reports only as the generic wrapper message above.
+- `ember-source@6.12.0` **deleted** those legacy compat shims
+  (`applyTextNodeMergingFix`/`applySVGInnerHTMLFix` no longer exist). That is
+  the only reason `ember-native`'s own `demo-app` never reproduced it: it pins
+  `^6.12.0`, this app pinned `^6.6.0` and had resolved to 6.9.0.
 
-**Separately, and more urgently: after the crash, the CI job hangs for the
-full 6-hour GitHub Actions max instead of failing fast.** The device-side
-log shows the unit-test-runner actually catches the crash and logs
-`NSUTR: completed test run.` right away, but the `nativescript test
-android` CLI process never exits - a different flavor of the
-already-once-fixed "hangs forever after `TOTAL: N SUCCESS`" karma bug
-(this one on the crash path instead of the success path, so the earlier
-launcher-id fix doesn't cover it). **Mitigated 2026-08-04** by adding
-`timeout-minutes: 30` to the `test` job in
-`.github/workflows/app-test.yml`, so a future occurrence fails in ~30min
-instead of burning 6 hours of CI - this does not fix the underlying crash
-or hang, just bounds the cost of hitting either one again.
+**Fix applied here**: bumped `ember-source` to `^6.12.0` (matching upstream's
+verified `demo-app`). No config, patch, or ember-native change needed.
 
-Did not comment on/reopen discussion on upstream issue #408 or push further
-fixes into `ember-native` itself from this session - flagging here for a
-human/next session to decide whether to escalate upstream with this
-fresh reproduction evidence.
+## The second CI blocker, hidden behind the crash: karma's 2000ms timeouts (2026-08-05)
+
+With the boot crash fixed, the run got as far as
+`NSUTR: successfully connected to karma` and then immediately died with
+`Disconnected, because no message in 2000 ms`. Cause: `karma.conf.js` had set
+`captureTimeout = 2000` and `browserNoActivityTimeout = 2000` (there since the
+original 2024 "add unit tests" commit, and dead code for as long as the app
+crashed before ever connecting). The device-side runner needs far longer than
+2s between connecting and its first message - `app/tests/test-helper.ts`'s
+`setupTestContainer()` polls for the test root frame in 1s steps before any
+test runs. Raised both to 120000 (upstream's `demo-app` just leaves karma's
+defaults). After that: `TOTAL: 6 SUCCESS` on a real emulator, and the CLI
+process exits cleanly instead of hanging - verified 2026-08-05.
+
+**Still worth fixing upstream** (not done from this repo): ember-native's
+placeholder `document` should be robust enough for any consumer still on
+`ember-source < 6.12` - i.e. give it `createTextNode`, `createComment`,
+`createElementNS`, and an element stub with `appendChild`/`insertAdjacentHTML`/
+`childNodes`. Issue #408's bisection is also still wrong and should be
+corrected/closed. Left for a human to decide whether to escalate.
+
+### How to debug the next contentless `vendor.mjs` crash in 10 minutes
+
+The native side swallows the actual JS error, so instrument module evaluation
+order and look for the last module that enters but never exits. Add a throwaway
+Vite plugin (this is exactly how the above was found):
+
+```js
+// vite-plugins/module-trace.mjs - TEMPORARY, do not commit
+export function moduleTracePlugin() {
+  return {
+    name: 'module-trace',
+    enforce: 'post',
+    transform(code, id) {
+      if (id.startsWith('\0')) return null;
+      if (!/\.(js|mjs|cjs|ts|gts|gjs)($|\?)/.test(id)) return null;
+      const short = JSON.stringify(id.replace(process.cwd(), '.'));
+      return { code: `console.log('[TRACE-ENTER] ' + ${short});\n${code}\n;console.log('[TRACE-EXIT] ' + ${short});`, map: null };
+    },
+  };
+}
+```
+
+Wire it into `vite.test.config.ts`'s `plugins: [...]`, run `pnpm test`, then
+`grep TRACE- <log> | tail`. ESM hoists imports, so a module's `TRACE-ENTER`
+only prints after all of its own imports finished - the last unmatched
+`TRACE-ENTER` is the module whose body threw.
+
+## CI job hang on the crash path (2026-08-04)
+
+When the app crashed on boot, the device-side runner logged
+`NSUTR: completed test run.` immediately but the `nativescript test android`
+CLI process never exited, so the `test app` job burned the full 6-hour GitHub
+Actions maximum. Mitigated by `timeout-minutes: 30` on the `test` job in
+`.github/workflows/app-test.yml`. That bound is still there and still useful:
+it does not fix the hang, it just caps the cost if the crash path is ever hit
+again.
