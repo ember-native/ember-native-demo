@@ -5,8 +5,8 @@ This document provides essential information for AI agents working on this Ember
 ## Project Overview
 
 This is an Ember Native application that uses:
-- **Ember.js 6.6.0** - Modern Ember framework
-- **NativeScript 8.9.x** - Cross-platform mobile framework
+- **Ember.js 6.12.x** - Modern Ember framework
+- **NativeScript 9.x** - Cross-platform mobile framework
 - **WarpDrive (Ember Data v5)** - Modern data management layer
 - **TypeScript** - Type-safe development
 - **Glimmer Components** - Modern component architecture
