@@ -43,7 +43,7 @@
     "nativescript-ui-listview": "^15.2.3",
     "nativescript-ui-sidedrawer": "^15.2.4",
     "octokit": "^5.0.5",
-    "selenium-webdriver": "^4.34.0"
+    "selenium-webdriver": "^4.46.0"
   },
   "devDependencies": {
     "@babel/core": "^7.29.6",
