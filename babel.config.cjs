@@ -1,7 +1,7 @@
 const {
   babelCompatSupport,
 } = require('@embroider/compat/babel');
-const hmrPlugin = require('ember-native/utils/babel-plugin.js');
+const hmrPlugin = require('ember-vite-hmr/lib/babel-plugin');
 const macros = require("@embroider/macros/src/macros-config");
 const { babelPlugin } = require('@warp-drive/core/build-config');
 
@@ -62,6 +62,7 @@ module.exports = {
       },
     ],
     ["@babel/plugin-transform-typescript", { allowDeclareFields: true }],
+    "@babel/plugin-transform-unicode-property-regex",
     ...babelCompatSupport()
       .filter(x => !(x[0] || x).includes('macros-babel-plugin.js'))
       .filter(x => !(x[0] || x).includes('babel-plugin-cache-busting.js')),
